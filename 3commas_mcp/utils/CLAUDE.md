@@ -13,13 +13,15 @@ This guidance activates when:
 
 ## Utility Architecture
 
-### Directory Structure
-- **__init__.py**: Utility imports and exports
-- **auth.py**: HMAC-SHA256 authentication and signature generation
-- **decorators.py**: Error handling decorators for trading operations
-- **env.py**: Environment configuration and credential management
-- **validation.py**: Trading parameter validation utilities
-- **filters.py**: Response filtering for trading data optimization
+### Directory Structure ✅ **IMPLEMENTED**
+- **__init__.py**: Utility imports and exports ✅ 
+- **auth.py**: HMAC-SHA256 authentication and signature generation ✅
+- **decorators.py**: Error handling decorators + rate limiting for trading operations ✅
+- **env.py**: Environment configuration and credential management ✅
+
+### Simplified Design Decisions
+- **❌ validation.py**: Replaced with Pydantic model validation + decorator-based context validation
+- **❌ filters.py**: Start minimal, add response filtering later if token usage becomes an issue
 
 ### Implementation Standards
 - **Security focused**: All utilities prioritize secure credential handling
@@ -27,37 +29,27 @@ This guidance activates when:
 - **Error handling**: Comprehensive error handling with trading context
 - **Reusability**: Utilities designed for use across all components
 
-## Utility Categories
+## Implemented Utility Categories ✅
 
-### Authentication Utilities (auth.py)
-- **HMAC-SHA256 signature generation**: Core authentication for 3Commas API
-- **Query string formatting**: Proper parameter formatting for signature generation
-- **Request header creation**: APIKEY and APISIGN header generation
-- **Credential validation**: API key and secret validation utilities
+### Authentication Utilities (auth.py) ✅
+- **`generate_signature()`**: HMAC-SHA256 signature generation for 3Commas API
+- **`build_query_string()`**: Proper parameter encoding for signature generation
+- **`create_auth_headers()`**: APIKEY and APISIGN header creation
+- **`sign_request()`**: Complete request signing utility
+- **`validate_credentials()`**: API key and secret format validation
 
-### Error Handling Utilities (decorators.py)
-- **@handle_api_errors**: Comprehensive error handling decorator for API calls
-- **@handle_trading_errors**: Trading-specific error handling with safety context
-- **@validate_trading_params**: Parameter validation decorator for trading operations
-- **@rate_limit_retry**: Exponential backoff decorator for rate limiting
+### Error Handling & Rate Limiting (decorators.py) ✅
+- **`@handle_api_errors`**: Consistent error formatting (terraform-cloud-mcp pattern)
+- **`@rate_limit_retry`**: Exponential backoff decorator for 3Commas rate limits
+- **`@validate_trading_context`**: Pre-flight trading safety and credential checks
+- **`RateLimiter`**: Sliding window rate limiting for 3Commas compliance (300/60/120 req/min)
 
-### Environment Utilities (env.py)
-- **Credential management**: Secure API key and secret handling
-- **Feature flags**: Destructive operation controls (enable/disable)
-- **Configuration validation**: Environment variable validation
-- **Security settings**: Trading safety configuration options
-
-### Validation Utilities (validation.py)
-- **Trading parameter validation**: Bot, strategy, and deal parameter validation
-- **Account permission validation**: Exchange account capability checks
-- **Market data validation**: Trading pair and currency validation
-- **Safety constraint validation**: Risk management and safety order validation
-
-### Response Filtering (filters.py)
-- **Trading data filtering**: Optimize response data while preserving critical trading information
-- **Audit trail preservation**: Maintain essential data for trading audit requirements
-- **Performance optimization**: Reduce token usage while maintaining trading safety
-- **Configurable filtering**: Flexible filtering based on trading context
+### Environment Management (env.py) ✅
+- **`get_3commas_credentials()`**: Secure API key and secret access
+- **`should_enable_destructive_ops()`**: Safety controls for bot deletion/panic operations
+- **`get_rate_limits()`**: Configurable rate limits per endpoint type
+- **`validate_environment()`**: Environment variable validation
+- **`get_api_base_url()`**: Configurable API base URL
 
 ## Implementation Requirements
 

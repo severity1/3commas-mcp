@@ -96,24 +96,19 @@ For any new implementation, always update:
 - **docs/DEVELOPMENT.md**: Add new patterns if applicable
 - **docs/CONTRIBUTING.md**: Update contribution guidelines if new patterns introduced
 
-### Implementation Standards
-- **Use utility functions**: `create_api_payload()`, `query_params()`, `@handle_api_errors`
-- **Apply authentication**: HMAC-SHA256 signature generation for all requests
+### Implementation Standards ✅ **UPDATED**
+- **Use utility functions**: `sign_request()`, `@handle_api_errors`, `@rate_limit_retry`
+- **Apply authentication**: HMAC-SHA256 signature generation for all requests (utils/auth.py)
 - **Follow component patterns**: Apply standards from automatically loaded component CLAUDE.md files
 - **Run quality checks**: Format, lint, type check before completion
 - **Update relevant documentation**: Maintain consistency across project
 
-### 3Commas API Response Filtering Context
-This MCP server implements trading-safe response filtering with the following constraints:
-- **Primary use case**: Trading automation requiring data integrity and audit trails
-- **Filtering approach**: Conservative optimization to preserve trading-critical data
-- **Critical preservation requirements**:
-  - Bot configuration and status data
-  - Deal tracking and safety order information
-  - Account permissions and trading limits
-  - Performance metrics and profit/loss data
-- **Decision principle**: Preserve fields when trading impact is uncertain
-- **Implementation location**: `utils/filters.py` with configurations in `models/filters.py`
+### Simplified Implementation Approach
+This MCP server uses a minimal, focused approach:
+- **No premature optimization**: Start with raw API responses, add filtering later if needed
+- **Pydantic-first validation**: Use Pydantic models for parameter validation instead of separate utilities
+- **Essential utilities only**: auth.py, env.py, decorators.py - no over-engineering
+- **Trading safety focus**: Destructive operation controls and comprehensive error handling
 
 ## Task Management
 
