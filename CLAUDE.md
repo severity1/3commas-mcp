@@ -43,16 +43,19 @@ This project uses Claude Code's automatic subtree discovery for context-aware gu
 
 ## Development Commands
 
-### Quality Checks
-- **Format**: `ruff format .`
-- **Lint**: `ruff check .`
-- **Type Check**: `mypy .`
-- **Test**: `pytest`
+### Package Management
+- **Sync Dependencies**: `uv sync`
+- **Install Package**: `uv pip install -e .`
+
+### Quality Checks (Reference Tools)
+- **Format**: Use external formatter (ruff not in pyproject.toml per reference pattern)
+- **Lint**: Use external linter (configured via external tools)
+- **Type Check**: `uv run -m mypy 3commas_mcp/` (configured in pyproject.toml)
+- **Test**: `pytest` (when tests are implemented)
 
 ### Build Commands
-- **Install**: `uv pip install -e .`
-- **Dev Install**: `uv pip install -e .[dev]`
-- **Requirements**: `uv pip compile requirements.in`
+- **Build Package**: `uv build`
+- **Run Server**: `uv run 3commas-mcp` (when server.py is implemented)
 
 ## Core Principles
 

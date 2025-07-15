@@ -1,7 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "3commas-mcp"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Model Context Protocol (MCP) server that integrates Claude with the 3Commas cryptocurrency trading platform API, enabling Claude to build, configure, and optimize DCA bots and trading strategies through natural conversation."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "dotenv>=0.9.9",
+    "httpx>=0.28.1",
+    "fastmcp>=2.9.1",
+    "pydantic>=2.11.7",
+    "cryptography>=41.0.0",
+]
+packages = ["3commas_mcp", "api", "models", "tools", "utils"]
+
+[project.scripts]
+3commas-mcp = "3commas_mcp.server:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+strict_optional = true
+namespace_packages = true
+explicit_package_bases = true
+ignore_missing_imports = true
+
+# Focus only on individual modules
+[[tool.mypy.overrides]]
+module = ["api.*", "models.*", "tools.*", "utils.*"]
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["server"]
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["mcp.*", "dotenv.*", "httpx.*"]
+ignore_missing_imports = true
