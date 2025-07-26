@@ -45,26 +45,16 @@ def rate_limit_retry(
     base_delay: float = 1.0,
     max_delay: float = 60.0,
     exponential_base: float = 2.0,
-):
+) -> Callable[
+    [Callable[..., Awaitable[Dict[str, Any]]]], Callable[..., Awaitable[Dict[str, Any]]]
+]:
     """Decorator to handle rate limiting with exponential backoff.
-
-    Automatically retries requests when rate limited (HTTP 429).
-    Uses exponential backoff to avoid overwhelming the API.
-
-    Args:
-        max_retries: Maximum number of retry attempts
-        base_delay: Initial delay in seconds before first retry
-        max_delay: Maximum delay between retries
-        exponential_base: Base for exponential backoff calculation
-
-    Example:
-        @rate_limit_retry(max_retries=5, base_delay=2.0)
-        @handle_api_errors
-        async def api_call():
-            # Will retry up to 5 times with 2, 4, 8, 16, 32 second delays
+    Automatically retries requests when rate limited (HTTP 429) using exponential backoff.
     """
 
-    def decorator(func: Callable[..., Awaitable[Dict[str, Any]]]):
+    def decorator(
+        func: Callable[..., Awaitable[Dict[str, Any]]],
+    ) -> Callable[..., Awaitable[Dict[str, Any]]]:
         @wraps(func)
         async def wrapper(*args, **kwargs) -> Dict[str, Any]:
             last_exception = None
@@ -109,16 +99,10 @@ def rate_limit_retry(
     return decorator
 
 
-def validate_trading_context(func: Callable[..., Awaitable[Dict[str, Any]]]):
-    """Decorator to validate trading context before API operations.
-
-    Performs pre-flight checks for trading operations:
-    - Validates API credentials are present
-    - Checks destructive operation permissions if needed
-    - Validates basic trading context requirements
-
-    This is minimal validation - Pydantic models handle detailed parameter validation.
-    """
+def validate_trading_context(
+    func: Callable[..., Awaitable[Dict[str, Any]]],
+) -> Callable[..., Awaitable[Dict[str, Any]]]:
+    """Decorator to validate trading context before API operations."""
 
     @wraps(func)
     async def wrapper(*args, **kwargs) -> Dict[str, Any]:
@@ -149,13 +133,9 @@ def validate_trading_context(func: Callable[..., Awaitable[Dict[str, Any]]]):
 
 
 class RateLimiter:
-    """Rate limiter for 3Commas API endpoints.
+    """Rate limiter for 3Commas API endpoints."""
 
-    Tracks request timing per endpoint type to prevent rate limit violations.
-    Uses sliding window approach for accurate rate limiting.
-    """
-
-    def __init__(self):
+    def __init__(self) -> None:
         self._requests: Dict[str, list[float]] = {
             "standard": [],
             "trading": [],
@@ -166,14 +146,7 @@ class RateLimiter:
         self._limits = get_rate_limits()
 
     def can_make_request(self, endpoint_type: str = "standard") -> bool:
-        """Check if a request can be made without exceeding rate limits.
-
-        Args:
-            endpoint_type: Type of endpoint ("standard", "trading", "stats")
-
-        Returns:
-            True if request can be made, False if rate limited
-        """
+        """Check if a request can be made without exceeding rate limits."""
         if endpoint_type not in self._limits:
             endpoint_type = "standard"
 
@@ -191,25 +164,14 @@ class RateLimiter:
         return len(self._requests[endpoint_type]) < self._limits[endpoint_type]
 
     def record_request(self, endpoint_type: str = "standard") -> None:
-        """Record that a request was made.
-
-        Args:
-            endpoint_type: Type of endpoint that was called
-        """
+        """Record that a request was made."""
         if endpoint_type not in self._limits:
             endpoint_type = "standard"
 
         self._requests[endpoint_type].append(time.time())
 
     def get_wait_time(self, endpoint_type: str = "standard") -> float:
-        """Get time to wait before next request can be made.
-
-        Args:
-            endpoint_type: Type of endpoint to check
-
-        Returns:
-            Seconds to wait, 0 if no wait needed
-        """
+        """Get time to wait before next request can be made."""
         if self.can_make_request(endpoint_type):
             return 0.0
 

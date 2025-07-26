@@ -34,7 +34,7 @@ This guidance activates when:
 ### Authentication Utilities (auth.py) ✅
 - **`generate_signature()`**: HMAC-SHA256 signature generation for 3Commas API
 - **`build_query_string()`**: Proper parameter encoding for signature generation
-- **`create_auth_headers()`**: APIKEY and APISIGN header creation
+- **`create_auth_headers()`**: Apikey and Signature header creation
 - **`sign_request()`**: Complete request signing utility
 - **`validate_credentials()`**: API key and secret format validation
 

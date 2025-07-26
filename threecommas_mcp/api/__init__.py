@@ -1,4 +1,4 @@
-"""3Commas API client module"""
+"""3Commas API client module."""
 
 from .client import api_request, health_check, detect_endpoint_type
 

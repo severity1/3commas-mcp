@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-3Commas MCP Server
-"""
+"""3Commas MCP Server."""
 
 import logging
 from fastmcp import FastMCP
@@ -11,6 +9,9 @@ from .utils.env import should_enable_destructive_ops
 
 # Import API client health check
 from .api.client import health_check
+
+# Import tools
+from .tools import dca_bots
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -23,6 +24,9 @@ enable_destructive_ops = should_enable_destructive_ops()
 
 # Register health check tool
 mcp.tool()(health_check)
+
+# Register DCA bot management tools
+mcp.tool()(dca_bots.get_dca_bot_details)
 
 
 def main() -> None:

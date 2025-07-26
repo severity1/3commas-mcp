@@ -26,105 +26,105 @@ These APIs are prioritized for MVP implementation based on core bot management f
 
 ### Core
 - [Overview](https://developers.3commas.io/) - Main API documentation
-- [Authentication](https://developers.3commas.io/#authentication) - API key and signature setup
-- [Rate Limits](https://developers.3commas.io/#rate-limiting) - Request limits and throttling
+- [Authentication](https://developers.3commas.io/authentication) - API key and signature setup
+- [Rate Limits](https://developers.3commas.io/rate-limiting) - Request limits and throttling
 
 ### DCA Bot APIs (MVP Priority)
-- [⏸️] [Create Bot](https://developers.3commas.io/dca-bot/#create-bot) - Create new DCA bot **[MVP]**
-- [⏸️] [Update Bot](https://developers.3commas.io/dca-bot/#update-bot) - Modify existing bot configuration **[MVP]**
-- [⏸️] [Get Bot Details](https://developers.3commas.io/dca-bot/#get-bot-details) - Retrieve specific bot information **[MVP]**
-- [⏸️] [List Bots](https://developers.3commas.io/dca-bot/#list-bots) - Get all bots for account **[MVP]**
-- [⏸️] [Enable Bot](https://developers.3commas.io/dca-bot/#enable-bot) - Activate bot trading **[MVP]**
-- [⏸️] [Disable Bot](https://developers.3commas.io/dca-bot/#disable-bot) - Pause bot trading **[MVP]**
-- [⏸️] [Get Bot Stats](https://developers.3commas.io/dca-bot/#get-bot-stats) - Bot performance statistics **[MVP]**
-- [⏸️⚠️] [Delete Bot](https://developers.3commas.io/dca-bot/#delete-bot) - Permanently remove bot **[Destructive]**
-- [⏸️⚠️] [Cancel All Deals](https://developers.3commas.io/dca-bot/#cancel-all-deals) - Cancel active deals **[High Risk]**
-- [⏸️⚠️] [Panic Sell All Deals](https://developers.3commas.io/dca-bot/#panic-sell-all-deals) - Emergency sell all positions **[High Risk]**
-- [⏸️] [Get Bot Profit](https://developers.3commas.io/dca-bot/#get-bot-profit) - Daily profit data
-- [⏸️] [Get Deals Stats](https://developers.3commas.io/dca-bot/#deals-stats) - Deal statistics and metrics
+- [⏸️] [Create Bot](https://developers.3commas.io/dca-bot/create-dca-bot) - Create new DCA bot **[MVP]**
+- [⏸️] [Update Bot](https://developers.3commas.io/dca-bot/edit-dca-bot) - Modify existing bot configuration **[MVP]**
+- [✅] [Get Bot Details](https://developers.3commas.io/dca-bot/get-dca-bot) - Retrieve specific bot information **[MVP]**
+- [⏸️] [List Bots](https://developers.3commas.io/dca-bot/get-the-list-of-dca-bots) - Get all bots for account **[MVP]**
+- [⏸️] [Enable Bot](https://developers.3commas.io/dca-bot/enable-dca-bot) - Activate bot trading **[MVP]**
+- [⏸️] [Disable Bot](https://developers.3commas.io/dca-bot/disable-dca-bot) - Pause bot trading **[MVP]**
+- [⏸️] [Get Bot Stats](https://developers.3commas.io/dca-bot/get-dca-bot-stats) - Bot performance statistics **[MVP]**
+- [⏸️⚠️] [Delete Bot](https://developers.3commas.io/dca-bot/delete-dca-bot) - Permanently remove bot **[Destructive]**
+- [⏸️⚠️] [Cancel All Deals](https://developers.3commas.io/dca-bot/cancel-all-deals) - Cancel active deals **[High Risk]**
+- [⏸️⚠️] [Panic Sell All Deals](https://developers.3commas.io/dca-bot/panic-sell-all-deals) - Emergency sell all positions **[High Risk]**
+- [⏸️] [Get Bot Profit](https://developers.3commas.io/dca-bot/get-bot-profit) - Daily profit data
+- [⏸️] [Get Deals Stats](https://developers.3commas.io/dca-bot/deals-stats) - Deal statistics and metrics
 
 ### Grid Bot APIs
-- [⏸️] [Create Grid Bot](https://developers.3commas.io/grid-bot/#create-grid-bot) - Create new grid bot
-- [⏸️] [Update Grid Bot](https://developers.3commas.io/grid-bot/#update-grid-bot) - Modify grid bot settings
-- [⏸️] [Get Grid Bot Details](https://developers.3commas.io/grid-bot/#get-grid-bot-details) - Retrieve grid bot info
-- [⏸️] [List Grid Bots](https://developers.3commas.io/grid-bot/#list-grid-bots) - Get all grid bots
-- [⏸️] [Delete Grid Bot](https://developers.3commas.io/grid-bot/#delete-grid-bot) - Remove grid bot
-- [⏸️] [Enable Grid Bot](https://developers.3commas.io/grid-bot/#enable-grid-bot) - Activate grid bot
-- [⏸️] [Disable Grid Bot](https://developers.3commas.io/grid-bot/#disable-grid-bot) - Pause grid bot
+- [⏸️] [Create Grid Bot](https://developers.3commas.io/grid-bot/create-grid-bot) - Create new grid bot
+- [⏸️] [Update Grid Bot](https://developers.3commas.io/grid-bot/update-grid-bot) - Modify grid bot settings
+- [⏸️] [Get Grid Bot Details](https://developers.3commas.io/grid-bot/get-grid-bot-details) - Retrieve grid bot info
+- [⏸️] [List Grid Bots](https://developers.3commas.io/grid-bot/get-grid-bots) - Get all grid bots
+- [⏸️] [Delete Grid Bot](https://developers.3commas.io/grid-bot/delete-grid-bot) - Remove grid bot
+- [⏸️] [Enable Grid Bot](https://developers.3commas.io/grid-bot/enable-grid-bot) - Activate grid bot
+- [⏸️] [Disable Grid Bot](https://developers.3commas.io/grid-bot/disable-grid-bot) - Pause grid bot
 
 ### Smart Trade APIs
-- [⏸️] [Create Smart Trade](https://developers.3commas.io/smart-trade/#create-smart-trade) - Create manual trade
-- [⏸️] [Update Smart Trade](https://developers.3commas.io/smart-trade/#update-smart-trade) - Modify trade parameters
-- [⏸️] [Get Smart Trade](https://developers.3commas.io/smart-trade/#get-smart-trade) - Retrieve trade details
-- [⏸️] [List Smart Trades](https://developers.3commas.io/smart-trade/#list-smart-trades) - Get all smart trades
-- [⏸️] [Cancel Smart Trade](https://developers.3commas.io/smart-trade/#cancel-smart-trade) - Cancel active trade
-- [⏸️] [Close Smart Trade](https://developers.3commas.io/smart-trade/#close-smart-trade) - Force close trade
+- [⏸️] [Create Smart Trade](https://developers.3commas.io/smart-trade/create-smart-trade) - Create manual trade
+- [⏸️] [Update Smart Trade](https://developers.3commas.io/smart-trade/update-smart-trade) - Modify trade parameters
+- [⏸️] [Get Smart Trade](https://developers.3commas.io/smart-trade/get-smart-trade) - Retrieve trade details
+- [⏸️] [List Smart Trades](https://developers.3commas.io/smart-trade/get-smart-trades) - Get all smart trades
+- [⏸️] [Cancel Smart Trade](https://developers.3commas.io/smart-trade/cancel-smart-trade) - Cancel active trade
+- [⏸️] [Close Smart Trade](https://developers.3commas.io/smart-trade/close-smart-trade) - Force close trade
 
 ### Strategy APIs (MVP Priority)
-- [⏸️] [Get Strategy List](https://developers.3commas.io/strategies/#strategy-list) - Available trading strategies **[MVP]**
-- [⏸️] [QFL Strategy](https://developers.3commas.io/strategies/#qfl) - QFL configuration options **[MVP]**
-- [⏸️] [RSI Strategy](https://developers.3commas.io/strategies/#rsi) - RSI indicator settings **[MVP]**
-- [⏸️] [Bollinger Bands Strategy](https://developers.3commas.io/strategies/#bollinger-bands) - BB parameters **[MVP]**
-- [⏸️] [MACD Strategy](https://developers.3commas.io/strategies/#macd) - MACD configuration **[MVP]**
-- [⏸️] [Moving Average Strategy](https://developers.3commas.io/strategies/#moving-average) - MA settings **[MVP]**
-- [⏸️] [Custom Signals](https://developers.3commas.io/strategies/#custom-signals) - External signal integration
+- [⏸️] [Get Strategy List](https://developers.3commas.io/strategies/get-strategies) - Available trading strategies **[MVP]**
+- [⏸️] [QFL Strategy](https://developers.3commas.io/strategies/qfl-strategy) - QFL configuration options **[MVP]**
+- [⏸️] [RSI Strategy](https://developers.3commas.io/strategies/rsi-strategy) - RSI indicator settings **[MVP]**
+- [⏸️] [Bollinger Bands Strategy](https://developers.3commas.io/strategies/bollinger-bands-strategy) - BB parameters **[MVP]**
+- [⏸️] [MACD Strategy](https://developers.3commas.io/strategies/macd-strategy) - MACD configuration **[MVP]**
+- [⏸️] [Moving Average Strategy](https://developers.3commas.io/strategies/moving-average-strategy) - MA settings **[MVP]**
+- [⏸️] [Custom Signals](https://developers.3commas.io/strategies/custom-signals) - External signal integration
 
 ### Account APIs (MVP Priority)
-- [⏸️] [Get Accounts](https://developers.3commas.io/accounts/#get-accounts) - List exchange accounts **[MVP]**
-- [⏸️] [Get Account Balance](https://developers.3commas.io/accounts/#account-balance) - Current balance info **[MVP]**
-- [⏸️] [Account Load Balances](https://developers.3commas.io/accounts/#load-balances) - Refresh balance data **[MVP]**
-- [⏸️] [Create Account](https://developers.3commas.io/accounts/#create-account) - Add exchange account
-- [⏸️] [Update Account](https://developers.3commas.io/accounts/#update-account) - Modify account settings
-- [⏸️⚠️] [Delete Account](https://developers.3commas.io/accounts/#delete-account) - Remove exchange account **[Destructive]**
+- [⏸️] [Get Accounts](https://developers.3commas.io/accounts/get-accounts) - List exchange accounts **[MVP]**
+- [⏸️] [Get Account Balance](https://developers.3commas.io/accounts/get-account-balance) - Current balance info **[MVP]**
+- [⏸️] [Account Load Balances](https://developers.3commas.io/accounts/load-balances) - Refresh balance data **[MVP]**
+- [⏸️] [Create Account](https://developers.3commas.io/accounts/create-account) - Add exchange account
+- [⏸️] [Update Account](https://developers.3commas.io/accounts/update-account) - Modify account settings
+- [⏸️⚠️] [Delete Account](https://developers.3commas.io/accounts/delete-account) - Remove exchange account **[Destructive]**
 
 ### Market Data APIs (MVP Priority)
-- [⏸️] [Get Market Pairs](https://developers.3commas.io/pairs/#market-pairs) - Available trading pairs **[MVP]**
-- [⏸️] [Currency Rates](https://developers.3commas.io/pairs/#currency-rates) - Exchange rates data **[MVP]**
-- [⏸️] [Get Pairs Blacklist](https://developers.3commas.io/pairs/#pairs-blacklist) - Blacklisted trading pairs **[MVP]**
-- [⏸️] [Update Pairs Blacklist](https://developers.3commas.io/pairs/#update-blacklist) - Modify blacklist
+- [⏸️] [Get Market Pairs](https://developers.3commas.io/market-data/market-pairs) - Available trading pairs **[MVP]**
+- [⏸️] [Currency Rates](https://developers.3commas.io/market-data/currency-rates) - Exchange rates data **[MVP]**
+- [⏸️] [Get Pairs Blacklist](https://developers.3commas.io/market-data/get-pairs-blacklist) - Blacklisted trading pairs **[MVP]**
+- [⏸️] [Update Pairs Blacklist](https://developers.3commas.io/market-data/update-blacklist) - Modify blacklist
 
 ### Deal Management APIs (MVP Priority)
-- [⏸️] [Get Deals](https://developers.3commas.io/deals/#get-deals) - List all deals **[MVP]**
-- [⏸️] [Get Deal](https://developers.3commas.io/deals/#get-deal) - Specific deal details **[MVP]**
-- [⏸️] [Add Safety Order](https://developers.3commas.io/deals/#add-safety-order) - Manual safety order **[MVP]**
-- [⏸️] [Update Deal](https://developers.3commas.io/deals/#update-deal) - Modify deal parameters
-- [⏸️⚠️] [Cancel Deal](https://developers.3commas.io/deals/#cancel-deal) - Cancel active deal **[High Risk]**
-- [⏸️⚠️] [Panic Sell Deal](https://developers.3commas.io/deals/#panic-sell-deal) - Emergency sell deal **[High Risk]**
+- [⏸️] [Get Deals](https://developers.3commas.io/deals/get-deals) - List all deals **[MVP]**
+- [⏸️] [Get Deal](https://developers.3commas.io/deals/get-deal) - Specific deal details **[MVP]**
+- [⏸️] [Add Safety Order](https://developers.3commas.io/deals/add-safety-order) - Manual safety order **[MVP]**
+- [⏸️] [Update Deal](https://developers.3commas.io/deals/update-deal) - Modify deal parameters
+- [⏸️⚠️] [Cancel Deal](https://developers.3commas.io/deals/cancel-deal) - Cancel active deal **[High Risk]**
+- [⏸️⚠️] [Panic Sell Deal](https://developers.3commas.io/deals/panic-sell-deal) - Emergency sell deal **[High Risk]**
 
 ### Portfolio APIs
-- [⏸️] [Get Portfolio Stats](https://developers.3commas.io/portfolio/#portfolio-stats) - Overall performance
-- [⏸️] [Get Profit Stats](https://developers.3commas.io/portfolio/#profit-stats) - Profit/loss analytics
-- [⏸️] [Get Balance Stats](https://developers.3commas.io/portfolio/#balance-stats) - Balance distribution
-- [⏸️] [Portfolio Pie Chart](https://developers.3commas.io/portfolio/#pie-chart) - Asset allocation data
+- [⏸️] [Get Portfolio Stats](https://developers.3commas.io/portfolio/portfolio-stats) - Overall performance
+- [⏸️] [Get Profit Stats](https://developers.3commas.io/portfolio/profit-stats) - Profit/loss analytics
+- [⏸️] [Get Balance Stats](https://developers.3commas.io/portfolio/balance-stats) - Balance distribution
+- [⏸️] [Portfolio Pie Chart](https://developers.3commas.io/portfolio/pie-chart) - Asset allocation data
 
 ### Marketplace APIs 💰
-- [⏸️] [Get Marketplace Items](https://developers.3commas.io/marketplace/#marketplace-items) 💰 - Available strategies
-- [⏸️] [Subscribe to Strategy](https://developers.3commas.io/marketplace/#subscribe) 💰 - Copy trading signals
-- [⏸️] [Unsubscribe Strategy](https://developers.3commas.io/marketplace/#unsubscribe) 💰 - Stop copying signals
-- [⏸️] [My Subscriptions](https://developers.3commas.io/marketplace/#my-subscriptions) 💰 - Active subscriptions
+- [⏸️] [Get Marketplace Items](https://developers.3commas.io/marketplace/get-marketplace-items) 💰 - Available strategies
+- [⏸️] [Subscribe to Strategy](https://developers.3commas.io/marketplace/subscribe) 💰 - Copy trading signals
+- [⏸️] [Unsubscribe Strategy](https://developers.3commas.io/marketplace/unsubscribe) 💰 - Stop copying signals
+- [⏸️] [My Subscriptions](https://developers.3commas.io/marketplace/my-subscriptions) 💰 - Active subscriptions
 
 ### Webhooks APIs
-- [⏸️] [Create Webhook](https://developers.3commas.io/webhooks/#create-webhook) - Setup external signals
-- [⏸️] [Update Webhook](https://developers.3commas.io/webhooks/#update-webhook) - Modify webhook config
-- [⏸️] [Delete Webhook](https://developers.3commas.io/webhooks/#delete-webhook) - Remove webhook
-- [⏸️] [List Webhooks](https://developers.3commas.io/webhooks/#list-webhooks) - Get all webhooks
-- [⏸️] [Test Webhook](https://developers.3commas.io/webhooks/#test-webhook) - Validate webhook setup
+- [⏸️] [Create Webhook](https://developers.3commas.io/webhooks/create-webhook) - Setup external signals
+- [⏸️] [Update Webhook](https://developers.3commas.io/webhooks/update-webhook) - Modify webhook config
+- [⏸️] [Delete Webhook](https://developers.3commas.io/webhooks/delete-webhook) - Remove webhook
+- [⏸️] [List Webhooks](https://developers.3commas.io/webhooks/get-webhooks) - Get all webhooks
+- [⏸️] [Test Webhook](https://developers.3commas.io/webhooks/test-webhook) - Validate webhook setup
 
 ### Trading View Integration
-- [⏸️] [TradingView Signals](https://developers.3commas.io/tradingview/#tradingview-signals) - Custom signal format
-- [⏸️] [Signal Processing](https://developers.3commas.io/tradingview/#signal-processing) - How signals are handled
-- [⏸️] [Webhook URL Format](https://developers.3commas.io/tradingview/#webhook-format) - Required URL structure
+- [⏸️] [TradingView Signals](https://developers.3commas.io/trading-view/trading-view-signals) - Custom signal format
+- [⏸️] [Signal Processing](https://developers.3commas.io/trading-view/signal-processing) - How signals are handled
+- [⏸️] [Webhook URL Format](https://developers.3commas.io/trading-view/webhook-format) - Required URL structure
 
 ### User Management APIs
-- [⏸️] [Get User Info](https://developers.3commas.io/users/#user-info) - Current user details
-- [⏸️] [Update User](https://developers.3commas.io/users/#update-user) - Modify user settings
-- [⏸️] [Change Password](https://developers.3commas.io/users/#change-password) - Update password
-- [⏸️] [Get Permissions](https://developers.3commas.io/users/#permissions) - API key permissions
+- [⏸️] [Get User Info](https://developers.3commas.io/users/get-user-info) - Current user details
+- [⏸️] [Update User](https://developers.3commas.io/users/update-user) - Modify user settings
+- [⏸️] [Change Password](https://developers.3commas.io/users/change-password) - Update password
+- [⏸️] [Get Permissions](https://developers.3commas.io/users/get-permissions) - API key permissions
 
 ### Notification APIs
-- [⏸️] [Get Notifications](https://developers.3commas.io/notifications/#get-notifications) - User notifications
-- [⏸️] [Mark as Read](https://developers.3commas.io/notifications/#mark-read) - Update notification status
-- [⏸️] [Notification Settings](https://developers.3commas.io/notifications/#settings) - Configure alerts
+- [⏸️] [Get Notifications](https://developers.3commas.io/notifications/get-notifications) - User notifications
+- [⏸️] [Mark as Read](https://developers.3commas.io/notifications/mark-as-read) - Update notification status
+- [⏸️] [Notification Settings](https://developers.3commas.io/notifications/notification-settings) - Configure alerts
 
 ## Endpoints Summary
 
@@ -162,7 +162,7 @@ All requests require:
 | MCP Tool | 3Commas Endpoint | Risk Level | Implementation Status |
 |----------|------------------|------------|----------------------|
 | `create_dca_bot` | `POST /ver1/bots/create_bot` | Medium | ⏸️ |
-| `get_bot_details` | `GET /ver1/bots/:id/show` | Low | ⏸️ |
+| `get_bot_details` | `GET /ver1/bots/:id/show` | Low | ✅ |
 | `list_bots` | `GET /ver1/bots` | Low | ⏸️ |
 | `update_bot_config` | `PATCH /ver1/bots/:id/update` | Medium | ⏸️ |
 | `enable_bot` | `POST /ver1/bots/:id/enable` | Medium | ⏸️ |

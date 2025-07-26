@@ -1,4 +1,4 @@
-"""Utility functions for 3Commas MCP"""
+"""Utility functions for 3Commas MCP."""
 
 # Environment and configuration utilities
 from .env import (

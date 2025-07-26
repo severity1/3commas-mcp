@@ -22,15 +22,7 @@ ReqT = TypeVar("ReqT", bound=BaseModel)
 
 
 def detect_endpoint_type(path: str, method: str) -> str:
-    """Detect endpoint type for rate limiting based on path and method.
-
-    Args:
-        path: API endpoint path
-        method: HTTP method
-
-    Returns:
-        Endpoint type: "trading", "stats", or "standard"
-    """
+    """Detect endpoint type for rate limiting based on path and method."""
     # Trading endpoints (60 req/min limit)
     trading_patterns = [
         "/bots/create_bot",
@@ -74,26 +66,7 @@ async def api_request(
     data: Union[Dict[str, Any], BaseModel, None] = None,
     endpoint_type: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Make a request to the 3Commas API with proper authentication and rate limiting.
-
-    Args:
-        path: API endpoint path (e.g., "ver1/bots")
-        method: HTTP method (GET, POST, PATCH, DELETE)
-        params: Query parameters for GET requests
-        data: Request body data for POST/PATCH requests
-        endpoint_type: Override endpoint type for rate limiting
-
-    Returns:
-        API response as dictionary, or {"error": "message"} for failures
-
-    Example:
-        >>> # GET request with query parameters
-        >>> response = await api_request("ver1/bots", params={"limit": 10})
-
-        >>> # POST request with data
-        >>> bot_data = {"name": "My Bot", "account_id": 123}
-        >>> response = await api_request("ver1/bots/create_bot", "POST", data=bot_data)
-    """
+    """Make a request to the 3Commas API with proper authentication and rate limiting."""
     # Validate environment
     missing_vars = validate_environment()
     if missing_vars:
@@ -146,6 +119,7 @@ async def api_request(
         auth_headers = sign_request(
             api_key,
             secret,
+            path,
             params=request_params if method in ("GET", "DELETE") else None,
             body=json.dumps(json_body) if json_body else None,
         )
@@ -153,7 +127,7 @@ async def api_request(
         # Prepare headers
         headers = {
             "Content-Type": "application/json",
-            **auth_headers,  # APIKEY and APISIGN headers
+            **auth_headers,  # Apikey and Signature headers
         }
 
         # Make the request
@@ -213,11 +187,7 @@ async def api_request(
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform a health check by testing API connectivity.
-
-    Returns:
-        Health status and basic API information
-    """
+    """Perform a health check by testing API connectivity."""
     try:
         # Test with a simple endpoint that doesn't require trading permissions
         response = await api_request("ver1/accounts", method="GET")

@@ -36,8 +36,8 @@ The `api_request()` function handles all API interactions with:
 
 ### 3Commas Authentication Requirements
 3Commas authentication requires specific header format:
-- **APIKEY**: API key header for request identification
-- **APISIGN**: HMAC-SHA256 signature of query string using secret key
+- **Apikey**: API key header for request identification
+- **Signature**: HMAC-SHA256 signature of query string using secret key
 - **Query string**: Properly formatted parameters for signature generation
 - **Content-Type**: application/json for POST/PATCH requests
 
@@ -125,7 +125,7 @@ For each API client enhancement:
 - [ ] Documentation updated: implementation status tracking
 
 ### 3Commas-Specific Patterns
-- **Base URL**: Always use https://api.3commas.io
+- **Base URL**: Always use https://api.3commas.io/public/api
 - **API Versioning**: Use /ver1/ prefix for all endpoints
 - **Error Format**: Handle 3Commas error response structure consistently
 - **Success Indicators**: Recognize 3Commas success response patterns

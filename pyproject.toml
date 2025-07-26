@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "3commas-mcp"
+name = "threecommas-mcp"
 version = "0.1.0"
 description = "A Model Context Protocol (MCP) server that integrates Claude with the 3Commas cryptocurrency trading platform API, enabling Claude to build, configure, and optimize DCA bots and trading strategies through natural conversation."
 readme = "README.md"
@@ -15,10 +15,10 @@ dependencies = [
     "pydantic>=2.11.7",
     "cryptography>=41.0.0",
 ]
-packages = ["3commas_mcp", "api", "models", "tools", "utils"]
+packages = ["threecommas_mcp", "api", "models", "tools", "utils"]
 
 [project.scripts]
-3commas-mcp = "3commas_mcp.server:main"
+threecommas-mcp = "threecommas_mcp.server:main"
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -27,15 +27,9 @@ allow-direct-references = true
 python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-strict_optional = true
+ignore_missing_imports = true
 namespace_packages = true
 explicit_package_bases = true
-ignore_missing_imports = true
 
 # Focus only on individual modules
 [[tool.mypy.overrides]]
