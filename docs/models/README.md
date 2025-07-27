@@ -52,6 +52,15 @@ Each model documentation file follows a consistent template:
 
 ## Model Files
 
+### Available Model Documentation
+
+#### Base Models (`base.md`) ✅
+- `BaseModelConfig`: Foundation configuration for all Pydantic models
+- `APIRequest`: Base class for all API request models  
+- `APIResponse`: Type alias for all API response data
+- `BotType`, `DealStatus`, `StrategyType`: Common enums for trading operations
+- `ReqT`: Generic type variable for API request models
+
 ### Planned Model Documentation
 
 #### Bot Models (`bots.md`)
@@ -91,9 +100,9 @@ Each model documentation file follows a consistent template:
 ## Cross-References
 
 ### Integration with Other Documentation Layers
-- **Tools Documentation**: Each model links to tools that use it
-- **Conversation Examples**: Models reference usage scenarios
-- **Code Implementation**: Models link to actual implementation files
+- **Tools Documentation**: Each model links to tools that use it - [Base Models](base.md) used by [DCA Bot Tools](../tools/dca_bots.md)
+- **Conversation Examples**: Models reference usage scenarios - [Base Models](base.md) patterns shown in [DCA Bot Management](../conversations/dca-bot-management-conversation.md)
+- **Code Implementation**: Models link to actual implementation files - [Base Models](base.md) implemented in `threecommas_mcp/models/base.py`
 - **API Reference**: Models reference corresponding 3Commas API endpoints
 
 ### Model Relationships
