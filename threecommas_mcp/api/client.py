@@ -22,40 +22,26 @@ ReqT = TypeVar("ReqT", bound=BaseModel)
 
 
 def detect_endpoint_type(path: str, method: str) -> str:
-    """Detect endpoint type for rate limiting based on path and method."""
-    # Trading endpoints (60 req/min limit)
-    trading_patterns = [
-        "/bots/create_bot",
-        "/bots/update",
-        "/bots/delete",
-        "/bots/enable",
-        "/bots/disable",
-        "/deals/cancel",
-        "/deals/panic_sell",
-        "/deals/add_safety_order",
-    ]
-
-    # Statistics endpoints (120 req/min limit)
-    stats_patterns = [
-        "/bots/stats",
-        "/deals/stats",
-        "/bots/profit",
-        "/deals/show",
-    ]
-
-    # Check for trading operations
-    if method in ("POST", "PATCH", "DELETE"):
-        for pattern in trading_patterns:
-            if pattern in path:
-                return "trading"
-
-    # Check for statistics endpoints
-    for pattern in stats_patterns:
-        if pattern in path:
-            return "stats"
-
-    # Default to standard (300 req/min limit)
-    return "standard"
+    """Detect endpoint type for rate limiting based on official 3Commas limits.
+    
+    Official rate limits from https://developers.3commas.io/quick-start/limits:
+    - Global: 100 req/min
+    - /ver1/deals: 120 req/min  
+    - /ver1/smart_trades: 40 req/10 seconds
+    - /ver1/deals/:deal_id/show: 120 req/min
+    """
+    # Specific endpoint patterns with higher limits
+    if "/ver1/deals" in path and not path.endswith("/show"):
+        return "deals"
+    
+    if "/ver1/smart_trades" in path:
+        return "smart_trades"
+        
+    if "/ver1/deals/" in path and path.endswith("/show"):
+        return "deals_show"
+    
+    # Default to global limit (100 req/min)
+    return "global"
 
 
 @handle_api_errors

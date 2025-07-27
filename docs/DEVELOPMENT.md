@@ -20,19 +20,16 @@ cp env.example .env
 ### Development Workflow
 ```bash
 # Format code
-ruff format .
+uv run -m ruff format .
 
 # Lint code
-ruff check .
+uv run -m ruff check .
 
 # Type check
-mypy .
-
-# Run tests
-pytest
+uv run -m mypy .
 
 # Run all quality checks
-ruff format . && ruff check . && mypy . && pytest
+uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
 ```
 
 ## Project Structure

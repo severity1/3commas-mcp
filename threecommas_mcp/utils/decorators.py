@@ -133,25 +133,27 @@ def validate_trading_context(
 
 
 class RateLimiter:
-    """Rate limiter for 3Commas API endpoints."""
+    """Rate limiter for 3Commas API endpoints based on official limits."""
 
     def __init__(self) -> None:
         self._requests: Dict[str, list[float]] = {
-            "standard": [],
-            "trading": [],
-            "stats": [],
+            "global": [],
+            "deals": [],
+            "smart_trades": [],
+            "deals_show": [],
         }
         from .env import get_rate_limits
 
         self._limits = get_rate_limits()
 
-    def can_make_request(self, endpoint_type: str = "standard") -> bool:
+    def can_make_request(self, endpoint_type: str = "global") -> bool:
         """Check if a request can be made without exceeding rate limits."""
         if endpoint_type not in self._limits:
-            endpoint_type = "standard"
+            endpoint_type = "global"
 
         current_time = time.time()
-        window_start = current_time - 60  # 1-minute window
+        limit_config = self._limits[endpoint_type]
+        window_start = current_time - limit_config["window"]
 
         # Clean old requests outside the window
         self._requests[endpoint_type] = [
@@ -161,23 +163,27 @@ class RateLimiter:
         ]
 
         # Check if we're under the limit
-        return len(self._requests[endpoint_type]) < self._limits[endpoint_type]
+        return len(self._requests[endpoint_type]) < limit_config["requests"]
 
-    def record_request(self, endpoint_type: str = "standard") -> None:
+    def record_request(self, endpoint_type: str = "global") -> None:
         """Record that a request was made."""
         if endpoint_type not in self._limits:
-            endpoint_type = "standard"
+            endpoint_type = "global"
 
         self._requests[endpoint_type].append(time.time())
 
-    def get_wait_time(self, endpoint_type: str = "standard") -> float:
+    def get_wait_time(self, endpoint_type: str = "global") -> float:
         """Get time to wait before next request can be made."""
         if self.can_make_request(endpoint_type):
             return 0.0
 
+        if endpoint_type not in self._limits:
+            endpoint_type = "global"
+
         # Find the oldest request in the current window
         current_time = time.time()
-        window_start = current_time - 60
+        limit_config = self._limits[endpoint_type]
+        window_start = current_time - limit_config["window"]
 
         old_requests = [
             req_time
@@ -190,7 +196,7 @@ class RateLimiter:
 
         # Wait until the oldest request falls outside the window
         oldest_request = min(old_requests)
-        return max(0.0, (oldest_request + 60) - current_time)
+        return max(0.0, (oldest_request + limit_config["window"]) - current_time)
 
 
 # Global rate limiter instance

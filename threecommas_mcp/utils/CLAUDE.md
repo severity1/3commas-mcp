@@ -17,7 +17,7 @@ Activates when working in `utils/` directory implementing authentication, error 
 - `@handle_api_errors` - Consistent error formatting
 - `@rate_limit_retry` - Exponential backoff for 3Commas limits
 - `@validate_trading_context` - Pre-flight safety checks
-- `RateLimiter` - Sliding window rate limiting (300/60/120 req/min)
+- `RateLimiter` - Sliding window rate limiting (official 3Commas limits: 100 global, 120 deals, 40 smart_trades/10s)
 
 ### Environment (env.py)
 - `get_3commas_credentials()` - Secure API key/secret access

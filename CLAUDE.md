@@ -48,7 +48,7 @@ This project uses automatic subtree discovery. Component-specific guidance loads
 - **Error handling**: `@handle_api_errors` decorator
 - **Response filtering**: `filter_response()` for 85% token reduction
 - **Validation**: Pydantic models with trading safety checks
-- **Rate limiting**: 300/60/120 req/min compliance with exponential backoff
+- **Rate limiting**: Official 3Commas limits (100 global, 120 deals, 40 smart_trades/10s) with exponential backoff
 
 ### API Integration
 - **Base URL**: `https://api.3commas.io/public/api/`
@@ -70,6 +70,6 @@ This project uses automatic subtree discovery. Component-specific guidance loads
 
 ### When to Update CLAUDE.md Files
 - **New implementation patterns** - Update component guidance
-- **3Commas API changes** - Review auth/rate limiting patterns  
+- **3Commas API changes** - Review auth/rate limiting patterns against official docs  
 - **Trading safety gaps** - Add missing bot operation safety docs
 - **High context usage** - Remove redundant information across files

@@ -34,10 +34,11 @@ Required header format:
 - **Security**: Never logs API keys/secrets, proper error redaction
 
 ### Rate Limiting Compliance
-3Commas limits by endpoint type:
-- **Standard endpoints**: 300 requests/minute
-- **Trading endpoints**: 60 requests/minute  
-- **Statistics endpoints**: 120 requests/minute
+Official 3Commas limits from https://developers.3commas.io/quick-start/limits:
+- **Global limit**: 100 requests/minute (applies to all endpoints)
+- **/ver1/deals**: 120 requests/minute
+- **/ver1/smart_trades**: 40 requests per 10 seconds
+- **/ver1/deals/:id/show**: 120 requests/minute
 - **Exponential backoff**: Required for 429 responses
 
 ## Integration Requirements
