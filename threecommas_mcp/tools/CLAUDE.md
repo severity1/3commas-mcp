@@ -20,6 +20,7 @@ This guidance activates when:
 ### Implementation Standards
 - **Consistent patterns**: All tools follow standardized implementation patterns for trading operations
 - **Error handling**: Use @handle_api_errors decorator for consistent error management
+- **Response filtering**: All tools include response_filter parameter for token efficiency
 - **Async patterns**: All API functions are async using httpx
 - **Parameter validation**: Use Pydantic models for input validation with trading safety checks
 
@@ -89,6 +90,7 @@ Tool functions follow a consistent parameter structure adapted for trading opera
 1. **Required routing parameters** (bot_id, account_id, deal_id, etc.)
 2. **Required trading parameters** (pair, strategy, base_order_volume, etc.)
 3. **Optional params object** for additional configuration
+4. **response_filter parameter** ("full" | "display", default: "display") for token efficiency
 
 ### Trading Safety Requirements
 - **Bot Creation**: Validate pair availability, account permissions, and strategy parameters
@@ -134,28 +136,31 @@ Essential utility functions for tool implementation:
 - `query_params()`: For transforming Pydantic models to API parameters
 - `@handle_api_errors`: Decorator for consistent error handling
 - `validate_trading_safety()`: Trading-specific validation functions
+- `filter_response()`: Response filtering for token efficiency (applied to all tools)
 
 ## Implementation Workflow
 
 ### New Tool Development Process
-1. **Define function signature**: Follow parameter order pattern for trading operations
+1. **Define function signature**: Follow parameter order pattern (include response_filter parameter)
 2. **Create Pydantic models**: For validation and type safety with trading checks
 3. **Implement core logic**: Using utility functions and decorators
-4. **Add error handling**: Apply @handle_api_errors decorator with trading context
-5. **Add safety checks**: Validate trading parameters and account permissions
-6. **Register in server.py**: Based on trading destructiveness classification
-7. **Test thoroughly**: Cover happy path, edge cases, error conditions, and trading safety
-8. **Update documentation**: TASKS.md, API_REFERENCES.md status updates
+4. **Add response filtering**: Apply filter_response() before returning API responses
+5. **Add error handling**: Apply @handle_api_errors decorator with trading context
+6. **Add safety checks**: Validate trading parameters and account permissions
+7. **Register in server.py**: Based on trading destructiveness classification
+8. **Test thoroughly**: Cover happy path, edge cases, error conditions, and trading safety
+9. **Update documentation**: TASKS.md, API_REFERENCES.md status updates
 
 ### Quality Validation Checklist
 For each tool implementation:
 - [ ] Function follows Essential Patterns (decorator, models, utilities)
+- [ ] Response filtering applied with response_filter parameter (defaults to "display")
 - [ ] Pydantic models created and validated with trading safety checks
 - [ ] Trading safety requirements implemented (bot validation, account checks)
 - [ ] Tool registered in server.py with appropriate destructiveness classification
 - [ ] Quality checks passed: format, lint, type check
 - [ ] Documentation updated: implementation status tracking
-- [ ] Tests cover all scenarios: success, edge cases, errors, trading safety
+- [ ] Tests cover all scenarios: success, edge cases, errors, trading safety, filter types
 
 ### 3Commas-Specific Tool Patterns
 - **Bot Management**: Always include account_id validation and bot status checks

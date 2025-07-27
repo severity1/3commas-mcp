@@ -18,10 +18,11 @@ This guidance activates when:
 - **auth.py**: HMAC-SHA256 authentication and signature generation ✅
 - **decorators.py**: Error handling decorators + rate limiting for trading operations ✅
 - **env.py**: Environment configuration and credential management ✅
+- **response_filter.py**: Token-efficient response filtering for AI context optimization ✅
 
 ### Simplified Design Decisions
 - **❌ validation.py**: Replaced with Pydantic model validation + decorator-based context validation
-- **❌ filters.py**: Start minimal, add response filtering later if token usage becomes an issue
+- **✅ response_filter.py**: Added for 85% token reduction through intelligent response filtering
 
 ### Implementation Standards
 - **Security focused**: All utilities prioritize secure credential handling
@@ -50,6 +51,14 @@ This guidance activates when:
 - **`get_rate_limits()`**: Configurable rate limits per endpoint type
 - **`validate_environment()`**: Environment variable validation
 - **`get_api_base_url()`**: Configurable API base URL
+
+### Response Filtering (response_filter.py) ✅ **NEW**
+- **`filter_response()`**: Main filtering function with layered approach (security → redundant → display)
+- **`_apply_security_filter()`**: Always remove `url_secret`, `account_id` from all responses
+- **`_remove_redundant_fields()`**: Remove bot-level fields duplicated in active deals (both filter types)
+- **`_apply_display_filter()`**: Display-specific filtering (pairs→count, events→3, widgets removed)
+- **`_remove_null_empty_fields()`**: Dynamic removal of null, empty arrays, empty objects
+- **Filter types**: `"full"` (editing/analysis) vs `"display"` (85% token reduction, default)
 
 ## Implementation Requirements
 

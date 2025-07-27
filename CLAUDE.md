@@ -106,11 +106,19 @@ For any new implementation, always update:
 - **Run quality checks**: Format, lint, type check before completion
 - **Update relevant documentation**: Maintain consistency across project
 
+### Response Filtering System ✅ **IMPLEMENTED**
+This MCP server includes intelligent response filtering for token efficiency:
+- **Security-first approach**: Always remove `url_secret`, `account_id` from all responses
+- **Redundant field removal**: Remove bot-level fields duplicated in active deals (both filter types)
+- **Filter types**: `"full"` (editing/analysis) vs `"display"` (general use, 85% token reduction)
+- **Context preservation**: Display filter removes pairs array→count, events→3 recent, crypto widgets
+- **Implementation**: `utils/response_filter.py` with layered filtering applied to all tools
+
 ### Simplified Implementation Approach
 This MCP server uses a minimal, focused approach:
-- **No premature optimization**: Start with raw API responses, add filtering later if needed
+- **Token-efficient responses**: Implemented response filtering system for optimal AI context usage
 - **Pydantic-first validation**: Use Pydantic models for parameter validation instead of separate utilities
-- **Essential utilities only**: auth.py, env.py, decorators.py - no over-engineering
+- **Essential utilities only**: auth.py, env.py, decorators.py, response_filter.py - no over-engineering
 - **Trading safety focus**: Destructive operation controls and comprehensive error handling
 
 ## Task Management

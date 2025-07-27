@@ -25,9 +25,15 @@ These APIs are prioritized for MVP implementation based on core bot management f
 ## API Documentation
 
 ### Core
-- [Overview](https://developers.3commas.io/) - Main API documentation
-- [Authentication](https://developers.3commas.io/authentication) - API key and signature setup
-- [Rate Limits](https://developers.3commas.io/rate-limiting) - Request limits and throttling
+- [Overview](https://developers.3commas.io/quick-start/overview)
+- [Security and Permission Types](https://developers.3commas.io/quick-start/security-and-permission-types)
+- [How to Start](https://developers.3commas.io/quick-start/how-to-start)
+- [How to create an RSA Key pair](https://developers.3commas.io/quick-start/how-to-create-an-rsa-key-pair)
+- [Signing a Request Using RSA](https://developers.3commas.io/quick-start/signing-a-request-using-rsa)
+- [Signing a Request Using HMAC SHA256](https://developers.3commas.io/quick-start/signing-a-request-using-hmac-sha256)
+- [Dates and times](https://developers.3commas.io/quick-start/dates-and-times)
+- [Errors](https://developers.3commas.io/quick-start/errors)
+- [Limits](https://developers.3commas.io/quick-start/errors)
 
 ### DCA Bot APIs (MVP Priority)
 - [⏸️] [Create Bot](https://developers.3commas.io/dca-bot/create-dca-bot) - Create new DCA bot **[MVP]**

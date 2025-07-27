@@ -6,11 +6,14 @@ Reference: https://developers.3commas.io/dca-bot
 
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
+from ..utils.response_filter import filter_response
 from ..models.base import APIResponse
 
 
 @handle_api_errors
-async def get_dca_bot_details(bot_id: str, include_events: bool = False) -> APIResponse:
+async def get_dca_bot_details(
+    bot_id: str, include_events: bool = False, response_filter: str = "display"
+) -> APIResponse:
     """Get details for a specific DCA bot.
 
     Retrieves comprehensive information about a DCA bot including configuration,
@@ -24,6 +27,7 @@ async def get_dca_bot_details(bot_id: str, include_events: bool = False) -> APIR
     Args:
         bot_id: DCA bot unique identifier (3Commas bot ID)
         include_events: Include related events in response (default: False)
+        response_filter: Filter type for response ("full" or "display", default: "display")
 
     Returns:
         Complete DCA bot details including:
@@ -33,7 +37,7 @@ async def get_dca_bot_details(bot_id: str, include_events: bool = False) -> APIR
         - Performance metrics and status
 
     Raises:
-        ValueError: If bot_id is empty or invalid
+        ValueError: If bot_id is empty or invalid, or if response_filter is invalid
         APIError: If bot not found or access denied
 
     See:
@@ -46,4 +50,12 @@ async def get_dca_bot_details(bot_id: str, include_events: bool = False) -> APIR
     params = {"include_events": str(include_events).lower()}
 
     # Make API request using existing authentication infrastructure
-    return await api_request(f"ver1/bots/{bot_id}/show", params=params, method="GET")
+    response = await api_request(
+        f"ver1/bots/{bot_id}/show", params=params, method="GET"
+    )
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, response_filter)
+
+    return response
