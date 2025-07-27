@@ -113,6 +113,48 @@ class StrategyType(str, Enum):
     SHORT = "short"
 
 
+class LimitType(str, Enum):
+    """Limit type options for currency rates and trading limits.
+
+    Defines the type of trading limits to retrieve:
+    - BOT: Trading limits for DCA, Signal, and Grid bots
+    - SMART_TRADE: Trading limits for SmartTrade operations
+
+    Reference: https://developers.3commas.io/market-data/currency-rates-and-limits
+
+    See:
+        docs/models/market_data.md for reference
+    """
+
+    BOT = "bot"
+    SMART_TRADE = "smart_trade"
+
+
+class MarketCode(str, Enum):
+    """Market code options for supported exchanges.
+
+    Defines the supported exchange market codes:
+    - BINANCE: Binance spot trading
+    - BINANCE_FUTURES: Binance USDT-M futures
+    - BINANCE_MARGIN: Binance margin trading
+    - OKX: OKX spot trading
+    - BYBIT: Bybit spot trading
+    - GATE_IO: Gate.io spot trading
+
+    Reference: https://developers.3commas.io/market-data/supported_markets_list
+
+    See:
+        docs/models/market_data.md for reference
+    """
+
+    BINANCE = "binance"
+    BINANCE_FUTURES = "binance_futures"
+    BINANCE_MARGIN = "binance_margin"
+    OKX = "okex"
+    BYBIT = "bybit_spot"
+    GATE_IO = "gate_io"
+
+
 # Response type for all API calls - just a dictionary with no validation
 APIResponse = Dict[str, Any]
 

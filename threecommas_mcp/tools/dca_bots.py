@@ -8,6 +8,7 @@ from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
 from ..models.base import APIResponse
+from ..models.dca_bots import GetDCABotDetailsRequest
 
 
 @handle_api_errors
@@ -43,15 +44,15 @@ async def get_dca_bot_details(
     See:
         docs/tools/dca_bots.md#get-dca-bot-details for usage examples
     """
-    if not bot_id or not bot_id.strip():
-        raise ValueError("bot_id is required and cannot be empty")
+    # Validate inputs using Pydantic model
+    request = GetDCABotDetailsRequest(bot_id=bot_id, include_events=include_events)
 
     # Build query parameters
-    params = {"include_events": str(include_events).lower()}
+    params = {"include_events": str(request.include_events).lower()}
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
-        f"ver1/bots/{bot_id}/show", params=params, method="GET"
+        f"ver1/bots/{request.bot_id}/show", params=params, method="GET"
     )
 
     # Apply response filtering for token efficiency

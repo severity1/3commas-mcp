@@ -11,7 +11,7 @@ from .utils.env import should_enable_destructive_ops
 from .api.client import health_check
 
 # Import tools
-from .tools import dca_bots
+from .tools import dca_bots, account, market_data
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -27,6 +27,14 @@ mcp.tool()(health_check)
 
 # Register DCA bot management tools
 mcp.tool()(dca_bots.get_dca_bot_details)
+
+# Register account management tools
+mcp.tool()(account.get_connected_exchanges_and_wallets)
+
+# Register market data tools
+mcp.tool()(market_data.get_all_market_pairs)
+mcp.tool()(market_data.get_currency_rates_and_limits)
+mcp.tool()(market_data.get_supported_markets)
 
 
 def main() -> None:

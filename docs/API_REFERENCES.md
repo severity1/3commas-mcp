@@ -37,7 +37,7 @@ For each implemented API, documentation is available in multiple layers:
 - [⏸️] `POST` [Add Exchange Account](https://developers.3commas.io/account/add-exchange-account) - Connect new exchange account
 - [⏸️] `GET` [Get Account Info](https://developers.3commas.io/account/get-account-info) - Retrieve current account information
 - [⏸️] `POST` [Edit Exchange Account](https://developers.3commas.io/account/edit-exchange-account) - Modify exchange account settings
-- [⏸️] `GET` [List Connected Exchanges and Wallets](https://developers.3commas.io/account/list-of-connected-exchanges-and-wallets) - Get all connected exchange accounts
+- [✅] `GET` [List Connected Exchanges and Wallets](https://developers.3commas.io/account/list-of-connected-exchanges-and-wallets) - Get all connected exchange accounts
 - [⏸️] `GET` [Get List of Active Entities](https://developers.3commas.io/account/get-the-list-of-active-entities) - Retrieve active trading entities
 - [⏸️] `POST` [Rename Exchange Account](https://developers.3commas.io/account/rename-exchange-account) - Update exchange account name
 - [⏸️] `GET` [Balance History Data](https://developers.3commas.io/account/balance-history-data) - Historical balance changes over time
@@ -56,9 +56,9 @@ For each implemented API, documentation is available in multiple layers:
 - [⏸️] `GET` [Get All-Time Trading Volume](https://developers.3commas.io/account/get-volume-total) - Total historical trading volume
 
 ### Market Data APIs (Market Information)
-- [⏸️] `GET` [Supported Markets List](https://developers.3commas.io/market-data/supported_markets_list) - Get list of supported trading markets and exchanges
-- [⏸️] `GET` [All Market Pairs](https://developers.3commas.io/market-data/all-market-pairs) - Retrieve all available trading pairs across markets
-- [⏸️] `GET` [Currency Rates and Limits](https://developers.3commas.io/market-data/currency-rates-and-limits) - Get exchange rates and trading limits for currencies
+- [✅] `GET` [Supported Markets List](https://developers.3commas.io/market-data/supported_markets_list) - Get list of supported trading markets and exchanges
+- [✅] `GET` [All Market Pairs](https://developers.3commas.io/market-data/all-market-pairs) - Retrieve all available trading pairs across markets
+- [✅] `GET` [Currency Rates and Limits](https://developers.3commas.io/market-data/currency-rates-and-limits) - Get exchange rates and trading limits for currencies
 - [⏸️] `GET` [Currency Rates and Limits with Leverage Data](https://developers.3commas.io/market-data/currency-rates-and-limits-with-leverage-data) - Get rates, limits, and leverage information
 
 ### Simple Trading APIs (Manual Trading)
