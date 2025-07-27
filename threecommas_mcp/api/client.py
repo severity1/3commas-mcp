@@ -23,23 +23,23 @@ ReqT = TypeVar("ReqT", bound=BaseModel)
 
 def detect_endpoint_type(path: str, method: str) -> str:
     """Detect endpoint type for rate limiting based on official 3Commas limits.
-    
+
     Official rate limits from https://developers.3commas.io/quick-start/limits:
     - Global: 100 req/min
-    - /ver1/deals: 120 req/min  
+    - /ver1/deals: 120 req/min
     - /ver1/smart_trades: 40 req/10 seconds
     - /ver1/deals/:deal_id/show: 120 req/min
     """
     # Specific endpoint patterns with higher limits
     if "/ver1/deals" in path and not path.endswith("/show"):
         return "deals"
-    
+
     if "/ver1/smart_trades" in path:
         return "smart_trades"
-        
+
     if "/ver1/deals/" in path and path.endswith("/show"):
         return "deals_show"
-    
+
     # Default to global limit (100 req/min)
     return "global"
 
