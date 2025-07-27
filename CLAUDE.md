@@ -62,9 +62,10 @@ This project uses automatic subtree discovery. Component-specific guidance loads
 3. Format: `uv run -m black .` and `uv run -m ruff format .`
 4. Lint check: `uv run -m ruff check .`
 5. Type check: `uv run -m mypy .`
-6. Update documentation status in relevant files
-7. Reinstall MCP server: `uv pip install -e .`
-8. Test trading safety scenarios
+6. **Update progress tracking**: TASKS.md, MVP_GET_APIS.md, API_REFERENCES.md status
+7. Update documentation status in relevant files
+8. Reinstall MCP server: `uv pip install -e .`
+9. Test trading safety scenarios
 
 ## Memory Maintenance
 
@@ -73,3 +74,30 @@ This project uses automatic subtree discovery. Component-specific guidance loads
 - **3Commas API changes** - Review auth/rate limiting patterns against official docs  
 - **Trading safety gaps** - Add missing bot operation safety docs
 - **High context usage** - Remove redundant information across files
+
+## Project Tracking Integration
+
+### Always Update Progress Files
+When implementing any API or feature, **ALWAYS** update these key tracking files:
+
+#### TASKS.md Progress Tracking
+- **Mark APIs as completed**: Change ⏸️ to ✅ when implementation is done
+- **Update phase progress**: Maintain accurate completion counts in MVP tracking tables
+- **Update implementation status**: Reflect current development areas and milestones
+
+#### MVP_GET_APIS.md Implementation Status  
+- **Update implementation tables**: Mark APIs as completed in phase priority tables
+- **Track quality gates**: Update checklist items as they're completed
+- **Document patterns**: Note any deviations or improvements to implementation approach
+
+### Integration Workflow
+1. **Before starting work**: Check TASKS.md and MVP_GET_APIS.md for current priorities
+2. **During implementation**: Follow patterns established in MVP_GET_APIS.md
+3. **After completion**: Update both files with accurate progress status
+4. **Cross-reference**: Ensure API_REFERENCES.md status matches TASKS.md
+
+### Key Files to Always Consider
+- **TASKS.md**: Project-wide progress tracking and phase management
+- **docs/MVP_GET_APIS.md**: MVP implementation strategy and detailed tracking
+- **docs/API_REFERENCES.md**: API status and comprehensive reference
+- **Component CLAUDE.md files**: Implementation patterns and quality standards

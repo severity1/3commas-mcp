@@ -14,6 +14,9 @@ dependencies = [
     "fastmcp>=2.9.1",
     "pydantic>=2.11.7",
     "cryptography>=41.0.0",
+    "black>=25.1.0",
+    "mypy>=1.17.0",
+    "ruff>=0.12.5",
 ]
 packages = ["threecommas_mcp", "api", "models", "tools", "utils"]
 
