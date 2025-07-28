@@ -13,5 +13,3 @@ Activates when creating documentation for 3Commas trading contexts.
 1. **conversations/** - Real-world usage examples
 2. **models/** - Pydantic validation documentation  
 3. **tools/** - API function reference
-
-### Current Domains: account, market_data, dca_bots
