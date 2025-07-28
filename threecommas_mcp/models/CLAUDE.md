@@ -1,71 +1,55 @@
 # CLAUDE.md for models/
 
 ## Context Activation
-Activates when working in `models/` directory creating Pydantic validation for 3Commas API structures.
+Activates when creating Pydantic validation models for 3Commas API structures.
 
-**Companions**: tools/ (usage), api/ (requests), utils/ (validation helpers)
+## Current Implementation Status
+**5 Request models implemented (all inherit from APIRequest):**
+- `account.py` - GetConnectedExchangesRequest (28 lines)
+- `market_data.py` - GetAllMarketPairsRequest, GetCurrencyRatesRequest, GetSupportedMarketsRequest (87 lines)
+- `dca_bots.py` - GetDCABotDetailsRequest (39 lines)
+- `base.py` - APIRequest, ResponseFilter, common enums (185 lines)
 
-## Decision Matrices
+**Exports**: Clean __init__.py with base models and enums
 
-### File Organization
-| Scenario | Action |
-|----------|--------|
-| Model fits domain + file <10 models | Add to existing |
-| New domain OR file ≥10 models | Create new file |
-| File exceeds 12 models | Split by sub-domains |
+## Established Patterns (from actual code)
+- **All models inherit from `APIRequest`** (verified in all 5 models)
+- **Field validation using `Field()`** (consistent pattern, no @validator found yet)
+- **API mapping in docstrings** (comprehensive documentation)
+- **Response filter automatic** (inherited from APIRequest base)
 
-### Model Categories
-| Domain | Focus | Examples |
-|--------|-------|----------|
-| Bot Models | Configuration, status | DCABotConfig, BotStatus |
-| Strategy Models | Trading strategies | QFLStrategy, RSIStrategy |
-| Deal Models | Deal management | DealConfig, SafetyOrderConfig |
-| Account Models | Exchange accounts | AccountConfig, AccountBalance |
-| Market Models | Trading pairs, rates | TradingPair, CurrencyRates |
-
-## Implementation Requirements
-
-### Essential Patterns
-1. **Inherit from `APIRequest`** (not BaseModel) - Automatic response_filter field
-2. Use Pydantic validators for trading parameters
-3. Include API field mappings to 3Commas structure
-4. Apply comprehensive trading safety validation
-5. Use `Decimal` for all financial values
-
-**Pattern Reference**: See `docs/PATTERNS.md` for complete model implementation templates
-
-### Trading Validation
-- **Bot configuration**: Validate volumes, safety orders, strategy params
-- **Account validation**: Verify permissions and trading capabilities
-- **Pair validation**: Check against account permissions and market availability
-- **Deal validation**: Validate parameters and safety order configurations
-
-### Field Mapping Pattern
+## Model Structure (from market_data.py:14-36)
 ```python
-class DCABotConfig(BaseModel):
-    account_id: int  # -> account_id
-    pair: str        # -> pair
-    base_order_volume: Decimal  # -> base_order_volume
-    
-    @validator('base_order_volume')
-    def validate_volume(cls, v):
-        if v <= 0:
-            raise ValueError('Volume must be positive')
-        return v
+class GetAllMarketPairsRequest(APIRequest):
+    """Request model for getting all market pairs.
+
+    Request parameters for retrieving all available trading pairs,
+    optionally filtered by market code.
+
+    API Mapping:
+        market_code -> market_code (optional query parameter)
+
+    API Endpoint: GET /ver1/accounts/market_pairs
+    """
+
+    market_code: Optional[str] = Field(
+        None,
+        min_length=1,
+        max_length=50,
+        description="Optional market code to filter pairs by exchange",
+        examples=["binance", "okex", "bybit_spot"],
+    )
 ```
 
-## Development Workflow
+## Base Architecture (base.py)
+- **ResponseFilter enum** (DISPLAY="display", FULL="full")
+- **APIRequest base class** (automatic response_filter field)
+- **Common enums** - BotType, DealStatus, StrategyType, LimitType, MarketCode
+- **APIResponse type alias** - Dict[str, Any] for unvalidated responses
 
-### Implementation Steps
-1. Analyze 3Commas API documentation for field requirements
-2. Create BaseModel with proper field definitions and types
-3. Add trading-specific validation using Pydantic validators
-4. Document field mappings to 3Commas API structure
-5. Test with valid/invalid trading scenarios
-
-### Quality Checklist
-- [ ] Extends BaseModel with comprehensive type hints
-- [ ] Trading parameter validation using Pydantic validators
-- [ ] Field mappings to 3Commas API documented
-- [ ] Comprehensive docstrings with trading context
-- [ ] Tests cover validation scenarios: valid, invalid, edge cases
+## Quality Standards (verified in current code)
+- [ ] Inherits from `APIRequest` (automatic response_filter)
+- [ ] Field validation using `Field()` with constraints
+- [ ] API endpoint and mapping documented in docstring
+- [ ] Comprehensive type hints and descriptions
+- [ ] Optional fields properly typed with `Optional[Type]`

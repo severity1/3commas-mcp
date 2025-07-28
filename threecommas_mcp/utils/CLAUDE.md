@@ -1,77 +1,47 @@
 # CLAUDE.md for utils/
 
 ## Context Activation
-Activates when working in `utils/` directory implementing authentication, error handling, and validation utilities.
+Activates when implementing authentication, error handling, and validation utilities.
 
-**Companions**: api/ (HTTP client), models/ (validation), tools/ (usage)
+## Current Implementation Status
+**557 lines across 4 utility modules:**
+- `auth.py` (68 lines) - HMAC-SHA256 authentication 
+- `decorators.py` (203 lines) - Error handling and rate limiting
+- `env.py` (61 lines) - Environment and configuration
+- `response_filter.py` (178 lines) - Response filtering and token optimization
 
-## Implemented Utilities
+**Exports**: 15 functions in clean __init__.py interface
 
-### Authentication (auth.py)
-- `generate_signature()` - HMAC-SHA256 for 3Commas API
-- `build_query_string()` - Parameter encoding for signatures
-- `create_auth_headers()` - APIKEY and APISIGN headers
-- `sign_request()` - Complete request signing utility
+## Implemented Functions (from __init__.py exports)
 
-### Error Handling (decorators.py)
-- `@handle_api_errors` - Consistent error formatting
-- `@rate_limit_retry` - Exponential backoff for 3Commas limits
-- `@validate_trading_context` - Pre-flight safety checks
-- `RateLimiter` - Sliding window rate limiting (official 3Commas limits: 100 global, 120 deals, 40 smart_trades/10s)
+### Environment utilities (env.py)
+- `get_3commas_credentials` - Secure API key/secret access
+- `should_enable_destructive_ops` - Safety controls for dangerous operations
+- `get_rate_limits` - Configurable limits per endpoint type
+- `validate_environment` - Environment variable validation
+- `get_api_base_url` - API base URL configuration
 
-### Environment (env.py)
-- `get_3commas_credentials()` - Secure API key/secret access
-- `should_enable_destructive_ops()` - Safety controls for dangerous operations
-- `get_rate_limits()` - Configurable limits per endpoint type
-- `validate_environment()` - Environment variable validation
+### Authentication utilities (auth.py)  
+- `generate_signature` - HMAC-SHA256 signature generation
+- `build_query_string` - Parameter encoding for signatures
+- `create_auth_headers` - APIKEY and APISIGN headers
+- `sign_request` - Complete request signing utility
+- `validate_credentials` - Credential validation
 
-### Response Filtering (response_filter.py)
-- `filter_response()` - Main filtering with layered approach
+### Decorators and rate limiting (decorators.py)
+- `handle_api_errors` - Consistent error formatting (used by all tools)
+- `rate_limit_retry` - Exponential backoff for 3Commas limits
+- `validate_trading_context` - Pre-flight safety checks
+- `RateLimiter` - Rate limiting class
+
+### Response filtering (response_filter.py)
+- `filter_response()` - Main filtering function (used by all tools)
+- Accepts string "display"/"full" (simplified validation)
 - Security filter: Always removes `url_secret`, `account_id`
-- Display filter: 85% token reduction vs full responses
-- Filter types: `"full"` (editing) vs `"display"` (default)
-- **Simplified validation**: Tools pass strings directly (no enum conversion)
+- Display filter: 85% token reduction
 
-**Pattern Reference**: See `docs/PATTERNS.md` for response filtering integration patterns
-
-## Implementation Requirements
-
-### Essential Patterns
-1. **Security first** - Never log credentials or sensitive data
-2. **Error context** - Include trading context in error messages
-3. **Validation comprehensive** - Validate all trading parameters
-4. **Reusable design** - Utilities work across all components
-5. **Simplified interfaces** - Accept strings for validation, convert internally
-
-**Pattern Reference**: See `docs/PATTERNS.md` for utility integration patterns
-
-### Authentication Standards
-```python
-def generate_signature(query_string: str, secret: str) -> str:
-    """Generate HMAC-SHA256 signature for 3Commas API"""
-    # Follow 3Commas authentication specification
-```
-
-### Error Handling Standards
-```python
-@handle_api_errors
-async def trading_operation():
-    """Trading operation with comprehensive error handling"""
-    # Implementation with trading-specific error context
-```
-
-## Development Workflow
-
-### Implementation Steps
-1. Define utility purpose with clear trading context
-2. Implement core logic following security standards
-3. Add comprehensive error handling with trading context
-4. Add parameter validation with trading safety checks
-5. Test: valid/invalid scenarios, edge cases, security scenarios
-
-### Quality Checklist
-- [ ] Comprehensive type hints and documentation
-- [ ] Security practices for credential/data handling
+## Quality Standards (verified in implementation)
+- [ ] Security practices implemented (no credential logging)
 - [ ] Error handling with trading context
-- [ ] Trading safety validation logic
-- [ ] Tests cover security scenarios and edge cases
+- [ ] Comprehensive type hints and documentation  
+- [ ] All functions actively used by tools/ module

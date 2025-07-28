@@ -1,73 +1,53 @@
 # CLAUDE.md for api/
 
 ## Context Activation
-Activates when working in `api/` directory implementing HTTP client for 3Commas API integration.
+Activates when implementing HTTP client for 3Commas API integration.
 
-**Companions**: tools/ (usage), models/ (requests), utils/ (auth/helpers)
+## Current Implementation Status
+**200 lines in client.py module:**
+- `api_request()` - Main HTTP client function (used by all tools)
+- `health_check()` - API connectivity validation
+- `detect_endpoint_type()` - Endpoint classification for rate limiting
 
-## Implementation Overview
+**Exports**: 3 functions in clean __init__.py interface
 
-### Core Components
-- **client.py**: `api_request()` function with complete 3Commas integration
-- **Authentication**: HMAC-SHA256 signature via utils/auth.py
-- **Rate limiting**: Integration with utils/decorators.py RateLimiter
-- **Health check**: `health_check()` for API connectivity validation
+## Core Function: api_request() (from client.py)
+```python
+async def api_request(
+    path: str,
+    params: Optional[Dict[str, Any]] = None,
+    data: Optional[Dict[str, Any]] = None,
+    method: str = "GET"
+) -> Dict[str, Any]:
+```
 
-## Implementation Requirements
+**Features implemented:**
+- Automatic HMAC-SHA256 signature generation via utils/auth.py
+- Built-in rate limiting compliance with exponential backoff  
+- Endpoint type detection for rate limit classification
+- Error handling for HTTP status codes, auth failures, rate limiting
+- Security: Never logs API keys/secrets
 
-### API Request Pattern
-The `api_request()` function handles all API interactions:
-- **Path/Method**: API endpoint path and HTTP method
-- **Authentication**: Automatic signature generation
-- **Parameters**: Query parameters and request body for trading operations
-- **Rate limiting**: Built-in compliance with exponential backoff
+## Authentication Integration
+- Uses `get_3commas_credentials()` from utils/env.py
+- Uses `sign_request()` from utils/auth.py for HMAC-SHA256
+- Headers: APIKEY and APISIGN for all authenticated requests
 
-### 3Commas Authentication
-Required header format:
-- **Apikey**: API key header for request identification
-- **Signature**: HMAC-SHA256 signature of query string
-- **Content-Type**: application/json for POST/PATCH requests
-
-### Response Handling
-- **Success**: 200/201 return API data; 204 returns success status
-- **Error handling**: HTTP status errors, auth failures, rate limiting
-- **Security**: Never logs API keys/secrets, proper error redaction
-
-### Rate Limiting Compliance
-Official 3Commas limits from https://developers.3commas.io/quick-start/limits:
-- **Global limit**: 100 requests/minute (applies to all endpoints)
-- **/ver1/deals**: 120 requests/minute
+## Rate Limiting Implementation
+Official 3Commas limits (implemented via detect_endpoint_type):
+- **Global**: 100 requests/minute (default)
+- **/ver1/deals**: 120 requests/minute  
 - **/ver1/smart_trades**: 40 requests per 10 seconds
-- **/ver1/deals/:id/show**: 120 requests/minute
-- **Exponential backoff**: Required for 429 responses
+- **Exponential backoff**: Integrated with utils/decorators.py
 
-## Integration Requirements
+## Integration Pattern (verified in tools)
+```python
+# All tools use this pattern:
+response = await api_request("ver1/accounts/market_pairs", params=params, method="GET")
+```
 
-### Usage Standards
-- Always use with `@handle_api_errors` decorator
-- Environment management via `get_3commas_credentials()`
-- Payload creation using utils/payload.py utilities
-- Signature generation via utils/auth.py
-
-### Trading Safety
-- **Bot operations**: Validate configuration before creation/modification
-- **Deal operations**: Safety checks for cancellation and modifications
-- **Destructive operations**: Require explicit confirmation
-- **Account validation**: Verify exchange permissions before operations
-
-## Development Workflow
-
-### Implementation Steps
-1. Define request patterns following 3Commas authentication requirements
-2. Implement HMAC-SHA256 signature generation
-3. Add error handling with trading context
-4. Handle rate limiting with exponential backoff
-5. Test: success, error, rate limiting, authentication scenarios
-
-### Quality Checklist
-- [ ] HMAC-SHA256 authentication and signature generation
-- [ ] Rate limiting compliance with exponential backoff
-- [ ] Security guidelines for API key/secret management
-- [ ] Tests cover success, error, rate limiting, authentication failures
-
-**Pattern Reference**: See `docs/PATTERNS.md` for complete API client integration patterns
+## Quality Standards (verified in implementation)
+- [ ] HMAC-SHA256 authentication implemented
+- [ ] Rate limiting compliance with endpoint detection
+- [ ] Security practices (no credential logging)
+- [ ] Used consistently by all 5 tool functions
