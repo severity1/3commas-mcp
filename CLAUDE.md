@@ -6,27 +6,43 @@
 - **Install**: `uv pip install -e .`
 - **Quality**: `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
 
-## Core Principles
-- **Trading safety first** - Always validate bot/deal operations
-- **Component guidance** - Let subtree discovery load context automatically
-- **Pattern consistency** - Follow `docs/PATTERNS.md` for all implementations
-- **Security focus** - Never log credentials, always filter responses
+## Core Implementation Patterns
+- **Trading safety first** - Always validate bot/deal operations before execution
+- **Consistent tool structure** - All tools use `@handle_api_errors` (decorators.py:11), Pydantic models, and `filter_response()` (response_filter.py:13)
+- **Security practices** - Never log credentials, always filter sensitive data in responses
+- **Component-based architecture** - Each subtree (tools/, models/, utils/, api/) has focused responsibilities
 
-## Project Tracking Workflow
-When implementing APIs, update status in:
-- `TASKS.md` - Change ⏸️ to ✅ for completed APIs
-- `docs/MVP_GET_APIS.md` - Mark completed in implementation tables
-- `docs/API_REFERENCES.md` - Update status markers
+## Development Workflow
+### Implementing New MCP Tools
+1. Create Pydantic request model in `models/{domain}.py` (inherit from APIRequest base.py:52)
+2. Implement tool function in `tools/{domain}.py`:
+   - Use `@handle_api_errors` decorator (decorators.py:11)
+   - Include `response_filter: str = "display"` parameter
+   - Call `api_request()` from api/client.py
+   - Apply `filter_response()` before returning (response_filter.py:13)
+3. Update tracking files: TASKS.md, docs/MVP_GET_APIS.md, docs/API_REFERENCES.md
+
+## Component Discovery
+Each subtree has specialized CLAUDE.md with implementation-specific guidance:
+- `tools/CLAUDE.md` - MCP function patterns, MVP tracking
+- `models/CLAUDE.md` - Pydantic validation patterns, APIRequest inheritance
+- `utils/CLAUDE.md` - Authentication, error handling, rate limiting utilities  
+- `api/CLAUDE.md` - HTTP client implementation, HMAC-SHA256, rate limits
+- `docs/CLAUDE.md` - 4-layer documentation workflow
+
+## Task Progress Maintenance
+When implementing a task, update status in task tracking files:
+- Update progress markers in TASKS.md (Phase tracking)
+- Mark completed items in MVP_GET_APIS.md (Priority tables)
+- Update status indicators in API_REFERENCES.md (⏸️ → ✅)
 
 ## Memory Maintenance
 - **Update CLAUDE.md files** - When implementation patterns change or new components added
-- **Reflect actual code** - Memory files must match current implementation, not theoretical patterns
+- **Reflect actual code** - Memory files must match current implementation, not theoretical patterns  
 - **Component-specific guidance** - Each subtree provides focused context for its domain
 
-## Component Discovery
-Subtree memory loads specific guidance for:
-- `tools/` - MCP functions, MVP tracking, trading safety patterns
-- `models/` - Pydantic validation, APIRequest inheritance, field mapping
-- `utils/` - Auth, error handling, response filtering, rate limiting
-- `api/` - HTTP client, HMAC-SHA256, 3Commas integration
-- `docs/` - Documentation workflow, 4-layer structure, templates
+## Document Maintenance
+- **Update relevant documentation** - When code changes affect documented workflows or APIs
+- **Maintain accuracy** - Keep documentation synchronized with actual implementation
+
+Update triggers: New modules, architectural changes, function signatures modified, documentation becomes outdated

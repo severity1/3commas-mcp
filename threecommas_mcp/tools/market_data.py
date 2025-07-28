@@ -50,7 +50,9 @@ async def get_all_market_pairs(
         docs/tools/market_data.md#get-all-market-pairs for usage examples
     """
     # Validate inputs using Pydantic model
-    request = GetAllMarketPairsRequest(market_code=market_code, response_filter=response_filter)
+    request = GetAllMarketPairsRequest(
+        market_code=market_code, response_filter=response_filter
+    )
 
     # Build query parameters
     params = {}
@@ -108,7 +110,10 @@ async def get_currency_rates_and_limits(
     """
     # Validate inputs using Pydantic model
     request = GetCurrencyRatesRequest(
-        market_code=market_code, pair=pair, limit_type=limit_type, response_filter=response_filter
+        market_code=market_code,
+        pair=pair,
+        limit_type=limit_type,
+        response_filter=response_filter,
     )
 
     # Build query parameters

@@ -10,6 +10,8 @@ from .base import (  # noqa: F401
     BotType,
     DealStatus,
     StrategyType,
+    LimitType,
+    MarketCode,
 )
 
 # Define __all__ to control what's imported with wildcard imports
@@ -24,4 +26,6 @@ __all__ = [
     "BotType",
     "DealStatus",
     "StrategyType",
+    "LimitType",
+    "MarketCode",
 ]

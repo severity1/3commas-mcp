@@ -45,7 +45,9 @@ async def get_dca_bot_details(
         docs/tools/dca_bots.md#get-dca-bot-details for usage examples
     """
     # Validate inputs using Pydantic model
-    request = GetDCABotDetailsRequest(bot_id=bot_id, include_events=include_events, response_filter=response_filter)
+    request = GetDCABotDetailsRequest(
+        bot_id=bot_id, include_events=include_events, response_filter=response_filter
+    )
 
     # Build query parameters
     params = {"include_events": str(request.include_events).lower()}

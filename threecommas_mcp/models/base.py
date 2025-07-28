@@ -67,7 +67,7 @@ class APIRequest(BaseModelConfig):
 
     response_filter: ResponseFilter = Field(
         default=ResponseFilter.DISPLAY,
-        description="Filter type for response ('full' or 'display', default: 'display')"
+        description="Filter type for response ('full' or 'display', default: 'display')",
     )
 
 
