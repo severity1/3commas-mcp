@@ -40,7 +40,7 @@ Each subtree has specialized CLAUDE.md with implementation-specific guidance:
 - @models/CLAUDE.md - Pydantic validation patterns, APIRequest inheritance
 - @utils/CLAUDE.md - Authentication, error handling, rate limiting utilities  
 - @api/CLAUDE.md - HTTP client implementation, HMAC-SHA256, rate limits
-- @docs/CLAUDE.md - 4-layer documentation workflow
+- @docs/CLAUDE.md - documentation workflow
 
 ## Task Progress Maintenance
 - Update progress markers in @TASKS.md (Phase tracking)
