@@ -4,85 +4,9 @@ This document describes the Pydantic models used for account management operatio
 
 ## Overview
 
-Account models provide validation and structure for account-related API requests and responses. These models ensure data integrity and provide clear documentation of expected data formats for account operations.
+Account models provide validation and structure for account-related API requests. These models ensure data integrity for request parameters. API responses are returned as unvalidated `APIResponse = Dict[str, Any]` following our established pattern.
 
-## Models
-
-### ConnectedExchange
-
-**Purpose:** Model representing a connected exchange account as returned by the 3Commas API.
-
-**Used by:** [get_connected_exchanges_and_wallets](../tools/account.md#get-connected-exchanges-and-wallets)
-
-**Fields:**
-- `id: int` - Exchange account unique identifier
-- `name: str` - Exchange name (binance, okx, etc.)
-- `account_name: Optional[str]` - User-defined account name
-- `market_code: str` - Market code for the exchange
-- `is_locked: bool` - Whether account is locked (default: False)
-- `created_at: Optional[str]` - Account creation timestamp
-- `updated_at: Optional[str]` - Last update timestamp
-
-**API Mapping:**
-- `id` -> `account_id`
-- `name` -> `exchange_name`
-- `account_name` -> `user_defined_name`
-- `market_code` -> `exchange_market_code`
-
-**Validation Rules:**
-- Exchange name cannot be empty and is normalized to lowercase
-- Market code cannot be empty and is normalized to lowercase
-- All string fields are stripped of whitespace
-
-**Safety:** Model includes validation to ensure exchange account data integrity and prevent configuration errors.
-
-**Example:**
-```python
-exchange = ConnectedExchange(
-    id=12345,
-    name="binance",
-    account_name="Main Trading Account",
-    market_code="binance",
-    is_locked=False
-)
-```
-
-### ExchangeBalance
-
-**Purpose:** Model representing balance data for a connected exchange account.
-
-**Used by:** Balance components within exchange account data
-
-**Fields:**
-- `currency_code: str` - Currency symbol (BTC, USDT, etc.)
-- `total_balance: Decimal` - Total balance (default: 0)
-- `available_balance: Decimal` - Available for trading (default: 0)
-- `reserved_balance: Decimal` - Reserved in orders (default: 0)
-- `usd_value: Optional[Decimal]` - USD equivalent value
-
-**API Mapping:**
-- `currency_code` -> `currency`
-- `total_balance` -> `total`
-- `available_balance` -> `available`
-- `reserved_balance` -> `reserved`
-
-**Validation Rules:**
-- Currency code cannot be empty and is normalized to uppercase
-- All balance values must be non-negative
-- Uses Decimal type for precise financial calculations
-
-**Safety:** Ensures accurate financial data representation and prevents negative balance errors.
-
-**Example:**
-```python
-balance = ExchangeBalance(
-    currency_code="BTC",
-    total_balance=Decimal("1.5"),
-    available_balance=Decimal("1.2"),
-    reserved_balance=Decimal("0.3"),
-    usd_value=Decimal("67500.00")
-)
-```
+## Request Models
 
 ### GetConnectedExchangesRequest
 
@@ -96,57 +20,35 @@ balance = ExchangeBalance(
 
 **Safety:** Simple model with no parameters, ensuring safe endpoint access.
 
+## API Response Handling
+
+Following our established pattern, API responses from account endpoints are returned as unvalidated `APIResponse = Dict[str, Any]`. This provides flexibility to handle varying response structures from the 3Commas API without validation overhead.
+
+Response data includes exchange account information, balance data, trading permissions, and connection status, but is not validated at the model level.
+
 ## Validation Patterns
 
-### Financial Data Validation
-All balance-related fields use `Decimal` type for precise financial calculations:
-```python
-@validator('total_balance', 'available_balance', 'reserved_balance')
-def validate_balance_positive(cls, v):
-    if v < 0:
-        raise ValueError("Balance values must be non-negative")
-    return v
-```
-
-### String Field Normalization
-Exchange and currency identifiers are normalized for consistency:
-```python
-@validator('currency_code')
-def validate_currency_code(cls, v):
-    if not v or not v.strip():
-        raise ValueError("Currency code cannot be empty")
-    return v.strip().upper()
-```
+### Request Parameter Validation
+No validation patterns required for this endpoint as it accepts no parameters.
 
 ## Trading Safety Considerations
 
-- **Financial Precision:** All monetary values use Decimal type to prevent floating-point errors
-- **Data Validation:** Strict validation prevents invalid account configurations
-- **Credential Security:** Models do not store or validate API credentials directly
-- **Exchange Compatibility:** Validation ensures exchange names match supported markets
+- **Read-only Operations:** Account detail retrieval has minimal trading risk
+- **Authentication Required:** All requests require proper API authentication
+- **Rate Limiting:** Respects 3Commas API rate limits for account operations
+- **Data Privacy:** Response filtering removes sensitive account information
 
 ## Integration Examples
 
-### Account Validation
+### Request Validation
 ```python
-# Validate exchange account data before using for bot configuration
+# Validate request parameters (none required for this endpoint)
 try:
-    exchange = ConnectedExchange(**api_response_data)
-    if exchange.is_locked:
-        raise ValueError("Cannot use locked exchange account")
+    request = GetConnectedExchangesRequest()
+    exchanges = await get_connected_exchanges_and_wallets()
+    # exchanges is APIResponse = Dict[str, Any] (unvalidated)
 except ValidationError as e:
-    logger.error(f"Invalid exchange data: {e}")
-```
-
-### Balance Checking
-```python
-# Validate balance data for trading decisions
-try:
-    balance = ExchangeBalance(**balance_data)
-    if balance.available_balance < minimum_required:
-        raise ValueError("Insufficient available balance for trading")
-except ValidationError as e:
-    logger.error(f"Invalid balance data: {e}")
+    logger.error(f"Invalid request parameters: {e}")
 ```
 
 ## Related Documentation

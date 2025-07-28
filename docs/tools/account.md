@@ -34,8 +34,8 @@ Account management tools provide read-only access to user account information, c
 - **Permission:** ACCOUNTS_READ
 
 **Models:** 
-- [ConnectedExchange](../models/account.md#connected-exchange) - Individual exchange account data
-- [ExchangeBalance](../models/account.md#exchange-balance) - Balance information for exchanges
+- [ConnectedExchange](../models/account.md#connectedexchange) - Individual exchange account data
+- [ExchangeBalance](../models/account.md#exchangebalance) - Balance information for exchanges
 
 **Examples:** [Account Management Conversation](../conversations/account-management-conversation.md#get-connected-exchanges)
 

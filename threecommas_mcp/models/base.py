@@ -9,7 +9,7 @@ Reference: https://github.com/3commas-io/3commas-official-api-docs
 
 from enum import Enum
 from typing import Any, Dict, TypeVar
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BaseModelConfig(BaseModel):
@@ -31,22 +31,44 @@ class BaseModelConfig(BaseModel):
     )
 
 
+class ResponseFilter(str, Enum):
+    """Response filter options for API responses.
+
+    Defines the type of response filtering to apply:
+    - DISPLAY: Returns filtered response optimized for display (85% token reduction)
+    - FULL: Returns complete API response with all fields
+
+    This enum is used across all API requests to control response verbosity
+    and optimize token usage in Claude interactions.
+
+    See:
+        docs/models/base.md#response-filter for reference
+    """
+
+    DISPLAY = "display"
+    FULL = "full"
+
+
 class APIRequest(BaseModelConfig):
     """Base model for API requests.
 
     All API request models should inherit from this class to ensure
     consistent configuration and behavior. It inherits settings from
-    BaseModelConfig.
+    BaseModelConfig and includes the universal response_filter field.
 
     Note:
         This class provides the foundation for all API requests and inherits
-        model configuration from BaseModelConfig.
+        model configuration from BaseModelConfig. All requests include
+        response filtering capabilities for token optimization.
 
     See:
         docs/models/base.md for reference
     """
 
-    pass
+    response_filter: ResponseFilter = Field(
+        default=ResponseFilter.DISPLAY,
+        description="Filter type for response ('full' or 'display', default: 'display')"
+    )
 
 
 # Common enums used across multiple modules

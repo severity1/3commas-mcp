@@ -6,6 +6,7 @@ from .base import (  # noqa: F401
     APIRequest,
     APIResponse,
     ReqT,
+    ResponseFilter,
     BotType,
     DealStatus,
     StrategyType,
@@ -18,6 +19,7 @@ __all__ = [
     "APIRequest",
     "APIResponse",
     "ReqT",
+    "ResponseFilter",
     # Common enums
     "BotType",
     "DealStatus",

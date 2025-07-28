@@ -5,10 +5,11 @@ This directory contains comprehensive documentation for the 3Commas MCP server p
 ## Documentation Structure
 
 ### Core Documentation
+- **[PATTERNS.md](PATTERNS.md)**: Implementation patterns reference and compliance checklist
 - **[DEVELOPMENT.md](DEVELOPMENT.md)**: Development standards, workflow, and quality requirements
 - **[CONTRIBUTING.md](CONTRIBUTING.md)**: Contributing guidelines with trading safety focus
 - **[API_REFERENCES.md](API_REFERENCES.md)**: 3Commas API reference links and implementation status
-- **[CLAUDE.md](CLAUDE.md)**: Documentation standards and templates for AI development
+- **[MVP_GET_APIS.md](MVP_GET_APIS.md)**: MVP implementation plan and progress tracking
 
 ### Multi-Layer Documentation System
 

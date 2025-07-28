@@ -115,6 +115,7 @@ def test_create_dca_bot_invalid_params():
    - [ ] All tests pass with `pytest`
    - [ ] Documentation updated
    - [ ] Trading safety validated
+   - [ ] **Pattern compliance verified** (see `docs/PATTERNS.md` checklist)
 
 2. **Submit pull request**
    - Use descriptive title summarizing the change

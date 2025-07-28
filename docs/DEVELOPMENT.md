@@ -135,16 +135,24 @@ def test_function_name():
 - **Authentication**: Test authentication scenarios and error conditions
 - **Trading Safety**: Validate trading parameter safety checks
 
-## Component Guidelines
+## Implementation Patterns
+
+### Pattern Reference
+All API implementations must follow established patterns documented in:
+- **`docs/PATTERNS.md`** - Complete implementation reference and templates
+- **Component CLAUDE.md files** - Component-specific guidance and standards
+
+### Component Guidelines
 
 ### Tool Implementation
 - **Function Signatures**: Follow (routing_params, trading_params, optional_params) pattern
 - **Validation**: Use Pydantic models for all input validation
+- **Response Filter**: Include `response_filter: str = "display"` parameter (pass string directly)
 - **Safety Checks**: Include trading safety validation before operations
 - **Registration**: Register tools in server.py with appropriate destructiveness classification
 
 ### Model Implementation
-- **Base Classes**: Extend Pydantic BaseModel for all data models
+- **Base Classes**: Inherit from `APIRequest` (not BaseModel) for automatic `response_filter` field
 - **Field Validation**: Use validators for trading parameter validation
 - **API Mapping**: Document field mappings to 3Commas API structure
 - **Type Safety**: Use comprehensive type hints for all fields
@@ -215,6 +223,10 @@ LOG_LEVEL=INFO
 - [ ] Trading safety validation included
 - [ ] Documentation updated for new features
 - [ ] Environment variables configured correctly
+- [ ] **Pattern compliance verified** (see `docs/PATTERNS.md` checklist)
+
+### Pattern Compliance Checklist
+For new API implementations, verify all items in the **complete checklist** documented in `docs/PATTERNS.md`
 
 ### Continuous Integration
 - **Automated Testing**: All tests must pass in CI/CD pipeline

@@ -69,3 +69,5 @@ Official 3Commas limits from https://developers.3commas.io/quick-start/limits:
 - [ ] Rate limiting compliance with exponential backoff
 - [ ] Security guidelines for API key/secret management
 - [ ] Tests cover success, error, rate limiting, authentication failures
+
+**Pattern Reference**: See `docs/PATTERNS.md` for complete API client integration patterns

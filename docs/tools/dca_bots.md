@@ -10,7 +10,7 @@ DCA (Dollar Cost Averaging) bot tools provide functionality for managing and mon
 
 ### get_dca_bot_details
 
-**Function:** `get_dca_bot_details(bot_id: str, include_events: bool = False) -> APIResponse`
+**Function:** `get_dca_bot_details(bot_id: str, include_events: bool = False, response_filter: str = "display") -> APIResponse`
 
 **Description:** Retrieves comprehensive information about a specific DCA bot including configuration, active deals, trading parameters, and performance data.
 
@@ -21,6 +21,7 @@ DCA (Dollar Cost Averaging) bot tools provide functionality for managing and mon
 **Parameters:**
 - `bot_id` (str, required): DCA bot unique identifier (3Commas bot ID)
 - `include_events` (bool, optional): Include related events in response (default: False)
+- `response_filter` (str, optional): Filter type for response ("full" or "display", default: "display")
 
 **Returns:** Complete DCA bot details including:
 - Bot configuration (trading pair, order volumes, strategy settings)

@@ -228,6 +228,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 ## Documentation
 
+- **[Implementation Patterns](docs/PATTERNS.md)** - Definitive patterns reference for new API development
 - **[API References](docs/API_REFERENCES.md)** - Complete 3Commas API endpoint mapping with implementation status
 - **[Development Guide](docs/DEVELOPMENT.md)** - Contributing and development setup instructions
 - **[Tool Documentation](docs/tools/)** - Detailed tool references and usage patterns

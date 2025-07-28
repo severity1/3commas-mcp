@@ -30,6 +30,9 @@ Activates when working in `utils/` directory implementing authentication, error 
 - Security filter: Always removes `url_secret`, `account_id`
 - Display filter: 85% token reduction vs full responses
 - Filter types: `"full"` (editing) vs `"display"` (default)
+- **Simplified validation**: Tools pass strings directly (no enum conversion)
+
+**Pattern Reference**: See `docs/PATTERNS.md` for response filtering integration patterns
 
 ## Implementation Requirements
 
@@ -38,6 +41,9 @@ Activates when working in `utils/` directory implementing authentication, error 
 2. **Error context** - Include trading context in error messages
 3. **Validation comprehensive** - Validate all trading parameters
 4. **Reusable design** - Utilities work across all components
+5. **Simplified interfaces** - Accept strings for validation, convert internally
+
+**Pattern Reference**: See `docs/PATTERNS.md` for utility integration patterns
 
 ### Authentication Standards
 ```python

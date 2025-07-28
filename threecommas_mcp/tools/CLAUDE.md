@@ -34,8 +34,11 @@ Activates when working in `tools/` directory implementing MCP functions for 3Com
 1. Use `@handle_api_errors` decorator
 2. Include `response_filter` parameter ("full"|"display", default: "display")
 3. Create Pydantic models for validation
-4. Follow signature: (routing_params, trading_params, optional_params)
-5. Apply trading safety validation before destructive operations
+4. **Pass response_filter string directly to model** (no enum conversion)
+5. Follow signature: (routing_params, trading_params, optional_params)
+6. Apply trading safety validation before destructive operations
+
+**Pattern Reference**: See `docs/PATTERNS.md` for complete implementation templates
 
 ### Trading Safety
 - **Bot operations**: Validate config and account permissions
@@ -48,9 +51,12 @@ Activates when working in `tools/` directory implementing MCP functions for 3Com
 1. Define signature with response_filter parameter
 2. Create Pydantic models with trading validation
 3. Implement with `@handle_api_errors` and safety checks
-4. Apply `filter_response()` before returning
-5. Register based on destructiveness classification
-6. Test: success, errors, trading safety scenarios
+4. **Pass response_filter string directly to model** (simplified validation)
+5. Apply `filter_response()` before returning
+6. Register based on destructiveness classification
+7. Test: success, errors, trading safety scenarios
+
+**Quick Start**: Copy template from `docs/PATTERNS.md` for new API implementation
 
 ### Quality Checklist
 - [ ] Uses `@handle_api_errors` decorator

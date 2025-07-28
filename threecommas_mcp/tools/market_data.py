@@ -9,7 +9,12 @@ from typing import Optional
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
-from ..models.base import APIResponse
+from ..models.base import APIResponse, LimitType
+from ..models.market_data import (
+    GetAllMarketPairsRequest,
+    GetCurrencyRatesRequest,
+    GetSupportedMarketsRequest,
+)
 
 
 @handle_api_errors
@@ -44,10 +49,13 @@ async def get_all_market_pairs(
     See:
         docs/tools/market_data.md#get-all-market-pairs for usage examples
     """
+    # Validate inputs using Pydantic model
+    request = GetAllMarketPairsRequest(market_code=market_code, response_filter=response_filter)
+
     # Build query parameters
     params = {}
-    if market_code:
-        params["market_code"] = market_code
+    if request.market_code:
+        params["market_code"] = request.market_code
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
@@ -56,7 +64,7 @@ async def get_all_market_pairs(
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:
-        response = filter_response(response, response_filter)
+        response = filter_response(response, request.response_filter)
 
     return response
 
@@ -65,7 +73,7 @@ async def get_all_market_pairs(
 async def get_currency_rates_and_limits(
     market_code: str,
     pair: str,
-    limit_type: Optional[str] = None,
+    limit_type: Optional[LimitType] = None,
     response_filter: str = "display",
 ) -> APIResponse:
     """Get currency rates and trading limits.
@@ -81,7 +89,7 @@ async def get_currency_rates_and_limits(
     Args:
         market_code: Exchange market code (string from supported markets)
         pair: Trading pair to get specific rates (e.g., "BTC_USDT")
-        limit_type: Optional limit type ("bot" or "smart_trade")
+        limit_type: Optional limit type (LimitType.BOT or LimitType.SMART_TRADE)
         response_filter: Filter type for response ("full" or "display", default: "display")
 
     Returns:
@@ -98,10 +106,15 @@ async def get_currency_rates_and_limits(
     See:
         docs/tools/market_data.md#get-currency-rates-and-limits for usage examples
     """
+    # Validate inputs using Pydantic model
+    request = GetCurrencyRatesRequest(
+        market_code=market_code, pair=pair, limit_type=limit_type, response_filter=response_filter
+    )
+
     # Build query parameters
-    params = {"market_code": market_code, "pair": pair}
-    if limit_type:
-        params["limit_type"] = limit_type
+    params = {"market_code": request.market_code, "pair": request.pair}
+    if request.limit_type:
+        params["limit_type"] = request.limit_type
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
@@ -110,7 +123,7 @@ async def get_currency_rates_and_limits(
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:
-        response = filter_response(response, response_filter)
+        response = filter_response(response, request.response_filter)
 
     return response
 
@@ -145,11 +158,14 @@ async def get_supported_markets(response_filter: str = "display") -> APIResponse
     See:
         docs/tools/market_data.md#get-supported-markets for usage examples
     """
+    # Validate inputs using Pydantic model
+    request = GetSupportedMarketsRequest(response_filter=response_filter)
+
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/accounts/market_list", method="GET")
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:
-        response = filter_response(response, response_filter)
+        response = filter_response(response, request.response_filter)
 
     return response

@@ -41,6 +41,10 @@ class MyTradingModel(BaseModelConfig):
 - Inherits all BaseModelConfig settings
 - Provides consistent foundation for request validation
 - Ensures uniform API request patterns
+- Includes universal `response_filter` field for token optimization
+
+**Fields:**
+- `response_filter: ResponseFilter` - Filter type for response (default: ResponseFilter.DISPLAY)
 
 **Usage Example:**
 ```python
@@ -88,6 +92,38 @@ async def get_bot_details(bot_id: str) -> APIResponse:
 - Response filtering removes sensitive data (`url_secret`, `account_id`)
 - No validation ensures compatibility with API changes
 - Tools handle data extraction and validation as needed
+
+### ResponseFilter
+
+**Purpose:** Defines response filtering options for API responses  
+**Used by:** All API request models via APIRequest base class  
+**Location:** `threecommas_mcp.models.base.ResponseFilter`
+
+**Values:**
+- `DISPLAY = "display"`: Returns filtered response optimized for display (85% token reduction)
+- `FULL = "full"`: Returns complete API response with all fields
+
+**Usage:** Controls response verbosity and optimizes token usage in Claude interactions
+
+**Example:**
+```python
+from threecommas_mcp.models.base import ResponseFilter
+from threecommas_mcp.models.account import GetConnectedExchangesRequest
+
+# Default behavior (display filtering)
+request = GetConnectedExchangesRequest()
+print(request.response_filter)  # ResponseFilter.DISPLAY
+
+# Direct string usage (recommended for tools)
+request = GetConnectedExchangesRequest(response_filter="full")
+print(request.response_filter)  # ResponseFilter.FULL
+
+# Enum usage (also supported)
+request = GetConnectedExchangesRequest(response_filter=ResponseFilter.FULL)
+print(request.response_filter)  # ResponseFilter.FULL
+```
+
+**API Integration:** All tools pass this value to `filter_response()` for consistent token optimization
 
 ## Common Enums
 

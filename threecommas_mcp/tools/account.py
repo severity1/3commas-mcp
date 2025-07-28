@@ -8,6 +8,7 @@ from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
 from ..models.base import APIResponse
+from ..models.account import GetConnectedExchangesRequest
 
 
 @handle_api_errors
@@ -42,11 +43,14 @@ async def get_connected_exchanges_and_wallets(
     See:
         docs/tools/account.md#get-connected-exchanges-and-wallets for usage examples
     """
+    # Validate inputs using Pydantic model
+    request = GetConnectedExchangesRequest(response_filter=response_filter)
+
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/accounts", method="GET")
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:
-        response = filter_response(response, response_filter)
+        response = filter_response(response, request.response_filter)
 
     return response

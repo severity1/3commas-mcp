@@ -26,11 +26,13 @@ Activates when working in `models/` directory creating Pydantic validation for 3
 ## Implementation Requirements
 
 ### Essential Patterns
-1. Inherit from `BaseModel`
+1. **Inherit from `APIRequest`** (not BaseModel) - Automatic response_filter field
 2. Use Pydantic validators for trading parameters
 3. Include API field mappings to 3Commas structure
 4. Apply comprehensive trading safety validation
 5. Use `Decimal` for all financial values
+
+**Pattern Reference**: See `docs/PATTERNS.md` for complete model implementation templates
 
 ### Trading Validation
 - **Bot configuration**: Validate volumes, safety orders, strategy params
