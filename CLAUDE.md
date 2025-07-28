@@ -20,10 +20,19 @@
    - Include `response_filter: str = "display"` parameter
    - Call `api_request()` from api/client.py
    - Apply `filter_response()` before returning (@threecommas_mcp/utils/response_filter.py:13)
-3. Run quality tests
-4. **Memory Maintenance** - Update relevant CLAUDE.md files
-5. **Document Maintenance** - Update @docs/ layer documentation
-6. **Task Progress Maintenance** - Update @TASKS.md, @docs/MVP_GET_APIS.md, @docs/API_REFERENCES.md
+3. Register tool in server.py with `mcp.tool()(function_name)`
+4. Run quality tests
+5. **Create/Update Documentation System**:
+   - Add/update function reference in `docs/tools/{domain}.md` (parameters, returns, examples, error handling)
+   - Add/update model documentation in `docs/models/{domain}.md` (request models, validation patterns, safety considerations)
+   - Add/update conversation examples in `docs/conversations/{domain}-conversation.md` (realistic usage scenarios)
+   - Update `docs/PATTERNS.md` if pattern is changed or new pattern is introduced
+   - Update tracking files:
+     - `@TASKS.md` (progress markers)
+     - `@docs/API_REFERENCES.md` (⏸️ → ✅)
+     - `@docs/MVP_GET_APIS.md` (priority tables)
+   - Update `README.md`
+6. [Memory Maintenance](#memory-maintenance) - Update relevant CLAUDE.md files when patterns change or new patterns are added
 
 ## Component Discovery
 Each subtree has specialized CLAUDE.md with implementation-specific guidance:
@@ -38,11 +47,11 @@ Each subtree has specialized CLAUDE.md with implementation-specific guidance:
 - Mark completed items in @docs/MVP_GET_APIS.md (Priority tables)
 - Update status indicators in @docs/API_REFERENCES.md (⏸️ → ✅)
 
+## Document Maintenance
+- **Update relevant documentation** - When code changes affect documented workflows or APIs
+- **Maintain accuracy** - Keep documentation synchronized with actual implementation
+
 ## Memory Maintenance
 - **Update CLAUDE.md files** - When implementation patterns change or new components added
 - **Reflect actual code** - Memory files must match current implementation, not theoretical patterns  
 - **Component-specific guidance** - Each subtree provides focused context for its domain
-
-## Document Maintenance
-- **Update relevant documentation** - When code changes affect documented workflows or APIs
-- **Maintain accuracy** - Keep documentation synchronized with actual implementation

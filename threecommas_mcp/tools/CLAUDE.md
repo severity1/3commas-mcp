@@ -14,6 +14,3 @@ Reference implementation: @threecommas_mcp/tools/dca_bots.py:14-64 (get_dca_bot_
 
 ## Standard Imports Pattern
 Reference: @threecommas_mcp/tools/dca_bots.py:7-11 for import structure
-
-## Progress Tracking
-Update: TASKS.md, docs/MVP_GET_APIS.md, docs/API_REFERENCES.md (⏸️ → ✅)
