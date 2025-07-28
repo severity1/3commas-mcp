@@ -7,7 +7,7 @@ Reference: https://developers.3commas.io/dca-bot
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
-from ..models.base import APIResponse
+from ..models.base import APIResponse, ResponseFilter
 from ..models.dca_bots import GetDCABotDetailsRequest
 
 
@@ -46,7 +46,9 @@ async def get_dca_bot_details(
     """
     # Validate inputs using Pydantic model
     request = GetDCABotDetailsRequest(
-        bot_id=bot_id, include_events=include_events, response_filter=response_filter
+        bot_id=bot_id,
+        include_events=include_events,
+        response_filter=ResponseFilter(response_filter),
     )
 
     # Build query parameters

@@ -7,7 +7,7 @@ Reference: https://developers.3commas.io/account
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
-from ..models.base import APIResponse
+from ..models.base import APIResponse, ResponseFilter
 from ..models.account import GetConnectedExchangesRequest
 
 
@@ -44,7 +44,9 @@ async def get_connected_exchanges_and_wallets(
         docs/tools/account.md#get-connected-exchanges-and-wallets for usage examples
     """
     # Validate inputs using Pydantic model
-    request = GetConnectedExchangesRequest(response_filter=response_filter)
+    request = GetConnectedExchangesRequest(
+        response_filter=ResponseFilter(response_filter)
+    )
 
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/accounts", method="GET")

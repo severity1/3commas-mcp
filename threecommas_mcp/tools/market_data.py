@@ -9,7 +9,7 @@ from typing import Optional
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
-from ..models.base import APIResponse, LimitType
+from ..models.base import APIResponse, LimitType, ResponseFilter
 from ..models.market_data import (
     GetAllMarketPairsRequest,
     GetCurrencyRatesRequest,
@@ -51,7 +51,7 @@ async def get_all_market_pairs(
     """
     # Validate inputs using Pydantic model
     request = GetAllMarketPairsRequest(
-        market_code=market_code, response_filter=response_filter
+        market_code=market_code, response_filter=ResponseFilter(response_filter)
     )
 
     # Build query parameters
@@ -113,7 +113,7 @@ async def get_currency_rates_and_limits(
         market_code=market_code,
         pair=pair,
         limit_type=limit_type,
-        response_filter=response_filter,
+        response_filter=ResponseFilter(response_filter),
     )
 
     # Build query parameters
@@ -164,7 +164,9 @@ async def get_supported_markets(response_filter: str = "display") -> APIResponse
         docs/tools/market_data.md#get-supported-markets for usage examples
     """
     # Validate inputs using Pydantic model
-    request = GetSupportedMarketsRequest(response_filter=response_filter)
+    request = GetSupportedMarketsRequest(
+        response_filter=ResponseFilter(response_filter)
+    )
 
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/accounts/market_list", method="GET")
