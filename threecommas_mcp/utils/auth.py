@@ -2,7 +2,7 @@
 
 import hashlib
 import hmac
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from urllib.parse import urlencode
 
 
@@ -13,7 +13,7 @@ def generate_signature(query_string: str, secret: str) -> str:
     ).hexdigest()
 
 
-def build_query_string(params: Optional[Dict[str, Any]]) -> str:
+def build_query_string(params: Dict[str, Any] | None) -> str:
     """Build URL-encoded query string sorted by key for consistent signatures."""
     if not params:
         return ""
@@ -32,8 +32,8 @@ def sign_request(
     api_key: str,
     secret: str,
     path: str,
-    params: Optional[Dict[str, Any]] = None,
-    body: Optional[str] = None,
+    params: Dict[str, Any] | None = None,
+    body: str | None = None,
 ) -> Dict[str, str]:
     """Generate complete authentication headers for a 3Commas API request."""
     # For GET requests, sign path + query string
@@ -51,7 +51,7 @@ def sign_request(
     return create_auth_headers(api_key, signature)
 
 
-def validate_credentials(api_key: Optional[str], secret: Optional[str]) -> bool:
+def validate_credentials(api_key: str | None, secret: str | None) -> bool:
     """Validate that API credentials are present and properly formatted."""
     if not api_key or not secret:
         return False

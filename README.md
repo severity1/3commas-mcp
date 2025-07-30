@@ -5,7 +5,6 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Python](https://img.shields.io/badge/python-3.12+-green)
 ![Implementation](https://img.shields.io/badge/phase_1-complete-success)
-![Tools](https://img.shields.io/badge/tools-5_available-brightgreen)
 ![Type Checking](https://img.shields.io/badge/type_checking-mypy-brightgreen)
 ![Code Quality](https://img.shields.io/badge/code_quality-100%25-success)
 
@@ -79,6 +78,7 @@ Add to `claude_desktop_config.json`:
 - `get_currency_rates_and_limits()` - Current rates, limits, and precision for currency pairs
 
 ### DCA Bot Information  
+- `get_dca_bot_list()` - Get all DCA bots with status, configuration, and performance overview
 - `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
 
 ### System
@@ -99,6 +99,7 @@ All tools include `response_filter` parameter (`"display"` for essential data, `
 
 **DCA Bot Analysis:**
 ```
+"List all my DCA bots and their status"
 "Show details for my DCA bot ID 12345678"
 "What's the current performance of my Bitcoin bot?"
 "Check if my bot is active and show safety order configuration"
@@ -126,18 +127,13 @@ All tools include `response_filter` parameter (`"display"` for essential data, `
 - **Destructive Operation Controls** - High-risk operations disabled by default
 - **Comprehensive Error Handling** with trading context
 
-### Project Structure
-```
-3commas-mcp/
-├── threecommas_mcp/           # Main package
-│   ├── api/                   # 3Commas API client with HMAC auth
-│   ├── models/                # Pydantic data models  
-│   ├── tools/                 # MCP tool implementations
-│   ├── utils/                 # Auth, env, decorators, rate limiting
-│   └── server.py              # MCP server entry point
-├── docs/                      # Comprehensive documentation
-└── README.md                  # This file
-```
+### Component Architecture
+- **API Layer**: HMAC-SHA256 authenticated 3Commas client with rate limiting
+- **Model Layer**: Pydantic validation for all trading parameters
+- **Tool Layer**: MCP-compatible functions with comprehensive error handling
+- **Utils Layer**: Authentication, environment, and safety decorators
+
+See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed project structure.
 
 ---
 

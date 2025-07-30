@@ -4,8 +4,6 @@ This module implements market data-related endpoints of the 3Commas API.
 Reference: https://developers.3commas.io/market-data
 """
 
-from typing import Optional
-
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
@@ -19,7 +17,7 @@ from ..models.market_data import (
 
 @handle_api_errors
 async def get_all_market_pairs(
-    market_code: Optional[str] = None, response_filter: str = "display"
+    market_code: str | None = None, response_filter: str = "display"
 ) -> APIResponse:
     """Get all available market pairs.
 
@@ -54,10 +52,8 @@ async def get_all_market_pairs(
         market_code=market_code, response_filter=ResponseFilter(response_filter)
     )
 
-    # Build query parameters
-    params = {}
-    if request.market_code:
-        params["market_code"] = request.market_code
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
@@ -75,7 +71,7 @@ async def get_all_market_pairs(
 async def get_currency_rates_and_limits(
     market_code: str,
     pair: str,
-    limit_type: Optional[LimitType] = None,
+    limit_type: LimitType | None = None,
     response_filter: str = "display",
 ) -> APIResponse:
     """Get currency rates and trading limits.
@@ -116,10 +112,8 @@ async def get_currency_rates_and_limits(
         response_filter=ResponseFilter(response_filter),
     )
 
-    # Build query parameters
-    params = {"market_code": request.market_code, "pair": request.pair}
-    if request.limit_type:
-        params["limit_type"] = request.limit_type
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
 
     # Make API request using existing authentication infrastructure
     response = await api_request(

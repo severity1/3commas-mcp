@@ -46,7 +46,7 @@ def _apply_security_filter(data: Dict[str, Any]) -> Dict[str, Any]:
 
     This filter is always applied regardless of filter type.
     """
-    security_fields = ["url_secret", "account_id"]
+    security_fields = ["url_secret"]
 
     for field in security_fields:
         if field in data:

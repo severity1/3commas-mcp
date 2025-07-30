@@ -118,13 +118,102 @@ Would you like me to help you adjust the strategy settings or analyze other trad
 
 Would you like me to help you implement any of these optimizations or analyze the strategy performance in more detail?"
 
+### Listing DCA Bots
+
+**Scenario:** User wants to see their complete DCA bot portfolio and get an overview of their trading setup.
+
+**User:** "Can you show me all my DCA bots? I want to see which ones are active and get an overview of my portfolio."
+
+**Claude Response Process:**
+1. Calls `get_dca_bot_list()` to retrieve all user's DCA bots
+2. Analyzes bot statuses, performance, and configurations
+3. Presents organized portfolio overview
+
+**Expected Claude Response:**
+"I'll retrieve your complete DCA bot portfolio for you.
+
+**DCA Bot Portfolio Overview:**
+
+**Active Bots (3 running):**
+1. **Bot #12345678** - BTC/USDT
+   - Status: ✅ Active | Profit: +$2,341.50 (+15.2%)
+   - Strategy: RSI | Entry: $43,250 | Target: 3.5%
+
+2. **Bot #23456789** - ETH/USDT  
+   - Status: ✅ Active | Profit: +$1,247.83 (+8.7%)
+   - Strategy: Moving Average | Entry: $2,890 | Target: 2.8%
+
+3. **Bot #34567890** - ADA/USDT
+   - Status: ✅ Active | Profit: +$456.21 (+5.3%)
+   - Strategy: Bollinger Bands | Entry: $0.38 | Target: 4.0%
+
+**Inactive Bots (2 paused):**
+4. **Bot #45678901** - MATIC/USDT
+   - Status: ⏸️ Paused | Last Profit: +$123.45
+   - Reason: Low volatility, waiting for better conditions
+
+5. **Bot #56789012** - DOT/USDT
+   - Status: ⏸️ Paused | Last Profit: -$67.89
+   - Reason: Manually paused for strategy review
+
+**Portfolio Summary:**
+- **Total Active Capital:** $15,750
+- **Total Portfolio Profit:** +$4,101.10 (+11.2%)
+- **Success Rate:** 84% (21/25 completed deals)
+- **Exchange:** Binance Main Account
+
+Your portfolio shows strong performance with good diversification across major altcoins. The 3 active bots are generating consistent profits. Would you like me to analyze any specific bot or help you optimize the paused ones?"
+
+### Portfolio Analysis and Filtering
+
+**Scenario:** User wants to analyze specific subsets of their bot portfolio.
+
+**User:** "Show me only my long position bots that are trading on Binance. I want to see how my long strategy is performing."
+
+**Claude Response Process:**
+1. Calls `get_dca_bot_list(strategy="long", account_id=98765)` with filtering
+2. Analyzes filtered results for long strategy performance
+3. Provides focused analysis
+
+**Expected Claude Response:**
+"I'll show you your long position DCA bots on your Binance account.
+
+**Long Strategy Portfolio (Binance Account #98765):**
+
+**Active Long Bots (4 bots):**
+1. **Bot #11111111** - BTC/USDT (Long)
+   - Profit: +$3,247.82 (+18.4%) | Success: 15/16 deals
+   - Strategy: RSI | Avg Deal: 5.2 days
+
+2. **Bot #22222222** - ETH/USDT (Long)  
+   - Profit: +$1,456.33 (+12.1%) | Success: 12/14 deals
+   - Strategy: MACD | Avg Deal: 4.8 days
+
+3. **Bot #33333333** - BNB/USDT (Long)
+   - Profit: +$892.47 (+9.7%) | Success: 8/9 deals
+   - Strategy: Bollinger | Avg Deal: 6.1 days
+
+4. **Bot #44444444** - ADA/USDT (Long)
+   - Profit: +$234.56 (+6.2%) | Success: 5/6 deals
+   - Strategy: Stoch RSI | Avg Deal: 7.3 days
+
+**Long Strategy Performance:**
+- **Combined Profit:** +$5,831.18 (+13.9%)
+- **Overall Success Rate:** 89% (40/45 deals)
+- **Average Deal Duration:** 5.6 days
+- **Best Performer:** BTC/USDT (+18.4%)
+
+**Analysis:** Your long strategy is performing exceptionally well with nearly 90% success rate. BTC and ETH bots are your strongest performers, suggesting large-cap focus is working well in the current market.
+
+Would you like me to compare this with your short positions or analyze performance by time period?"
+
 ## Tools Used
 
-### Primary Tool
+### Primary Tools
 - **get_dca_bot_details**: [Function Reference](../tools/dca_bots.md#get-dca-bot-details)
+- **get_dca_bot_list**: [Function Reference](../tools/dca_bots.md#get-dca-bot-list)
 
 ### Future Integrations
-- `list_dca_bots()` - For managing multiple bots
 - `update_dca_bot()` - For implementing optimizations
 - `get_dca_bot_stats()` - For detailed performance analysis
 
@@ -147,6 +236,12 @@ Would you like me to help you implement any of these optimizations or analyze th
 2. Claude retrieves bot details and metrics
 3. Claude analyzes configuration effectiveness
 4. Claude provides optimization recommendations
+
+### Portfolio Management Pattern
+1. User requests portfolio overview or filtering
+2. Claude calls get_dca_bot_list with appropriate filters
+3. Claude organizes and analyzes portfolio data
+4. Claude provides strategic insights and recommendations
 
 ## Safety Considerations
 
