@@ -6,7 +6,6 @@ These models provide validation for market information operations.
 Reference: https://developers.3commas.io/market-data
 """
 
-from typing import Optional
 from pydantic import Field
 from .base import APIRequest, LimitType
 
@@ -27,7 +26,7 @@ class GetAllMarketPairsRequest(APIRequest):
         docs/models/market_data.md#get-all-market-pairs-request for reference
     """
 
-    market_code: Optional[str] = Field(
+    market_code: str | None = Field(
         None,
         min_length=1,
         max_length=50,
@@ -69,7 +68,7 @@ class GetCurrencyRatesRequest(APIRequest):
         description="Trading pair in BASE_QUOTE format (e.g., 'BTC_USDT', 'ETH_USDT')",
         examples=["BTC_USDT", "ETH_USDT", "USDT_BTC"],
     )
-    limit_type: Optional[LimitType] = Field(
+    limit_type: LimitType | None = Field(
         None, description="Optional limit type for specific trading contexts"
     )
 

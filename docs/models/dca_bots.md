@@ -43,11 +43,11 @@ request = GetDCABotDetailsRequest(
 **Used by:** [get_dca_bot_list](../tools/dca_bots.md#get-dca-bot-list)
 
 **Fields:**
-- `account_id: int | None` - Filter bots by specific 3Commas exchange account ID (optional)
+- `account_id: int` - Filter bots by specific 3Commas exchange account ID (0 = all accounts, default: 0)
 - `strategy: StrategyType | None` - Filter by trading strategy ("long" or "short", optional)
 - `order_direction: str` - Sort order ("ASC" or "DESC", default: "DESC")
-- `limit: int | None` - Maximum number of bots to return (1-1000, optional)
-- `offset: int | None` - Number of bots to skip for pagination (optional)
+- `limit: int` - Maximum number of bots to return (1-1000, default: 50)
+- `offset: int` - Number of bots to skip for pagination (default: 0)
 - `from_date: str | None` - Filter bots created from this date (ISO format, optional)
 - `scope: str | None` - Filter scope for bot selection (optional)
 - `sort_by: str | None` - Field to sort by (optional)
@@ -115,15 +115,15 @@ include_events: bool = Field(
 ```
 
 ### Integer Range Validation
-Numeric parameters use Field constraints with range validation:
+Numeric parameters use Field constraints with meaningful defaults:
 ```python
-account_id: int | None = Field(
-    default=None, ge=1,
-    description="Filter bots by specific 3Commas exchange account ID"
+account_id: int = Field(
+    default=0, ge=0,
+    description="Filter bots by specific 3Commas exchange account ID (0 = all accounts)"
 )
 
-limit: int | None = Field(
-    default=None, ge=1, le=1000,
+limit: int = Field(
+    default=50, ge=1, le=1000,
     description="Maximum number of bots to return (1-1000)"
 )
 ```

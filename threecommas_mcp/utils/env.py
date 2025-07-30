@@ -1,10 +1,9 @@
 """Environment variable management for 3Commas MCP"""
 
 import os
-from typing import Optional, Tuple
 
 
-def get_3commas_credentials() -> Tuple[Optional[str], Optional[str]]:
+def get_3commas_credentials() -> tuple[str | None, str | None]:
     """Get 3Commas API credentials from environment."""
     api_key = os.getenv("3COMMAS_API_KEY")
     secret_key = os.getenv("3COMMAS_SECRET_KEY")

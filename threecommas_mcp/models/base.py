@@ -76,7 +76,7 @@ class APIRequest(BaseModelConfig):
         Automatically converts the Pydantic model to a dictionary suitable for
         API query parameters. Handles field aliases, excludes None values,
         converts all values to strings, and excludes internal fields.
-        
+
         Special handling for optional-like integer parameters:
         - account_id=0 is excluded (means "all accounts")
         - Other 0 values are included as they may be valid API parameters

@@ -2,7 +2,7 @@
 
 import asyncio
 import logging
-from typing import Optional, Dict, TypeVar, Union, Any
+from typing import Dict, TypeVar, Union, Any
 import httpx
 from pydantic import BaseModel
 
@@ -48,9 +48,9 @@ def detect_endpoint_type(path: str, method: str) -> str:
 async def api_request(
     path: str,
     method: str = "GET",
-    params: Optional[Dict[str, Any]] = None,
+    params: Dict[str, Any] | None = None,
     data: Union[Dict[str, Any], BaseModel, None] = None,
-    endpoint_type: Optional[str] = None,
+    endpoint_type: str | None = None,
 ) -> Dict[str, Any]:
     """Make a request to the 3Commas API with proper authentication and rate limiting."""
     # Validate environment

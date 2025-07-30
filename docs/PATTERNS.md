@@ -30,7 +30,7 @@ Our patterns prioritize **scalability**, **maintainability**, and **trading safe
 
 **Key Pattern Elements:**
 - ✅ **`@handle_api_errors` decorator** - Always first decorator for consistent error handling
-- ✅ **Type hints** - Full type annotations including union types (int | None)
+- ✅ **Type hints** - Modern Python union types (str | None, int with defaults)
 - ✅ **`response_filter: str = "display"`** - Always include with default value
 - ✅ **Comprehensive docstring** - Include API endpoint, security, parameters, returns, errors
 - ✅ **Pydantic validation** - Use request model for input validation with proper enum types
@@ -90,7 +90,7 @@ When implementing a new API, verify:
 
 ### Tool Compliance
 - [ ] Uses `@handle_api_errors` decorator as first decorator
-- [ ] Full type hints including union types (int | None)
+- [ ] Modern Python type hints (str | None, int with defaults)
 - [ ] Includes `response_filter: str = "display"` parameter
 - [ ] Uses proper enum types in function signature
 - [ ] Uses Pydantic model for input validation
