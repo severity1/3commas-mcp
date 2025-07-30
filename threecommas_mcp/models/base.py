@@ -70,6 +70,43 @@ class APIRequest(BaseModelConfig):
         description="Filter type for response ('full' or 'display', default: 'display')",
     )
 
+    def to_query_params(self, exclude_defaults: bool = True) -> dict[str, str]:
+        """Convert model to API query parameters dict.
+
+        Automatically converts the Pydantic model to a dictionary suitable for
+        API query parameters. Handles field aliases, excludes None values,
+        converts all values to strings, and excludes internal fields.
+        
+        Special handling for optional-like integer parameters:
+        - account_id=0 is excluded (means "all accounts")
+        - Other 0 values are included as they may be valid API parameters
+
+        Args:
+            exclude_defaults: Exclude fields with default values (default: True)
+
+        Returns:
+            Dict suitable for API request query parameters with all values as strings
+
+        Example:
+            >>> request = GetDCABotListRequest(account_id=12345, strategy="long")
+            >>> params = request.to_query_params()
+            >>> # {'account_id': '12345', 'strategy': 'long'}
+        """
+        # Get model data using by_alias to handle field aliases properly
+        data = self.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            exclude_defaults=exclude_defaults,
+            exclude={"response_filter"},  # Exclude internal field
+        )
+
+        # Handle special cases for optional-like behavior
+        if data.get("account_id") == 0:
+            data.pop("account_id", None)  # Don't filter by account
+
+        # Convert all values to strings as required by query parameters
+        return {key: str(value) for key, value in data.items()}
+
 
 # Common enums used across multiple modules
 class BotType(str, Enum):

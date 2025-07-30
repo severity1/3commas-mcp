@@ -36,6 +36,59 @@ request = GetDCABotDetailsRequest(
 )
 ```
 
+### GetDCABotListRequest
+
+**Purpose:** Request model for retrieving list of DCA bots with filtering and sorting capabilities.
+
+**Used by:** [get_dca_bot_list](../tools/dca_bots.md#get-dca-bot-list)
+
+**Fields:**
+- `account_id: int | None` - Filter bots by specific 3Commas exchange account ID (optional)
+- `strategy: StrategyType | None` - Filter by trading strategy ("long" or "short", optional)
+- `order_direction: str` - Sort order ("ASC" or "DESC", default: "DESC")
+- `limit: int | None` - Maximum number of bots to return (1-1000, optional)
+- `offset: int | None` - Number of bots to skip for pagination (optional)
+- `from_date: str | None` - Filter bots created from this date (ISO format, optional)
+- `scope: str | None` - Filter scope for bot selection (optional)
+- `sort_by: str | None` - Field to sort by (optional)
+- `quote: str | None` - Filter by quote currency (optional)
+
+**API Mapping:**
+- `account_id` -> `account_id` (query parameter)
+- `strategy` -> `strategy` (query parameter)
+- `order_direction` -> `order_direction` (query parameter)
+- `limit` -> `limit` (query parameter)
+- `offset` -> `offset` (query parameter)
+- `from_date` -> `from` (query parameter)
+- `scope` -> `scope` (query parameter)
+- `sort_by` -> `sort_by` (query parameter)
+- `quote` -> `quote` (query parameter)
+
+**Validation Rules:**
+- Account ID must be ≥1 if provided
+- Strategy must be valid StrategyType ("long" or "short") if provided
+- Order direction must match pattern (ASC|DESC)
+- Limit must be between 1-1000 if provided
+- Offset must be ≥0 if provided
+- All parameters except order_direction are optional
+
+**Safety:** Validates parameter ranges and formats to prevent invalid API requests and ensure proper portfolio filtering.
+
+**Example:**
+```python
+# Basic request for all bots
+request = GetDCABotListRequest()
+
+# Filtered request with pagination
+request = GetDCABotListRequest(
+    account_id=12345,
+    strategy="long",
+    limit=50,
+    offset=0,
+    quote="USDT"
+)
+```
+
 ## API Response Handling
 
 Following our established pattern, API responses from DCA bot endpoints are returned as unvalidated `APIResponse = Dict[str, Any]`. This provides flexibility to handle varying response structures from the 3Commas API without validation overhead.
@@ -61,29 +114,69 @@ include_events: bool = Field(
 )
 ```
 
+### Integer Range Validation
+Numeric parameters use Field constraints with range validation:
+```python
+account_id: int | None = Field(
+    default=None, ge=1,
+    description="Filter bots by specific 3Commas exchange account ID"
+)
+
+limit: int | None = Field(
+    default=None, ge=1, le=1000,
+    description="Maximum number of bots to return (1-1000)"
+)
+```
+
+### Enum Validation
+Strategy parameters use StrategyType enum for validation:
+```python
+strategy: StrategyType | None = Field(
+    default=None,
+    description="Filter by trading strategy (long or short positions)"
+)
+```
+
 ## Trading Safety Considerations
 
 ### Request Parameter Validation
 - **Bot ID Format:** Ensures bot ID is numeric string format to prevent invalid API calls
 - **Parameter Types:** Validates boolean parameters with appropriate defaults
 - **Input Sanitization:** Pattern validation prevents malformed bot identifiers
+- **Range Validation:** Ensures numeric parameters are within acceptable API limits
+- **Enum Constraints:** Strategy types are validated against allowed values
+- **Pagination Safety:** Validates limit and offset ranges for safe pagination
 
 ### Risk Assessment
-- **Read-only Operations:** DCA bot detail retrieval has minimal trading risk
+- **Read-only Operations:** DCA bot retrieval operations have minimal trading risk
 - **Authentication Required:** All requests require proper API authentication
 - **Rate Limiting:** Respects 3Commas API rate limits for bot operations
+- **Portfolio Access:** List operations only return bots owned by authenticated account
 
 ## Integration Examples
 
 ### Request Validation
 ```python
-# Validate request parameters before API call
+# Validate bot details request parameters before API call
 try:
     request = GetDCABotDetailsRequest(bot_id="12345678", include_events=True)
     bot_details = await get_dca_bot_details(request.bot_id, request.include_events)
     # bot_details is APIResponse = Dict[str, Any] (unvalidated)
 except ValidationError as e:
     logger.error(f"Invalid bot request parameters: {e}")
+
+# Validate bot list request with filtering
+try:
+    request = GetDCABotListRequest(
+        account_id=12345,
+        strategy="long",
+        limit=50,
+        offset=0
+    )
+    bot_list = await get_dca_bot_list(**request.dict())
+    # bot_list is APIResponse = Dict[str, Any] (unvalidated)
+except ValidationError as e:
+    logger.error(f"Invalid bot list parameters: {e}")
 ```
 
 ### Error Handling
@@ -93,6 +186,15 @@ try:
     request = GetDCABotDetailsRequest(bot_id="invalid_id")  # Will fail validation
 except ValidationError as e:
     logger.error(f"Bot ID must be numeric string: {e}")
+
+# Handle validation errors for list parameters
+try:
+    request = GetDCABotListRequest(
+        account_id=0,  # Will fail validation (must be ≥1)
+        limit=2000     # Will fail validation (must be ≤1000)
+    )
+except ValidationError as e:
+    logger.error(f"Invalid list parameters: {e}")
 ```
 
 ## Related Documentation

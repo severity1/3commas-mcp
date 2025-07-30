@@ -7,8 +7,8 @@ Reference: https://developers.3commas.io/dca-bot
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
-from ..models.base import APIResponse, ResponseFilter
-from ..models.dca_bots import GetDCABotDetailsRequest
+from ..models.base import APIResponse, ResponseFilter, StrategyType
+from ..models.dca_bots import GetDCABotDetailsRequest, GetDCABotListRequest
 
 
 @handle_api_errors
@@ -51,13 +51,90 @@ async def get_dca_bot_details(
         response_filter=ResponseFilter(response_filter),
     )
 
-    # Build query parameters
-    params = {"include_events": str(request.include_events).lower()}
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
         f"ver1/bots/{request.bot_id}/show", params=params, method="GET"
     )
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, request.response_filter)
+
+    return response
+
+
+@handle_api_errors
+async def get_dca_bot_list(
+    account_id: int = 0,
+    strategy: StrategyType | None = None,
+    order_direction: str = "DESC",
+    limit: int = 50,
+    offset: int = 0,
+    from_date: str | None = None,
+    scope: str | None = None,
+    sort_by: str | None = None,
+    quote: str | None = None,
+    response_filter: str = "display",
+) -> APIResponse:
+    """Get list of DCA bots for the user's account.
+
+    Retrieves the user's DCA bot portfolio with optional filtering and sorting.
+    This provides an overview of all DCA bots including their status, configuration,
+    and performance data. Essential for bot management and portfolio analysis.
+
+    API endpoint: GET /ver1/bots
+    Security: SIGNED (requires API key + HMAC signature)
+    Permission: BOTS_READ
+
+    Args:
+        account_id: Filter bots by specific 3Commas exchange account ID (0 = all accounts, default: 0)
+        strategy: Filter by trading strategy (StrategyType.LONG or StrategyType.SHORT)
+        order_direction: Sort order ("ASC" or "DESC", default: "DESC")
+        limit: Maximum number of bots to return (1-1000, default: 50)
+        offset: Number of bots to skip for pagination (default: 0)
+        from_date: Filter bots created from this date (ISO format)
+        scope: Filter scope for bot selection
+        sort_by: Field to sort by (created_at, updated_at, etc.)
+        quote: Filter by quote currency (e.g., "USDT", "BTC")
+        response_filter: Filter type for response ("full" or "display", default: "display")
+
+    Returns:
+        List of DCA bots including:
+        - Bot configuration (pairs, volumes, strategies)
+        - Status and enabled state
+        - Active deals information
+        - Performance metrics
+        - Trading parameters
+
+    Raises:
+        ValueError: If parameters are invalid or outside acceptable ranges
+        APIError: If API request fails or access denied
+
+    See:
+        docs/tools/dca_bots.md#get-dca-bot-list for usage examples
+    """
+    # Validate inputs using Pydantic model
+    request = GetDCABotListRequest(
+        account_id=account_id,
+        strategy=strategy,
+        order_direction=order_direction,
+        limit=limit,
+        offset=offset,
+        **{"from": from_date} if from_date is not None else {},
+        scope=scope,
+        sort_by=sort_by,
+        quote=quote,
+        response_filter=ResponseFilter(response_filter),
+    )
+
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
+
+    # Make API request using existing authentication infrastructure
+    response = await api_request("ver1/bots", params=params, method="GET")
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:

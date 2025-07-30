@@ -75,7 +75,7 @@ For each implemented API, documentation is available in multiple layers:
 - [⏸️] `POST` [Create DCA Bot](https://developers.3commas.io/dca-bot/create-dca-bot) - Create new DCA trading bot
 - [⏸️] `PATCH` [Edit DCA Bot](https://developers.3commas.io/dca-bot/edit-dca-bot) - Modify existing DCA bot configuration
 - [✅] `GET` [Get DCA Bot](https://developers.3commas.io/dca-bot/get-dca-bot) - Retrieve specific DCA bot details
-- [⏸️] `GET` [Get List of DCA Bots](https://developers.3commas.io/dca-bot/get-the-list-of-dca-bots) - List all DCA bots for account
+- [✅] `GET` [Get List of DCA Bots](https://developers.3commas.io/dca-bot/get-the-list-of-dca-bots) - List all DCA bots for account
 - [⏸️] `POST` [Disable DCA Bot](https://developers.3commas.io/dca-bot/disable-dca-bot) - Stop DCA bot trading
 - [⏸️] `POST` [Enable DCA Bot](https://developers.3commas.io/dca-bot/enable-dca-bot) - Start DCA bot trading
 - [⏸️] `POST` [Copy DCA Bot](https://developers.3commas.io/dca-bot/copy-dca-bot) - Duplicate existing DCA bot configuration

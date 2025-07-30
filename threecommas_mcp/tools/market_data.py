@@ -54,10 +54,8 @@ async def get_all_market_pairs(
         market_code=market_code, response_filter=ResponseFilter(response_filter)
     )
 
-    # Build query parameters
-    params = {}
-    if request.market_code:
-        params["market_code"] = request.market_code
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
@@ -116,10 +114,8 @@ async def get_currency_rates_and_limits(
         response_filter=ResponseFilter(response_filter),
     )
 
-    # Build query parameters
-    params = {"market_code": request.market_code, "pair": request.pair}
-    if request.limit_type:
-        params["limit_type"] = request.limit_type
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
 
     # Make API request using existing authentication infrastructure
     response = await api_request(
