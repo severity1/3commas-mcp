@@ -61,15 +61,12 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 - ✅ **Priority 1.3**: `GET` Currency Rates and Limits - Required for trading decisions
 - ✅ **Priority 1.4**: `GET` Supported Markets List - Exchange compatibility
 
-### Phase 2: Bot Management APIs (8 APIs) 🚧 **IN PROGRESS**
+### Phase 2: DCA Bot Management APIs (5 APIs) 🚧 **IN PROGRESS**
 - ✅ **Priority 2.1**: `GET` Get List of DCA Bots - Bot portfolio overview
-- ⏸️ **Priority 2.2**: `GET` Get List of Grid Bots - Grid bot portfolio 
-- ⏸️ **Priority 2.3**: `GET` Available Strategy List - Strategy options for bots
-- ✅ **Priority 2.4**: `GET` Get DCA Bot - Individual DCA bot details **[IMPLEMENTED]**
-- ⏸️ **Priority 2.5**: `GET` Get Grid Bot - Individual grid bot details
-- ⏸️ **Priority 2.6**: `GET` Get Profit Details (Grid) - Grid bot analytics
-- ⏸️ **Priority 2.7**: `GET` Get DCA Bot Profit Data - DCA bot analytics  
-- ⏸️ **Priority 2.8**: `GET` Get Blacklist of Pairs - Trading restrictions
+- ⏸️ **Priority 2.2**: `GET` Available Strategy List - Strategy options for bots
+- ✅ **Priority 2.3**: `GET` Get DCA Bot - Individual DCA bot details **[IMPLEMENTED]**
+- ⏸️ **Priority 2.4**: `GET` Get DCA Bot Profit Data - DCA bot analytics  
+- ⏸️ **Priority 2.5**: `GET` Get Blacklist of Pairs - Trading restrictions
 
 ### Phase 3: Account & Trading Data APIs (12 APIs) ⏸️
 - ⏸️ **Priority 3.1**: `GET` Get Account Info - User account details
@@ -83,18 +80,15 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 - ⏸️ **Priority 3.11**: `GET` Available Reduce Funds - Fund management data
 - ⏸️ **Priority 3.12**: `GET` Available Market Subtypes - Market type support
 
-### Phase 4: Advanced Analytics APIs (11 APIs) ⏸️
+### Phase 4: Advanced Analytics APIs (8 APIs) ⏸️
 - ⏸️ **Priority 4.1**: `GET` DCA Bot Deals Stats - Deal performance metrics
 - ⏸️ **Priority 4.2**: `GET` Get DCA Bot Stats - Bot performance statistics
 - ⏸️ **Priority 4.3**: `GET` Get DCA Bot Stats by Date - Time-based analytics
-- ⏸️ **Priority 4.4**: `GET` Grid Bot Events - Event history
-- ⏸️ **Priority 4.5**: `GET` Get Market Orders of Grid Bot - Order details
-- ⏸️ **Priority 4.6**: `GET` Required Balances for Launch - Pre-flight checks
-- ⏸️ **Priority 4.7**: `GET` Get Trades of SmartTrade - Trade execution details
-- ⏸️ **Priority 4.8**: `GET` Deposit/Withdraw Networks Info - Network options
-- ⏸️ **Priority 4.9**: `GET` User Deposit Data - Deposit history
-- ⏸️ **Priority 4.10**: `GET` Get List of Active Entities - Active trading entities
-- ⏸️ **Priority 4.11**: `GET` Currency Rates with Leverage Data - Rates with leverage info
+- ⏸️ **Priority 4.4**: `GET` Get Trades of SmartTrade - Trade execution details
+- ⏸️ **Priority 4.5**: `GET` Deposit/Withdraw Networks Info - Network options
+- ⏸️ **Priority 4.6**: `GET` User Deposit Data - Deposit history
+- ⏸️ **Priority 4.7**: `GET` Get List of Active Entities - Active trading entities
+- ⏸️ **Priority 4.8**: `GET` Currency Rates with Leverage Data - Rates with leverage info
 
 ## Post-MVP Implementation (Future Phases)
 
@@ -138,25 +132,23 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 
 ## MVP GET APIs Progress Tracking
 
-### Implementation Progress (35 Total GET APIs)
-- ✅ **Completed**: 6/35 APIs (17.1%)
-- 🚧 **In Progress**: 0/35 APIs (0%)
-- ⏸️ **Pending**: 29/35 APIs (82.9%)
+### Implementation Progress (29 Total GET APIs)
+- ✅ **Completed**: 6/29 APIs (20.7%)
+- 🚧 **In Progress**: 0/29 APIs (0%)
+- ⏸️ **Pending**: 23/29 APIs (79.3%)
 
 ### Phase Progress
 | Phase | APIs | Completed | In Progress | Pending | Status |
 |-------|------|-----------|-------------|---------|--------|
 | Phase 1: Foundation | 4 | 4 | 0 | 0 | ✅ Completed |
-| Phase 2: Bot Management | 8 | 2 | 0 | 6 | 🚧 In progress |
+| Phase 2: DCA Bot Management | 5 | 2 | 0 | 3 | 🚧 In progress |
 | Phase 3: Account & Trading | 12 | 0 | 0 | 12 | ⏸️ Awaiting Phase 2 |
-| Phase 4: Advanced Analytics | 11 | 0 | 0 | 11 | ⏸️ Awaiting Phase 3 |
+| Phase 4: Advanced Analytics | 8 | 0 | 0 | 8 | ⏸️ Awaiting Phase 3 |
 
-### Next 5 Priority APIs for Implementation
-1. **Priority 2.2**: `GET` Get List of Grid Bots ⏸️
-2. **Priority 2.3**: `GET` Available Strategy List ⏸️
-3. **Priority 2.5**: `GET` Get Grid Bot ⏸️
-4. **Priority 2.6**: `GET` Get Profit Details (Grid) ⏸️
-5. **Priority 2.7**: `GET` Get DCA Bot Profit Data ⏸️
+### Next 3 Priority APIs for Implementation (Phase 2 Completion)
+1. **Priority 2.2**: `GET` Available Strategy List ⏸️
+2. **Priority 2.4**: `GET` Get DCA Bot Profit Data ⏸️
+3. **Priority 2.5**: `GET` Get Blacklist of Pairs ⏸️
 
 ### Quality Gates Status
 - ✅ **Implementation Pattern**: Established with get_dca_bot_details
