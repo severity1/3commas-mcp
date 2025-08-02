@@ -12,6 +12,7 @@ from ..models.dca_bots import (
     GetDCABotDetailsRequest,
     GetDCABotListRequest,
     GetAvailableStrategyListRequest,
+    GetDCABotProfitDataRequest,
 )
 
 
@@ -128,6 +129,42 @@ async def get_available_strategy_list(response_filter: str = "display") -> APIRe
 
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/bots/strategy_list", params=params, method="GET")
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, request.response_filter)
+
+    return response
+
+
+@handle_api_errors
+async def get_dca_bot_profit_data(
+    bot_id: str, days: int = 30, response_filter: str = "display"
+) -> APIResponse:
+    """Get daily profit data for a specific DCA bot.
+
+    Args:
+        bot_id: DCA bot unique identifier
+        days: Number of days for profit data (default: 30)
+        response_filter: Response detail level ("full" or "display")
+
+    Returns:
+        Daily profit analytics with BTC/USD amounts and timestamps.
+    """
+    # Validate inputs using Pydantic model
+    request = GetDCABotProfitDataRequest(
+        bot_id=bot_id,
+        days=days,
+        response_filter=ResponseFilter(response_filter),
+    )
+
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
+
+    # Make API request using existing authentication infrastructure
+    response = await api_request(
+        f"ver1/bots/{request.bot_id}/profit_by_day", params=params, method="GET"
+    )
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:

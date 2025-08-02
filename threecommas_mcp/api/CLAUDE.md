@@ -1,14 +1,48 @@
-# CLAUDE.md for @api/
+# CLAUDE.md for api/
 
 ## Context Activation
-Activates when implementing HTTP client for 3Commas API integration.
+**Triggers**: Implementing HTTP client for 3Commas API integration
+**Usage**: Referenced as needed for api_request() implementation
 
-## Core Function: api_request() (@threecommas_mcp/api/client.py:48-173)
-Used by all tool functions for authenticated API calls.
+## Required Usage Pattern
+1. **Standard API Call**
+   ```python
+   from ..api.client import api_request
+   
+   # Always use api_request() - never implement direct HTTP calls
+   response = await api_request(
+       endpoint="ver1/bots",
+       params={"account_id": 123, "strategy": "long"}
+   )
+   # Returns: Dict[str, Any] with JSON response
+   ```
 
-## Implementation Features
-- HMAC-SHA256 authentication via `sign_request()` (@threecommas_mcp/api/client.py:103-111)
-- Rate limiting with `_rate_limiter` (@threecommas_mcp/api/client.py:75-80)
-- Endpoint type detection (@threecommas_mcp/api/client.py:24-44): global/deals/smart_trades/deals_show
-- JSON/text response handling (@threecommas_mcp/api/client.py:144-153)
-- Security: Never logs credentials (@threecommas_mcp/api/client.py:166)
+2. **Endpoint Format**
+   ```python
+   # Correct endpoint formats:
+   endpoint = "ver1/bots"           # Global endpoints
+   endpoint = "ver1/deals/123"      # Deal-specific  
+   endpoint = "ver1/smart_trades"   # SmartTrade endpoints
+   
+   # Do NOT include base URL or full path
+   ```
+
+3. **Authentication & Security**
+   ```python
+   # Authentication handled automatically via HMAC-SHA256
+   # Rate limiting applied automatically based on endpoint type
+   # Credentials never logged or exposed
+   ```
+
+## Available Features
+- **Authentication**: Automatic HMAC-SHA256 signing
+- **Rate Limiting**: Global (100/min), Deals (120/min), SmartTrades (40/10s)  
+- **Endpoint Detection**: Automatic classification and rate limit application
+- **Response Handling**: JSON/text parsing with error handling
+- **Security**: Credential protection and safe logging
+
+## Reference Examples
+- **Complete implementation**: client.py:48 (api_request function)
+
+## Documentation Requirements
+After implementation, follow root CLAUDE.md step 6 for documentation workflow.

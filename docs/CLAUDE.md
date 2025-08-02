@@ -1,60 +1,83 @@
-# CLAUDE.md for @docs/
+# CLAUDE.md for docs/
 
 ## Context Activation
-Activates when creating documentation for 3Commas trading contexts.
+**Triggers**: Creating documentation for 3Commas trading contexts
+**Usage**: Referenced during root CLAUDE.md step 6 (documentation system)
 
-## Documentation Structure
-### Core Tracking Files
-- **@docs/API_REFERENCES.md** - Status tracking (⏸️ → ✅)
-- **@docs/MVP_GET_APIS.md** - Implementation roadmap with phases
-- **@TASKS.md** - Phase-based implementation progress
+## Required Documentation Workflow
+1. **Function Reference** - Create `docs/tools/{domain}.md`
+2. **Model Documentation** - Create `docs/models/{domain}.md`  
+3. **Conversation Examples** - Create `docs/conversations/{domain}-conversation.md`
+4. **README Updates** - Add function to appropriate category
+5. **Tracking Updates** - Update API_REFERENCES.md, TASKS.md, MVP_GET_APIS.md
 
-### Documentation Layers
-1. **@docs/conversations/** - Real-world usage examples
-2. **@docs/models/** - Pydantic validation documentation  
-3. **@docs/tools/** - API function reference
+## Documentation Structure Templates
 
-## Documentation Update Requirements (Per New API Implementation)
+### 1. Function Reference Template (docs/tools/{domain}.md)
+```markdown
+# {Domain} Tools API Reference
 
-### 1. Function Reference Documentation (@docs/tools/{domain}.md)
-**Required Content:**
-- Function signature with all parameters and types
-- API endpoint, security requirements, and permissions
-- Parameter descriptions with trading constraints and validation
-- Return value structure and key data fields
-- Error handling patterns and common failure scenarios
-- Usage examples with realistic trading contexts
-- Integration notes and cross-references to related tools
-- Safety considerations and risk assessment
+## function_name()
+**Purpose**: Brief description of what the function does
+**Endpoint**: /api/ver1/endpoint_name
+**Authentication**: Required
 
-**Template Pattern:** Follow existing `dca_bots.md` structure for consistency
+### Parameters
+- `param_name` (type): Description with constraints
+- `optional_param` (type, optional): Description
 
-### 2. Model Documentation (@docs/models/{domain}.md)
-**Required Content:**
-- Request model class descriptions with purpose and usage
-- Field validation rules with Field() constraints and patterns
-- API parameter mapping from model fields to endpoint parameters
-- Validation examples with error handling demonstrations
-- Trading safety considerations for parameter validation
-- Integration examples showing request model usage in tools
-- Development guidelines for extending model functionality
+### Returns
+- Dictionary with key data fields
+- Error object on failure: `{"error": "message"}`
 
-**Template Pattern:** Follow existing `dca_bots.md` model documentation structure
+### Example Usage
+\`\`\`python
+result = await function_name(param="example_value")
+\`\`\`
 
-### 3. Conversation Examples (@docs/conversations/{domain}-conversation.md)
-**Required Content:**
-- Realistic user scenarios demonstrating natural language interactions
-- Step-by-step Claude response processes showing API calls
-- Expected Claude responses with properly formatted trading data
-- Multiple conversation patterns (information retrieval, troubleshooting, analysis)
-- Tool integration examples showing function calls and data processing
-- Safety considerations and risk assessment for conversation scenarios
-- Cross-references to related tools and API documentation
+### Safety Considerations
+- Risk assessment and trading safety notes
+```
 
-**Template Pattern:** Follow existing `dca-bot-management-conversation.md` structure
+### 2. Model Documentation Template (docs/models/{domain}.md)
+```markdown
+# {Domain} Models Reference
 
-### 4. Tracking File Updates
-**Required Updates:**
-- **@docs/API_REFERENCES.md:** Change status from `[⏸️]` to `[✅]` for implemented API
-- **@TASKS.md:** Update progress counters and phase completion status
-- **@docs/MVP_GET_APIS.md:** Mark API as implemented in priority tables if applicable
+## ModelNameRequest
+**Purpose**: Brief description of model purpose
+**API Endpoint**: /api/ver1/endpoint_name
+
+### Fields
+- `field_name` (type): Description and validation rules
+- `optional_field` (type, optional): Description
+
+### Example
+\`\`\`python
+request = ModelNameRequest(
+    field_name="example_value"
+)
+\`\`\`
+```
+
+### 3. Conversation Example Template (docs/conversations/{domain}-conversation.md)
+```markdown
+# {Domain} Conversation Examples
+
+## Scenario: User Task Description
+**User**: "Natural language request"
+**Claude**: "Response with function call and formatted results"
+
+## Integration Examples
+- Show function calls with realistic dummy data
+- Demonstrate error handling and troubleshooting
+```
+
+## Critical Requirements
+- **Privacy**: Use dummy/example data only (bot ID 12345678, $245.67 profit)
+- **Consistency**: Follow existing documentation structure patterns
+- **Cross-References**: Link between tools, models, and conversation docs
+- **Tracking**: Update API_REFERENCES.md (⏸️ → ✅), TASKS.md, MVP_GET_APIS.md
+
+## Reference Examples
+- **Complete documentation**: docs/tools/dca_bots.md, docs/models/dca_bots.md
+- **Conversation pattern**: docs/conversations/dca-bot-management-conversation.md

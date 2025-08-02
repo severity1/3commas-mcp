@@ -1,22 +1,46 @@
-# CLAUDE.md for @utils/
+# CLAUDE.md for utils/
 
 ## Context Activation
-Activates when implementing authentication, error handling, and validation utilities.
+**Triggers**: Implementing authentication, error handling, and validation utilities
+**Usage**: Referenced as needed throughout development workflow
 
-## Core Functions (used by all tools)
-- `handle_api_errors` (@threecommas_mcp/utils/decorators.py:11) - Error handling decorator
-- `filter_response()` (@threecommas_mcp/utils/response_filter.py:13) - Token optimization, 85% reduction
-- Authentication via `api_request()` integration (@threecommas_mcp/utils/auth.py exports)
+## Required Usage Patterns
+1. **Error Handling Decorator**
+   ```python
+   from ..utils.decorators import handle_api_errors
+   
+   @handle_api_errors
+   async def your_function():
+       # Automatically handles API errors with consistent formatting
+       # Returns: {"error": "message"} on failure
+   ```
 
-## Key Utilities
-### Error Handling (@threecommas_mcp/utils/decorators.py:11-40)
-- Consistent error formatting: `{"error": "message"}`
-- Security: Never exposes sensitive information
+2. **Response Filtering**
+   ```python
+   from ..utils.response_filter import filter_response
+   
+   # Always filter responses before returning
+   filtered_data = filter_response(api_response, response_filter)
+   # - Security: Removes url_secret, account_id
+   # - Display: Removes crypto_widget, reduces arrays (85% token reduction)
+   ```
 
-### Response Filtering (@threecommas_mcp/utils/response_filter.py:13-41)  
-- Security filter: Always removes `url_secret`, `account_id` (line 49)
-- Display filter: Removes crypto_widget, reduces arrays (line 59-87)
+3. **Authentication Integration**
+   ```python
+   # Authentication handled automatically via api_request()
+   # Never manually implement HMAC-SHA256 signing
+   response = await api_request("endpoint", params)
+   ```
 
-### Rate Limiting (@threecommas_mcp/utils/decorators.py:135-204)
-- Global: 100/min, Deals: 120/min, SmartTrades: 40/10s (line 146-147)
-- Exponential backoff for rate limit handling
+## Available Utilities
+- **Error Handling**: Consistent `{"error": "message"}` formatting, security-safe
+- **Response Filtering**: Security + display filtering with token optimization
+- **Rate Limiting**: Global (100/min), Deals (120/min), SmartTrades (40/10s)
+- **Authentication**: HMAC-SHA256 via api_request() integration
+
+## Reference Examples
+- **Complete decorator usage**: decorators.py:11 (handle_api_errors)
+- **Response filtering**: response_filter.py:13 (filter_response)
+
+## Documentation Requirements
+After implementation, follow root CLAUDE.md step 6 for documentation workflow.

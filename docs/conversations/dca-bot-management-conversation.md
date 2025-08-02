@@ -118,6 +118,100 @@ Would you like me to help you adjust the strategy settings or analyze other trad
 
 Would you like me to help you implement any of these optimizations or analyze the strategy performance in more detail?"
 
+### Analyzing Bot Performance
+
+**Scenario:** User wants to see detailed profit analytics for their DCA bot over time.
+
+**User:** "Can you show me the profit history for my bot 12345678 over the last 30 days? I want to see the daily performance trends."
+
+**Claude Response Process:**
+1. Calls `get_dca_bot_profit_data(bot_id="12345678", days=30)`
+2. Analyzes profit trends and patterns
+3. Provides insights on performance consistency
+
+**Expected Claude Response:**
+"I'll retrieve the 30-day profit history for your DCA bot 12345678.
+
+**Daily Profit Analysis (Last 30 Days):**
+
+**Recent Performance:**
+- **July 27:** +$8.45 (+0.00006120 BTC)
+- **July 26:** +$12.33 (+0.00008890 BTC)
+- **July 25:** +$6.78 (+0.00004950 BTC)
+- **July 24:** +$15.22 (+0.00011080 BTC)
+
+**Performance Trends:**
+- **Total 30-Day Profit:** +$245.67 USD
+- **Trading Days:** 18 out of 30 days (active on 60% of days)
+- **Average Daily Profit:** +$13.65 USD (when active)
+- **Best Day:** July 20 (+$22.45 USD)
+- **Most Consistent Week:** July 19-25 (daily profits $6.78-$22.45)
+
+**Profit Pattern Analysis:**
+- **Trend:** Consistent positive returns with only 2 small loss days
+- **Volatility:** Moderate profit range ($2.15-$22.45 daily)
+- **BTC Performance:** Accumulated +0.00178340 BTC over 30 days
+- **Activity Rate:** Bot shows good market timing with selective entries
+
+**Performance Insights:**
+Your bot demonstrates strong consistency with 89% profitable days when active. The selective trading approach effectively avoids major losses while capturing steady gains. The 60% activity rate suggests excellent market timing.
+
+Would you like me to compare this with a longer time period or analyze specific trading days in more detail?"
+
+### Strategy Configuration
+
+**Scenario:** User wants to understand available trading strategies before configuring their bot.
+
+**User:** "What trading strategies are available for DCA bots? I'm thinking about creating a new bot and want to understand my options."
+
+**Claude Response Process:**
+1. Calls `get_available_strategy_list()`
+2. Organizes strategies by type and complexity
+3. Provides guidance on strategy selection
+
+**Expected Claude Response:**
+"I'll show you all available DCA bot trading strategies and help you understand your options.
+
+**Available DCA Bot Strategies:**
+
+**Technical Indicator Strategies:**
+1. **RSI (Relative Strength Index)**
+   - Best for: Identifying overbought/oversold conditions
+   - Parameters: Period (14), overbought (70), oversold (30)
+   - Good for: Range-bound markets, contrarian approach
+
+2. **Moving Average Crossover**
+   - Best for: Trend following in trending markets
+   - Parameters: Fast MA (9), slow MA (21), signal confirmation
+   - Good for: Strong directional movements
+
+3. **MACD (Moving Average Convergence Divergence)**
+   - Best for: Momentum confirmation and trend changes
+   - Parameters: Fast (12), slow (26), signal (9)
+   - Good for: Medium-term trend identification
+
+4. **Bollinger Bands**
+   - Best for: Volatility-based entries near support/resistance
+   - Parameters: Period (20), standard deviation (2.0)
+   - Good for: Mean reversion strategies
+
+**External Signal Strategies:**
+5. **TradingView Signals**
+   - Best for: Following expert analysis and custom indicators
+   - Parameters: Signal strength (buy/strong_buy), timeframe
+   - Good for: Users who want professional signal integration
+
+**Strategy Selection Guidance:**
+- **For Beginners:** RSI or TradingView signals (easier to understand)
+- **For Trending Markets:** Moving Average Crossover or MACD
+- **For Range-bound Markets:** RSI or Bollinger Bands
+- **For Custom Analysis:** TradingView integration
+
+**Market Compatibility:**
+All strategies work across supported trading pairs, but effectiveness varies by market conditions and volatility.
+
+Would you like me to explain any specific strategy in detail or help you choose based on your trading goals and market outlook?"
+
 ### Listing DCA Bots
 
 **Scenario:** User wants to see their complete DCA bot portfolio and get an overview of their trading setup.
@@ -212,6 +306,8 @@ Would you like me to compare this with your short positions or analyze performan
 ### Primary Tools
 - **get_dca_bot_details**: [Function Reference](../tools/dca_bots.md#get-dca-bot-details)
 - **get_dca_bot_list**: [Function Reference](../tools/dca_bots.md#get-dca-bot-list)
+- **get_available_strategy_list**: [Function Reference](../tools/dca_bots.md#get-available-strategy-list)
+- **get_dca_bot_profit_data**: [Function Reference](../tools/dca_bots.md#get-dca-bot-profit-data)
 
 ### Future Integrations
 - `update_dca_bot()` - For implementing optimizations

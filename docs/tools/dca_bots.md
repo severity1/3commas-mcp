@@ -67,6 +67,55 @@ DCA (Dollar Cost Averaging) bot tools provide functionality for managing and mon
 
 **Examples:** [DCA Bot Management Conversation](../conversations/dca-bot-management-conversation.md#listing-dca-bots)
 
+### get_available_strategy_list
+
+**Function:** `get_available_strategy_list(response_filter: str = "display") -> APIResponse`
+
+**Description:** Retrieves all available DCA bot trading strategies from 3Commas. Provides comprehensive catalog of strategy options including configuration parameters, compatibility information, and strategy-specific settings for bot creation and configuration.
+
+**API Endpoint:** `GET /ver1/bots/strategy_list`  
+**Security:** SIGNED (requires API key + HMAC signature)  
+**Permission:** BOTS_READ
+
+**Parameters:**
+- `response_filter` (str, optional): Filter type for response ("full" or "display", default: "display")
+
+**Returns:** Available strategies including:
+- Strategy names and identifiers
+- Configuration options and parameters for each strategy  
+- Compatibility information with different exchanges
+- Strategy-specific requirements and constraints
+- Strategy description and trading logic information
+
+**Safety:** Read-only operation with no trading risks
+
+**Examples:** [DCA Bot Management Conversation](../conversations/dca-bot-management-conversation.md#strategy-configuration)
+
+### get_dca_bot_profit_data
+
+**Function:** `get_dca_bot_profit_data(bot_id: str, days: int = 30, response_filter: str = "display") -> APIResponse`
+
+**Description:** Retrieves daily profit/loss data for a specific DCA bot over a specified time period. Provides historical performance analytics with profit amounts in both BTC and USD for tracking bot profitability.
+
+**API Endpoint:** `GET /ver1/bots/{bot_id}/profit_by_day`  
+**Security:** SIGNED (requires API key + HMAC signature)  
+**Permission:** BOTS_READ
+
+**Parameters:**
+- `bot_id` (str, required): DCA bot unique identifier (3Commas bot ID)
+- `days` (int, optional): Number of days for profit data (1-365 days, default: 30)
+- `response_filter` (str, optional): Filter type for response ("full" or "display", default: "display")
+
+**Returns:** Daily profit data including:
+- Daily profit/loss amounts in BTC and USD
+- Date timestamps (both string format and Unix timestamp)  
+- Historical performance data for specified period
+- Profit trend analysis over time
+
+**Safety:** Read-only operation with no trading risks
+
+**Examples:** [DCA Bot Management Conversation](../conversations/dca-bot-management-conversation.md#analyzing-bot-performance)
+
 ## Usage Patterns
 
 ### Basic Bot Information Retrieval
@@ -96,6 +145,30 @@ recent_bots = await get_dca_bot_list(limit=20, sort_by="created_at", order_direc
 usdt_bots = await get_dca_bot_list(quote="USDT")
 ```
 
+### Strategy Configuration
+```python
+# Get all available strategies
+strategies = await get_available_strategy_list()
+
+# Get strategies with full details
+detailed_strategies = await get_available_strategy_list(response_filter="full")
+```
+
+### Bot Performance Analysis
+```python
+# Get 30-day profit data (default)
+profit_data = await get_dca_bot_profit_data("12345678")
+
+# Get 7-day profit data for recent performance
+recent_profit = await get_dca_bot_profit_data("12345678", days=7)
+
+# Get quarterly profit data for long-term analysis
+quarterly_profit = await get_dca_bot_profit_data("12345678", days=90)
+
+# Get full response for detailed analysis
+detailed_profit = await get_dca_bot_profit_data("12345678", days=30, response_filter="full")
+```
+
 ### Bot Status Monitoring
 The functions are commonly used for:
 - Checking bot configuration before making changes
@@ -109,17 +182,17 @@ The functions are commonly used for:
 ## Error Handling
 
 **Common Errors:**
-- `ValueError`: Empty or invalid bot_id parameter (get_dca_bot_details)
-- `ValueError`: Invalid parameter values (account_id, limit, offset ranges)
-- `APIError`: Bot not found (invalid bot_id for get_dca_bot_details)
+- `ValueError`: Empty or invalid bot_id parameter (get_dca_bot_details, get_dca_bot_profit_data)
+- `ValueError`: Invalid parameter values (account_id, limit, offset ranges, days: 1-365)
+- `APIError`: Bot not found (invalid bot_id for get_dca_bot_details, get_dca_bot_profit_data)
 - `AuthenticationError`: Invalid API credentials
 - `PermissionError`: Insufficient API key permissions (missing BOTS_READ)
 
 **Error Prevention:**
-- Ensure bot_id is valid and belongs to your account (get_dca_bot_details)
+- Ensure bot_id is valid and belongs to your account (get_dca_bot_details, get_dca_bot_profit_data)
 - Verify API key has BOTS_READ permission
 - Use proper bot ID format (numeric string)
-- Validate parameter ranges (limit: 1-1000, offset: ≥0, account_id: ≥1)
+- Validate parameter ranges (limit: 1-1000, offset: ≥0, account_id: ≥1, days: 1-365)
 - Use valid strategy values ("long" or "short")
 - Ensure proper date format for from_date (ISO format)
 
@@ -128,6 +201,8 @@ The functions are commonly used for:
 ### Related Tools
 - `get_dca_bot_list()` - Get all DCA bots for portfolio overview ✅
 - `get_dca_bot_details()` - Get detailed information for specific bot ✅
+- `get_available_strategy_list()` - Get available DCA bot trading strategies ✅
+- `get_dca_bot_profit_data()` - Get daily profit analytics for specific bot ✅
 - Future: `update_dca_bot()` - Modify bot configuration
 - Future: `get_dca_bot_stats()` - Detailed performance statistics
 

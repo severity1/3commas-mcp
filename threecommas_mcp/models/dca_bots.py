@@ -85,3 +85,22 @@ class GetAvailableStrategyListRequest(APIRequest):
     """Request parameters for available DCA bot strategies."""
 
     pass
+
+
+class GetDCABotProfitDataRequest(APIRequest):
+    """Request parameters for DCA bot profit data retrieval."""
+
+    bot_id: str = Field(
+        ...,
+        min_length=1,
+        pattern=r"^\d+$",
+        description="DCA bot unique identifier (numeric string)",
+        examples=["12345", "67890", "123456789"],
+    )
+    days: int = Field(
+        default=30,
+        ge=1,
+        le=365,
+        description="Number of days for profit data (1-365 days, default: 30)",
+        examples=[7, 30, 90, 180],
+    )
