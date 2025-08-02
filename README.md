@@ -80,6 +80,8 @@ Add to `claude_desktop_config.json`:
 ### DCA Bot Information  
 - `get_dca_bot_list()` - Get all DCA bots with status, configuration, and performance overview
 - `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
+- `get_available_strategy_list()` - Available DCA bot trading strategies with configuration options
+- `get_dca_bot_profit_data()` - Daily profit analytics with BTC/USD amounts and timestamps
 
 ### System
 - `health_check()` - Test API connectivity and authentication
@@ -103,6 +105,8 @@ All tools include `response_filter` parameter (`"display"` for essential data, `
 "Show details for my DCA bot ID 12345678"
 "What's the current performance of my Bitcoin bot?"
 "Check if my bot is active and show safety order configuration"
+"Show me available DCA bot strategies"
+"Get profit data for my bot over the last 30 days"
 ```
 
 **System Health:**

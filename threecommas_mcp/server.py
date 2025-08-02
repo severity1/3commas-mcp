@@ -29,6 +29,7 @@ mcp.tool()(health_check)
 mcp.tool()(dca_bots.get_dca_bot_details)
 mcp.tool()(dca_bots.get_dca_bot_list)
 mcp.tool()(dca_bots.get_available_strategy_list)
+mcp.tool()(dca_bots.get_dca_bot_profit_data)
 
 # Register account management tools
 mcp.tool()(account.get_connected_exchanges_and_wallets)

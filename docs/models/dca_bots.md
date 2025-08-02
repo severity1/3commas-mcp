@@ -89,6 +89,56 @@ request = GetDCABotListRequest(
 )
 ```
 
+### GetAvailableStrategyListRequest
+
+**Purpose:** Request model for retrieving available DCA bot trading strategies.
+
+**Used by:** [get_available_strategy_list](../tools/dca_bots.md#get-available-strategy-list)
+
+**Fields:** No additional fields beyond the base `response_filter` from `APIRequest`.
+
+**API Mapping:** No query parameters beyond response filtering.
+
+**Validation Rules:** Uses default APIRequest validation (response_filter only).
+
+**Safety:** Simple read-only operation with no trading risks.
+
+**Example:**
+```python
+request = GetAvailableStrategyListRequest()
+```
+
+The simplest request model with no parameters, demonstrating the minimal APIRequest inheritance pattern.
+
+### GetDCABotProfitDataRequest
+
+**Purpose:** Validates parameters for retrieving DCA bot profit analytics over specified time periods.
+
+**Used by:** [get_dca_bot_profit_data](../tools/dca_bots.md#get-dca-bot-profit-data)
+
+**Fields:**
+- `bot_id: str` - DCA bot identifier (numeric string pattern, required)
+- `days: int` - Number of days for profit data (1-365 range, default: 30)
+
+**API Mapping:**
+- `bot_id` → Path parameter `/bots/{bot_id}/profit_by_day`
+- `days` → Query parameter `?days={days}`
+
+**Validation Rules:**
+- `bot_id`: Must be numeric string format (validates 3Commas bot ID format)
+- `days`: Range validation (1-365) ensures reasonable time period requests
+
+**Safety:** Read-only operation with no trading risks. Time period validation prevents excessive API load, and bot ID validation ensures proper request format.
+
+**Example:**
+```python
+# Default 30-day profit data
+request = GetDCABotProfitDataRequest(bot_id="12345678")
+
+# Custom time period
+request = GetDCABotProfitDataRequest(bot_id="12345678", days=90)
+```
+
 ## API Response Handling
 
 Following our established pattern, API responses from DCA bot endpoints are returned as unvalidated `APIResponse = Dict[str, Any]`. This provides flexibility to handle varying response structures from the 3Commas API without validation overhead.

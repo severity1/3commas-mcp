@@ -8,7 +8,7 @@ https://docs.anthropic.com/en/docs/build-with-claude/token-counting
 Usage:
     python scripts/validate_endpoint.py <endpoint_name>
 
-Available endpoints: strategy_list, dca_bots, accounts, market_pairs
+Available endpoints: strategy_list, dca_bots, accounts, market_pairs, dca_bot_profit
 """
 
 import asyncio
@@ -37,6 +37,12 @@ TESTS: dict[str, list[tuple[str, dict[str, str] | None]]] = {
     "market_pairs": [
         ("ver1/market_pairs", None),
         ("ver1/market_pairs", {"market_code": "binance"}),
+    ],
+    "dca_bot_profit": [
+        ("ver1/bots/15565014/profit_by_day", None),
+        ("ver1/bots/15565014/profit_by_day", {"days": "7"}),
+        ("ver1/bots/15565014/profit_by_day", {"days": "30"}),
+        ("ver1/bots/15565014/profit_by_day", {"days": "90"}),
     ],
 }
 

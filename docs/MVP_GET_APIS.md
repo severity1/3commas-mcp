@@ -26,7 +26,7 @@ This document outlines the MVP implementation strategy focusing on GET method AP
 | 2.1 | `GET` Get List of DCA Bots | `/dca-bot/get-the-list-of-dca-bots` | Bot portfolio overview ✅ **Implemented** |
 | 2.2 | `GET` Available Strategy List | `/dca-bot/available-strategy-list` | Strategy options for bots ✅ **Implemented** |
 | 2.3 | `GET` Get DCA Bot | `/dca-bot/get-dca-bot` | Individual DCA bot details ✅ **Implemented** |
-| 2.4 | `GET` Get DCA Bot Profit Data | `/dca-bot/get-dca-bot-profit-data` | DCA bot analytics |
+| 2.4 | `GET` Get DCA Bot Profit Data | `/dca-bot/get-dca-bot-profit-data` | DCA bot analytics ✅ **Implemented** |
 | 2.5 | `GET` Get Blacklist of Pairs | `/dca-bot/get-blacklist-of-pairs` | Trading restrictions |
 
 ### **Phase 3: Account & Trading Data (12 APIs)**
