@@ -8,7 +8,11 @@ from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
 from ..models.base import APIResponse, ResponseFilter, StrategyType
-from ..models.dca_bots import GetDCABotDetailsRequest, GetDCABotListRequest
+from ..models.dca_bots import (
+    GetDCABotDetailsRequest,
+    GetDCABotListRequest,
+    GetAvailableStrategyListRequest,
+)
 
 
 @handle_api_errors
@@ -135,6 +139,58 @@ async def get_dca_bot_list(
 
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/bots", params=params, method="GET")
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, request.response_filter)
+
+    return response
+
+
+@handle_api_errors
+async def get_available_strategy_list(
+    account_id: int = 0, response_filter: str = "display"
+) -> APIResponse:
+    """Get list of available DCA bot strategies.
+
+    Retrieves all available trading strategies for DCA bots. The API returns
+    comprehensive strategy information including strategy names, types, options,
+    and account compatibility without requiring type/direction filters.
+
+    API endpoint: GET /ver1/bots/strategy_list
+    Security: SIGNED (requires API key + HMAC signature)
+    Permission: BOTS_READ
+
+    Args:
+        account_id: 3Commas exchange account ID to filter strategies by account compatibility (0 = all accounts, default: 0)
+        response_filter: Filter type for response ("full" or "display", default: "display")
+
+    Returns:
+        Complete strategy catalog including:
+        - All available strategy types (QFL, RSI, Trading View, Manual, etc.)
+        - Strategy configuration options and parameters
+        - Account type compatibility information
+        - Payment requirements and beta status
+        - Strategy-specific settings and constraints
+
+    Raises:
+        ValueError: If account_id is invalid or response_filter is invalid
+        APIError: If API request fails or access denied
+
+    See:
+        docs/tools/dca_bots.md#get-available-strategy-list for usage examples
+    """
+    # Validate inputs using Pydantic model
+    request = GetAvailableStrategyListRequest(
+        account_id=account_id,
+        response_filter=ResponseFilter(response_filter),
+    )
+
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
+
+    # Make API request using existing authentication infrastructure
+    response = await api_request("ver1/bots/strategy_list", params=params, method="GET")
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:

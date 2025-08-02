@@ -114,3 +114,28 @@ class GetDCABotListRequest(APIRequest):
         description="Filter by quote currency (e.g., USDT, BTC)",
         examples=["USDT", "BTC", "ETH"],
     )
+
+
+class GetAvailableStrategyListRequest(APIRequest):
+    """Request model for getting available DCA bot strategies.
+
+    Request parameters for retrieving all available trading strategies
+    for DCA bots. The API returns comprehensive strategy information
+    without requiring type/direction filters.
+
+    API Mapping:
+        account_id -> account_id (query parameter, optional)
+
+    API Endpoint: GET /ver1/bots/strategy_list
+    Reference: https://developers.3commas.io/dca-bot/available-strategy-list
+
+    See:
+        docs/models/dca_bots.md#get-available-strategy-list-request for reference
+    """
+
+    account_id: int = Field(
+        default=0,
+        ge=0,
+        description="Optional 3Commas exchange account ID to filter strategies by account compatibility (0 = all accounts)",
+        examples=[0, 12345, 67890, 123456789],
+    )

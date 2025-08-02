@@ -63,7 +63,7 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 
 ### Phase 2: DCA Bot Management APIs (5 APIs) 🚧 **IN PROGRESS**
 - ✅ **Priority 2.1**: `GET` Get List of DCA Bots - Bot portfolio overview
-- ⏸️ **Priority 2.2**: `GET` Available Strategy List - Strategy options for bots
+- ✅ **Priority 2.2**: `GET` Available Strategy List - Strategy options for bots
 - ✅ **Priority 2.3**: `GET` Get DCA Bot - Individual DCA bot details **[IMPLEMENTED]**
 - ⏸️ **Priority 2.4**: `GET` Get DCA Bot Profit Data - DCA bot analytics  
 - ⏸️ **Priority 2.5**: `GET` Get Blacklist of Pairs - Trading restrictions
@@ -120,11 +120,11 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 - ✅ **Phase 1 Foundation APIs**: All 4 APIs implemented and documented
 - ✅ **GET DCA Bot Details**: Fully implemented and tested
 - **Pattern Established**: All future GET APIs follow consistent implementation pattern
-- 🚧 **Phase 2 Bot Management**: 2/8 APIs completed, ready to continue with remaining 6 APIs
+- 🚧 **Phase 2 Bot Management**: 3/5 APIs completed, ready to continue with remaining 2 APIs
 
 ### Next Milestones
 1. ✅ **Foundation APIs Completion**: 4 essential GET APIs providing core account and market data
-2. **Bot Management APIs**: 6 remaining GET APIs for bot portfolio and analytics
+2. **Bot Management APIs**: 2 remaining GET APIs for bot portfolio and analytics
 3. **Account & Trading Data APIs**: 12 GET APIs for comprehensive account management
 4. **Advanced Analytics APIs**: 11 GET APIs for detailed analytics and operational data
 5. **MVP Completion**: All 35 GET APIs implemented with comprehensive documentation
@@ -141,14 +141,13 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 | Phase | APIs | Completed | In Progress | Pending | Status |
 |-------|------|-----------|-------------|---------|--------|
 | Phase 1: Foundation | 4 | 4 | 0 | 0 | ✅ Completed |
-| Phase 2: DCA Bot Management | 5 | 2 | 0 | 3 | 🚧 In progress |
+| Phase 2: DCA Bot Management | 5 | 3 | 0 | 2 | 🚧 In progress |
 | Phase 3: Account & Trading | 12 | 0 | 0 | 12 | ⏸️ Awaiting Phase 2 |
 | Phase 4: Advanced Analytics | 8 | 0 | 0 | 8 | ⏸️ Awaiting Phase 3 |
 
-### Next 3 Priority APIs for Implementation (Phase 2 Completion)
-1. **Priority 2.2**: `GET` Available Strategy List ⏸️
-2. **Priority 2.4**: `GET` Get DCA Bot Profit Data ⏸️
-3. **Priority 2.5**: `GET` Get Blacklist of Pairs ⏸️
+### Next 2 Priority APIs for Implementation (Phase 2 Completion)
+1. **Priority 2.4**: `GET` Get DCA Bot Profit Data ⏸️
+2. **Priority 2.5**: `GET` Get Blacklist of Pairs ⏸️
 
 ### Quality Gates Status
 - ✅ **Implementation Pattern**: Established with get_dca_bot_details

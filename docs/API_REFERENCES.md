@@ -71,7 +71,7 @@ For each implemented API, documentation is available in multiple layers:
 
 ### DCA Bot APIs (Automated Trading - DCA Strategy)
 - [DCA Bot Entity](https://developers.3commas.io/dca-bot/dca-bot-entity) - DCA bot data structure and field definitions
-- [⏸️] `GET` [Available Strategy List](https://developers.3commas.io/dca-bot/available-strategy-list) - Get list of available trading strategies
+- [✅] `GET` [Available Strategy List](https://developers.3commas.io/dca-bot/available-strategy-list) - Get list of available trading strategies
 - [⏸️] `POST` [Create DCA Bot](https://developers.3commas.io/dca-bot/create-dca-bot) - Create new DCA trading bot
 - [⏸️] `PATCH` [Edit DCA Bot](https://developers.3commas.io/dca-bot/edit-dca-bot) - Modify existing DCA bot configuration
 - [✅] `GET` [Get DCA Bot](https://developers.3commas.io/dca-bot/get-dca-bot) - Retrieve specific DCA bot details
