@@ -17,7 +17,7 @@ dependencies = [
     "black>=25.1.0",
     "mypy>=1.17.0",
     "ruff>=0.12.5",
-    "aiohttp>=3.12.15",
+    "anthropic>=0.60.0",
 ]
 packages = ["threecommas_mcp", "api", "models", "tools", "utils"]
 

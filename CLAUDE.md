@@ -14,14 +14,19 @@
 
 ## Development Workflow
 ### Implementing New MCP Tools
-1. Create Pydantic request model in `models/{domain}.py` (inherit from APIRequest @threecommas_mcp/models/base.py:52)
-2. Implement tool function in `tools/{domain}.py`:
+1. **API Validation First** - Test raw API endpoint before implementation:
+   ```bash
+   python scripts/test_api.py <endpoint> [key=value ...]
+   python scripts/validate_endpoint.py <endpoint_name>  # For common endpoints
+   ```
+2. Create Pydantic request model in `models/{domain}.py` (inherit from APIRequest @threecommas_mcp/models/base.py:52)
+3. Implement tool function in `tools/{domain}.py`:
    - Use `@handle_api_errors` decorator (@threecommas_mcp/utils/decorators.py:11)
    - Include `response_filter: str = "display"` parameter
    - Call `api_request()` from api/client.py
    - Apply `filter_response()` before returning (@threecommas_mcp/utils/response_filter.py:13)
-3. Register tool in server.py with `mcp.tool()(function_name)`
-4. Run quality tests
+4. Register tool in server.py with `mcp.tool()(function_name)`
+5. Run quality tests
 5. **Create/Update Documentation System**:
    - Add/update function reference in `docs/tools/{domain}.md` (parameters, returns, examples, error handling)
    - Add/update model documentation in `docs/models/{domain}.md` (request models, validation patterns, safety considerations)

@@ -11,20 +11,7 @@ from .base import APIRequest, LimitType
 
 
 class GetAllMarketPairsRequest(APIRequest):
-    """Request model for getting all market pairs.
-
-    Request parameters for retrieving all available trading pairs,
-    optionally filtered by market code.
-
-    API Mapping:
-        market_code -> market_code (optional query parameter)
-
-    API Endpoint: GET /ver1/accounts/market_pairs
-    Reference: https://developers.3commas.io/market-data/all-market-pairs
-
-    See:
-        docs/models/market_data.md#get-all-market-pairs-request for reference
-    """
+    """Request parameters for market pairs retrieval with optional filtering."""
 
     market_code: str | None = Field(
         None,
@@ -36,22 +23,7 @@ class GetAllMarketPairsRequest(APIRequest):
 
 
 class GetCurrencyRatesRequest(APIRequest):
-    """Request model for getting currency rates and limits.
-
-    Request parameters for retrieving currency exchange rates and
-    trading limits for a specific market and trading pair.
-
-    API Mapping:
-        market_code -> market_code (query parameter)
-        pair -> pair (query parameter)
-        limit_type -> limit_type (optional query parameter)
-
-    API Endpoint: GET /ver1/accounts/currency_rates
-    Reference: https://developers.3commas.io/market-data/currency-rates-and-limits
-
-    See:
-        docs/models/market_data.md#get-currency-rates-request for reference
-    """
+    """Request parameters for currency rates and trading limits."""
 
     market_code: str = Field(
         ...,
@@ -74,13 +46,6 @@ class GetCurrencyRatesRequest(APIRequest):
 
 
 class GetSupportedMarketsRequest(APIRequest):
-    """Request model for getting supported markets.
-
-    This is a simple request model for the get_supported_markets
-    endpoint. No parameters are required for this endpoint.
-
-    See:
-        docs/models/market_data.md#get-supported-markets-request for reference
-    """
+    """Request parameters for supported markets retrieval."""
 
     pass  # No parameters required for this endpoint

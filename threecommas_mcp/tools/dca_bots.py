@@ -19,34 +19,15 @@ from ..models.dca_bots import (
 async def get_dca_bot_details(
     bot_id: str, include_events: bool = False, response_filter: str = "display"
 ) -> APIResponse:
-    """Get details for a specific DCA bot.
-
-    Retrieves comprehensive information about a DCA bot including configuration,
-    active deals, trading parameters, and performance data. This is useful for
-    checking bot settings, monitoring performance, or preparing for bot updates.
-
-    API endpoint: GET /ver1/bots/{bot_id}/show
-    Security: SIGNED (requires API key + HMAC signature)
-    Permission: BOTS_READ
+    """Get comprehensive details for a specific DCA bot.
 
     Args:
-        bot_id: DCA bot unique identifier (3Commas bot ID)
-        include_events: Include related events in response (default: False)
-        response_filter: Filter type for response ("full" or "display", default: "display")
+        bot_id: DCA bot unique identifier
+        include_events: Include related events (default: False)
+        response_filter: Response detail level ("full" or "display")
 
     Returns:
-        Complete DCA bot details including:
-        - Bot configuration (pair, volumes, strategy)
-        - Active deals information
-        - Trading parameters and settings
-        - Performance metrics and status
-
-    Raises:
-        ValueError: If bot_id is empty or invalid, or if response_filter is invalid
-        APIError: If bot not found or access denied
-
-    See:
-        docs/tools/dca_bots.md#get-dca-bot-details for usage examples
+        Bot configuration, active deals, trading parameters, and performance metrics.
     """
     # Validate inputs using Pydantic model
     request = GetDCABotDetailsRequest(
@@ -83,42 +64,22 @@ async def get_dca_bot_list(
     quote: str | None = None,
     response_filter: str = "display",
 ) -> APIResponse:
-    """Get list of DCA bots for the user's account.
-
-    Retrieves the user's DCA bot portfolio with optional filtering and sorting.
-    This provides an overview of all DCA bots including their status, configuration,
-    and performance data. Essential for bot management and portfolio analysis.
-
-    API endpoint: GET /ver1/bots
-    Security: SIGNED (requires API key + HMAC signature)
-    Permission: BOTS_READ
+    """Get list of DCA bots with optional filtering and sorting.
 
     Args:
-        account_id: Filter bots by specific 3Commas exchange account ID (0 = all accounts, default: 0)
-        strategy: Filter by trading strategy (StrategyType.LONG or StrategyType.SHORT)
-        order_direction: Sort order ("ASC" or "DESC", default: "DESC")
-        limit: Maximum number of bots to return (1-1000, default: 50)
-        offset: Number of bots to skip for pagination (default: 0)
-        from_date: Filter bots created from this date (ISO format)
+        account_id: Exchange account ID (0 = all accounts)
+        strategy: Trading strategy filter (long/short)
+        order_direction: Sort order ("ASC" or "DESC")
+        limit: Maximum bots to return (1-1000)
+        offset: Pagination offset
+        from_date: Filter bots created from date (ISO format)
         scope: Filter scope for bot selection
-        sort_by: Field to sort by (created_at, updated_at, etc.)
-        quote: Filter by quote currency (e.g., "USDT", "BTC")
-        response_filter: Filter type for response ("full" or "display", default: "display")
+        sort_by: Field to sort by
+        quote: Filter by quote currency
+        response_filter: Response detail level ("full" or "display")
 
     Returns:
-        List of DCA bots including:
-        - Bot configuration (pairs, volumes, strategies)
-        - Status and enabled state
-        - Active deals information
-        - Performance metrics
-        - Trading parameters
-
-    Raises:
-        ValueError: If parameters are invalid or outside acceptable ranges
-        APIError: If API request fails or access denied
-
-    See:
-        docs/tools/dca_bots.md#get-dca-bot-list for usage examples
+        List of DCA bots with configuration, status, deals, and performance data.
     """
     # Validate inputs using Pydantic model
     request = GetDCABotListRequest(
@@ -148,41 +109,17 @@ async def get_dca_bot_list(
 
 
 @handle_api_errors
-async def get_available_strategy_list(
-    account_id: int = 0, response_filter: str = "display"
-) -> APIResponse:
-    """Get list of available DCA bot strategies.
-
-    Retrieves all available trading strategies for DCA bots. The API returns
-    comprehensive strategy information including strategy names, types, options,
-    and account compatibility without requiring type/direction filters.
-
-    API endpoint: GET /ver1/bots/strategy_list
-    Security: SIGNED (requires API key + HMAC signature)
-    Permission: BOTS_READ
+async def get_available_strategy_list(response_filter: str = "display") -> APIResponse:
+    """Get all available DCA bot trading strategies.
 
     Args:
-        account_id: 3Commas exchange account ID to filter strategies by account compatibility (0 = all accounts, default: 0)
-        response_filter: Filter type for response ("full" or "display", default: "display")
+        response_filter: Response detail level ("full" or "display")
 
     Returns:
-        Complete strategy catalog including:
-        - All available strategy types (QFL, RSI, Trading View, Manual, etc.)
-        - Strategy configuration options and parameters
-        - Account type compatibility information
-        - Payment requirements and beta status
-        - Strategy-specific settings and constraints
-
-    Raises:
-        ValueError: If account_id is invalid or response_filter is invalid
-        APIError: If API request fails or access denied
-
-    See:
-        docs/tools/dca_bots.md#get-available-strategy-list for usage examples
+        Complete catalog of available strategies with configuration options and compatibility.
     """
     # Validate inputs using Pydantic model
     request = GetAvailableStrategyListRequest(
-        account_id=account_id,
         response_filter=ResponseFilter(response_filter),
     )
 
