@@ -71,7 +71,7 @@ For each implemented API, documentation is available in multiple layers:
 
 ### DCA Bot APIs (Automated Trading - DCA Strategy)
 - [DCA Bot Entity](https://developers.3commas.io/dca-bot/dca-bot-entity) - DCA bot data structure and field definitions
-- [⏸️] `GET` [Available Strategy List](https://developers.3commas.io/dca-bot/available-strategy-list) - Get list of available trading strategies
+- [✅] `GET` [Available Strategy List](https://developers.3commas.io/dca-bot/available-strategy-list) - Get list of available trading strategies
 - [⏸️] `POST` [Create DCA Bot](https://developers.3commas.io/dca-bot/create-dca-bot) - Create new DCA trading bot
 - [⏸️] `PATCH` [Edit DCA Bot](https://developers.3commas.io/dca-bot/edit-dca-bot) - Modify existing DCA bot configuration
 - [✅] `GET` [Get DCA Bot](https://developers.3commas.io/dca-bot/get-dca-bot) - Retrieve specific DCA bot details
@@ -89,20 +89,22 @@ For each implemented API, documentation is available in multiple layers:
 - [⏸️⚠️] `POST` [Delete DCA Bot](https://developers.3commas.io/dca-bot/delete-dca-bot) - Permanently remove DCA bot **[Destructive]**
 - [⏸️] `GET` [DCA Bot Deals Stats](https://developers.3commas.io/dca-bot/dca-bot-deals-stats) - Statistics for bot deals and trades
 
-### Grid Bot APIs (Automated Trading - Grid Strategy)
+### Grid Bot APIs (Automated Trading - Grid Strategy) **[EXCLUDED FROM MVP]**
+*Grid Bot APIs are not included in the current MVP scope as they are not actively used.*
+
 - [Grid Bot Entity](https://developers.3commas.io/grid-bot/grid-bot-entity) - Grid bot data structure and field definitions
-- [⏸️] `POST` [Create Grid Bot](https://developers.3commas.io/grid-bot/create-grid-bot) - Create new grid trading bot
-- [⏸️] `PATCH` [Edit Grid Bot](https://developers.3commas.io/grid-bot/edit-grid-bot) - Modify existing grid bot configuration
-- [⏸️] `GET` [Get Grid Bot](https://developers.3commas.io/grid-bot/get-grid-bot) - Retrieve specific grid bot details
-- [⏸️] `GET` [Get List of Grid Bots](https://developers.3commas.io/grid-bot/get-the-list-of-grid-bots) - List all grid bots for account
-- [⏸️] `GET` [Get Profit Details](https://developers.3commas.io/grid-bot/get-profit-details) - Retrieve grid bot profit analytics
-- [⏸️] `POST` [Disable Grid Bot](https://developers.3commas.io/grid-bot/disable-grid-bot) - Stop grid bot trading
-- [⏸️] `POST` [Enable Grid Bot](https://developers.3commas.io/grid-bot/enable_grid_bot) - Start grid bot trading
-- [⏸️⚠️] `DELETE` [Delete Grid Bot](https://developers.3commas.io/grid-bot/delete-grid-bot) - Permanently remove grid bot **[Destructive]**
-- [⏸️] `POST` [Set Note to Grid Bot](https://developers.3commas.io/grid-bot/set-a-note-to-grid-bot) - Add or update grid bot notes
-- [⏸️] `GET` [Required Balances for Launch](https://developers.3commas.io/grid-bot/required-balances-for-launch) - Get minimum balance requirements
-- [⏸️] `GET` [Grid Bot Events](https://developers.3commas.io/grid-bot/grid-bot-events) - Retrieve grid bot activity events
-- [⏸️] `GET` [Get Market Orders of Grid Bot](https://developers.3commas.io/grid-bot/get-market-orders-of-grid-bot) - List grid bot market orders
+- [❌] `POST` [Create Grid Bot](https://developers.3commas.io/grid-bot/create-grid-bot) - Create new grid trading bot **[Not in MVP]**
+- [❌] `PATCH` [Edit Grid Bot](https://developers.3commas.io/grid-bot/edit-grid-bot) - Modify existing grid bot configuration **[Not in MVP]**
+- [❌] `GET` [Get Grid Bot](https://developers.3commas.io/grid-bot/get-grid-bot) - Retrieve specific grid bot details **[Not in MVP]**
+- [❌] `GET` [Get List of Grid Bots](https://developers.3commas.io/grid-bot/get-the-list-of-grid-bots) - List all grid bots for account **[Not in MVP]**
+- [❌] `GET` [Get Profit Details](https://developers.3commas.io/grid-bot/get-profit-details) - Retrieve grid bot profit analytics **[Not in MVP]**
+- [❌] `POST` [Disable Grid Bot](https://developers.3commas.io/grid-bot/disable-grid-bot) - Stop grid bot trading **[Not in MVP]**
+- [❌] `POST` [Enable Grid Bot](https://developers.3commas.io/grid-bot/enable_grid_bot) - Start grid bot trading **[Not in MVP]**
+- [❌] `DELETE` [Delete Grid Bot](https://developers.3commas.io/grid-bot/delete-grid-bot) - Permanently remove grid bot **[Not in MVP]**
+- [❌] `POST` [Set Note to Grid Bot](https://developers.3commas.io/grid-bot/set-a-note-to-grid-bot) - Add or update grid bot notes **[Not in MVP]**
+- [❌] `GET` [Required Balances for Launch](https://developers.3commas.io/grid-bot/required-balances-for-launch) - Get minimum balance requirements **[Not in MVP]**
+- [❌] `GET` [Grid Bot Events](https://developers.3commas.io/grid-bot/grid-bot-events) - Retrieve grid bot activity events **[Not in MVP]**
+- [❌] `GET` [Get Market Orders of Grid Bot](https://developers.3commas.io/grid-bot/get-market-orders-of-grid-bot) - List grid bot market orders **[Not in MVP]**
 
 ### Smart Trading APIs (Advanced Manual Trading)
 - [SmartTrade Entity](https://developers.3commas.io/smart-trade/smart-trade-entity) - SmartTrade data structure and field definitions

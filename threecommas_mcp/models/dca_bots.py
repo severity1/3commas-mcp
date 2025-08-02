@@ -11,21 +11,7 @@ from .base import APIRequest, StrategyType
 
 
 class GetDCABotDetailsRequest(APIRequest):
-    """Request model for getting DCA bot details.
-
-    Request parameters for retrieving comprehensive information about
-    a specific DCA bot including configuration, deals, and performance.
-
-    API Mapping:
-        bot_id -> {bot_id} (path parameter)
-        include_events -> include_events (query parameter)
-
-    API Endpoint: GET /ver1/bots/{bot_id}/show
-    Reference: https://developers.3commas.io/dca-bot/get-dca-bot
-
-    See:
-        docs/models/dca_bots.md#get-dca-bot-details-request for reference
-    """
+    """Request parameters for DCA bot details retrieval."""
 
     bot_id: str = Field(
         ...,
@@ -40,28 +26,7 @@ class GetDCABotDetailsRequest(APIRequest):
 
 
 class GetDCABotListRequest(APIRequest):
-    """Request model for getting list of DCA bots.
-
-    Request parameters for retrieving the user's DCA bot portfolio
-    with optional filtering and sorting capabilities.
-
-    API Mapping:
-        account_id -> account_id (query parameter)
-        strategy -> strategy (query parameter)
-        order_direction -> order_direction (query parameter)
-        limit -> limit (query parameter)
-        offset -> offset (query parameter)
-        from -> from (query parameter)
-        scope -> scope (query parameter)
-        sort_by -> sort_by (query parameter)
-        quote -> quote (query parameter)
-
-    API Endpoint: GET /ver1/bots
-    Reference: https://developers.3commas.io/dca-bot/get-the-list-of-dca-bots
-
-    See:
-        docs/models/dca_bots.md#get-dca-bot-list-request for reference
-    """
+    """Request parameters for DCA bot list with filtering and sorting options."""
 
     account_id: int = Field(
         default=0,
@@ -114,3 +79,9 @@ class GetDCABotListRequest(APIRequest):
         description="Filter by quote currency (e.g., USDT, BTC)",
         examples=["USDT", "BTC", "ETH"],
     )
+
+
+class GetAvailableStrategyListRequest(APIRequest):
+    """Request parameters for available DCA bot strategies."""
+
+    pass

@@ -4,9 +4,9 @@
 
 This document outlines the MVP implementation strategy focusing on GET method APIs first. GET APIs provide read-only access to essential data without financial risk, making them ideal for establishing robust patterns and delivering immediate user value.
 
-**Strategy**: Implement all 35 GET APIs across 4 phases, building from foundation to advanced analytics.
+**Strategy**: Implement all 29 GET APIs across 4 phases, building from foundation to advanced analytics. Grid Bot APIs excluded from MVP scope.
 
-## Implementation Priority (35 Total GET APIs)
+## Implementation Priority (29 Total GET APIs)
 
 ### **Phase 1: Foundation APIs (4 APIs)** ✅ **COMPLETED**
 *Essential account and market data required for any trading operation*
@@ -18,19 +18,16 @@ This document outlines the MVP implementation strategy focusing on GET method AP
 | 1.3 | `GET` Currency Rates and Limits | `/market-data/currency-rates-and-limits` | Required for trading decisions ✅ **Implemented** |
 | 1.4 | `GET` Supported Markets List | `/market-data/supported_markets_list` | Exchange compatibility ✅ **Implemented** |
 
-### **Phase 2: Bot Management APIs (8 APIs)**
-*Core bot operations providing highest user value*
+### **Phase 2: DCA Bot Management APIs (5 APIs)**
+*Core DCA bot operations providing highest user value*
 
 | Priority | API | Endpoint | Description |
 |----------|-----|----------|-------------|
-| 2.1 | `GET` Get List of DCA Bots | `/dca-bot/get-the-list-of-dca-bots` | Bot portfolio overview |
-| 2.2 | `GET` Get List of Grid Bots | `/grid-bot/get-the-list-of-grid-bots` | Grid bot portfolio |
-| 2.3 | `GET` Available Strategy List | `/dca-bot/available-strategy-list` | Strategy options for bots |
-| 2.4 | `GET` Get DCA Bot | `/dca-bot/get-dca-bot` | Individual DCA bot details ✅ **Already Implemented** |
-| 2.5 | `GET` Get Grid Bot | `/grid-bot/get-grid-bot` | Individual grid bot details |
-| 2.6 | `GET` Get Profit Details (Grid) | `/grid-bot/get-profit-details` | Grid bot analytics |
-| 2.7 | `GET` Get DCA Bot Profit Data | `/dca-bot/get-dca-bot-profit-data` | DCA bot analytics |
-| 2.8 | `GET` Get Blacklist of Pairs | `/dca-bot/get-blacklist-of-pairs` | Trading restrictions |
+| 2.1 | `GET` Get List of DCA Bots | `/dca-bot/get-the-list-of-dca-bots` | Bot portfolio overview ✅ **Implemented** |
+| 2.2 | `GET` Available Strategy List | `/dca-bot/available-strategy-list` | Strategy options for bots ✅ **Implemented** |
+| 2.3 | `GET` Get DCA Bot | `/dca-bot/get-dca-bot` | Individual DCA bot details ✅ **Implemented** |
+| 2.4 | `GET` Get DCA Bot Profit Data | `/dca-bot/get-dca-bot-profit-data` | DCA bot analytics |
+| 2.5 | `GET` Get Blacklist of Pairs | `/dca-bot/get-blacklist-of-pairs` | Trading restrictions |
 
 ### **Phase 3: Account & Trading Data (12 APIs)**
 *Account management and trading history*
@@ -50,7 +47,7 @@ This document outlines the MVP implementation strategy focusing on GET method AP
 | 3.11 | `GET` Available Reduce Funds | `/smart-trade/available-reduce-funds` | Fund management data |
 | 3.12 | `GET` Available Market Subtypes | `/account/available-market-subtypes` | Market type support |
 
-### **Phase 4: Advanced Analytics (11 APIs)**
+### **Phase 4: Advanced Analytics (8 APIs)**
 *Detailed analytics and operational data*
 
 | Priority | API | Endpoint | Description |
@@ -58,14 +55,11 @@ This document outlines the MVP implementation strategy focusing on GET method AP
 | 4.1 | `GET` DCA Bot Deals Stats | `/dca-bot/dca-bot-deals-stats` | Deal performance metrics |
 | 4.2 | `GET` Get DCA Bot Stats | `/dca-bot/get-dca-bot-stats` | Bot performance statistics |
 | 4.3 | `GET` Get DCA Bot Stats by Date | `/dca-bot/get-dca-bot-stats-by-date` | Time-based analytics |
-| 4.4 | `GET` Grid Bot Events | `/grid-bot/grid-bot-events` | Event history |
-| 4.5 | `GET` Get Market Orders of Grid Bot | `/grid-bot/get-market-orders-of-grid-bot` | Order details |
-| 4.6 | `GET` Required Balances for Launch | `/grid-bot/required-balances-for-launch` | Pre-flight checks |
-| 4.7 | `GET` Get Trades of SmartTrade | `/smart-trade/trades/get-trades-of-smart-trade` | Trade execution details |
-| 4.8 | `GET` Deposit/Withdraw Networks Info | `/account/deposit-or-withdraw-networks-info` | Network options |
-| 4.9 | `GET` User Deposit Data | `/account/user-deposit-data` | Deposit history |
-| 4.10 | `GET` Get List of Active Entities | `/account/get-the-list-of-active-entities` | Active trading entities |
-| 4.11 | `GET` Currency Rates with Leverage Data | `/market-data/currency-rates-and-limits-with-leverage-data` | Rates with leverage info |
+| 4.4 | `GET` Get Trades of SmartTrade | `/smart-trade/trades/get-trades-of-smart-trade` | Trade execution details |
+| 4.5 | `GET` Deposit/Withdraw Networks Info | `/account/deposit-or-withdraw-networks-info` | Network options |
+| 4.6 | `GET` User Deposit Data | `/account/user-deposit-data` | Deposit history |
+| 4.7 | `GET` Get List of Active Entities | `/account/get-the-list-of-active-entities` | Active trading entities |
+| 4.8 | `GET` Currency Rates with Leverage Data | `/market-data/currency-rates-and-limits-with-leverage-data` | Rates with leverage info |
 
 ## Technical Strategy
 
