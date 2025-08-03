@@ -301,6 +301,47 @@ Your portfolio shows strong performance with good diversification across major a
 
 Would you like me to compare this with your short positions or analyze performance by time period?"
 
+### Managing Trading Restrictions
+
+**Scenario:** User wants to understand which trading pairs are restricted for DCA bot creation.
+
+**User:** "Before I create a new DCA bot, I want to see which trading pairs are blacklisted. Can you show me the current restrictions?"
+
+**Claude Response Process:**
+1. Calls `get_blacklist_of_pairs()` to retrieve current restrictions
+2. Analyzes blacklisted pairs and their implications
+3. Provides guidance on safe pair selection
+
+**Expected Claude Response:**
+"I'll check the current trading pair restrictions for DCA bot creation.
+
+**Trading Pair Blacklist:**
+
+**Currently Restricted Pairs (8 pairs):**
+1. **LUNA/USDT** - Restricted due to market volatility
+2. **FTT/USDT** - Restricted due to regulatory concerns  
+3. **UST/USDT** - Restricted due to stablecoin risks
+4. **SHIB/BTC** - Restricted due to high volatility risk
+5. **DOGE/BTC** - Restricted due to meme coin volatility
+6. **APE/USDT** - Restricted due to speculative nature
+7. **LUNC/USDT** - Restricted due to extreme volatility
+8. **USTC/USDT** - Restricted due to depegging history
+
+**Risk Categories:**
+- **Regulatory Risk:** 2 pairs (FTT, UST)
+- **High Volatility:** 4 pairs (LUNA, SHIB, DOGE, LUNC)
+- **Stablecoin Risk:** 2 pairs (UST, USTC)
+
+**Safe Alternatives:**
+Instead of restricted pairs, consider these established alternatives:
+- **For BTC exposure:** BTC/USDT, ETH/USDT
+- **For altcoin exposure:** ADA/USDT, DOT/USDT, MATIC/USDT
+- **For stablecoin pairs:** Any major altcoin paired with USDT or BUSD
+
+**Recommendation:** Focus on major cryptocurrencies with USDT pairing for optimal DCA bot performance. Avoid the blacklisted pairs as they carry elevated risk profiles that could impact your trading strategy.
+
+Would you like me to help you select an appropriate trading pair for your new DCA bot?"
+
 ## Tools Used
 
 ### Primary Tools
@@ -308,6 +349,7 @@ Would you like me to compare this with your short positions or analyze performan
 - **get_dca_bot_list**: [Function Reference](../tools/dca_bots.md#get-dca-bot-list)
 - **get_available_strategy_list**: [Function Reference](../tools/dca_bots.md#get-available-strategy-list)
 - **get_dca_bot_profit_data**: [Function Reference](../tools/dca_bots.md#get-dca-bot-profit-data)
+- **get_blacklist_of_pairs**: [Function Reference](../tools/dca_bots.md#get-blacklist-of-pairs)
 
 ### Future Integrations
 - `update_dca_bot()` - For implementing optimizations

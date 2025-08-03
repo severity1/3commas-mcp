@@ -12,6 +12,7 @@ from ..models.dca_bots import (
     GetDCABotDetailsRequest,
     GetDCABotListRequest,
     GetAvailableStrategyListRequest,
+    GetBlacklistOfPairsRequest,
     GetDCABotProfitDataRequest,
 )
 
@@ -164,6 +165,36 @@ async def get_dca_bot_profit_data(
     # Make API request using existing authentication infrastructure
     response = await api_request(
         f"ver1/bots/{request.bot_id}/profit_by_day", params=params, method="GET"
+    )
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, request.response_filter)
+
+    return response
+
+
+@handle_api_errors
+async def get_blacklist_of_pairs(response_filter: str = "display") -> APIResponse:
+    """Get blacklisted trading pairs for DCA bots.
+
+    Args:
+        response_filter: Response detail level ("full" or "display")
+
+    Returns:
+        List of blacklisted trading pairs with restrictions and configurations.
+    """
+    # Validate inputs using Pydantic model
+    request = GetBlacklistOfPairsRequest(
+        response_filter=ResponseFilter(response_filter),
+    )
+
+    # Build query parameters using automatic Pydantic conversion
+    params = request.to_query_params()
+
+    # Make API request using existing authentication infrastructure
+    response = await api_request(
+        "ver1/bots/pairs_black_list", params=params, method="GET"
     )
 
     # Apply response filtering for token efficiency

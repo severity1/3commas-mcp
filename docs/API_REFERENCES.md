@@ -82,7 +82,7 @@ For each implemented API, documentation is available in multiple layers:
 - [⏸️⚠️] `POST` [Close DCA Bot at Market Price](https://developers.3commas.io/dca-bot/close-dca-bot-at-market-price) - Force close bot positions at market price **[High Risk]**
 - [⏸️⚠️] `POST` [Cancel DCA Bot](https://developers.3commas.io/dca-bot/cancel-dca-bot) - Cancel DCA bot and all active deals **[High Risk]**
 - [⏸️] `POST` [Add Pairs to Blacklist](https://developers.3commas.io/dca-bot/add-pairs-to-blacklist) - Add trading pairs to blacklist
-- [⏸️] `GET` [Get Blacklist of Pairs](https://developers.3commas.io/dca-bot/get-blacklist-of-pairs) - Retrieve blacklisted trading pairs
+- [✅] `GET` [Get Blacklist of Pairs](https://developers.3commas.io/dca-bot/get-blacklist-of-pairs) - Retrieve blacklisted trading pairs
 - [✅] `GET` [Get DCA Bot Profit Data](https://developers.3commas.io/dca-bot/get-dca-bot-profit-data) - Retrieve bot profit analytics
 - [⏸️] `GET` [Get DCA Bot Stats](https://developers.3commas.io/dca-bot/get-dca-bot-stats) - Get bot performance statistics
 - [⏸️] `GET` [Get DCA Bot Stats by Date](https://developers.3commas.io/dca-bot/get-dca-bot-stats-by-date) - Get bot stats for specific date range
