@@ -42,8 +42,9 @@ This root memory defines the master development workflow. Component-specific mem
    - Apply `filter_response()` before returning
 4. Register tool in server.py with `mcp.tool()(function_name)`
 5. **Run quality tests**: `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
-6. **Documentation System** - Follow requirements in `docs/CLAUDE.md` and update README.md
-7. **Memory Maintenance** - Update CLAUDE.md files when patterns change
+6. **Documentation System** - Follow requirements in `docs/CLAUDE.md`
+7. **Update Root README.md** - Update tool listings, phase completion, and usage examples
+8. **Memory Maintenance** - Update CLAUDE.md files when patterns change
 
 ## Privacy & Security Requirements
 
@@ -60,7 +61,7 @@ This root memory defines the master development workflow. Component-specific mem
 - **models/** - Pydantic validation patterns for step 2
 - **utils/** - Error handling and authentication utilities
 - **api/** - HTTP client implementation  
-- **docs/** - Documentation requirements for step 6
+- **docs/** - Documentation requirements for steps 6-7
 
 **Usage**: Consult component memories when implementing specific parts of the workflow.
 

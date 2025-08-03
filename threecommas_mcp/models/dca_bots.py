@@ -87,6 +87,12 @@ class GetAvailableStrategyListRequest(APIRequest):
     pass
 
 
+class GetBlacklistOfPairsRequest(APIRequest):
+    """Request parameters for DCA bot blacklisted pairs retrieval."""
+
+    pass
+
+
 class GetDCABotProfitDataRequest(APIRequest):
     """Request parameters for DCA bot profit data retrieval."""
 

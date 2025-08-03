@@ -4,7 +4,7 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Python](https://img.shields.io/badge/python-3.12+-green)
-![Implementation](https://img.shields.io/badge/phase_1-complete-success)
+![Implementation](https://img.shields.io/badge/phase_2-complete-success)
 ![Type Checking](https://img.shields.io/badge/type_checking-mypy-brightgreen)
 ![Code Quality](https://img.shields.io/badge/code_quality-100%25-success)
 
@@ -12,14 +12,18 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 
 ## What's Available Now
 
-**Phase 1 Foundation (Complete)** - Safe, read-only operations with no trading risks:
-
+**Phase 1 Foundation (Complete)** - Essential account and market data operations:
 - **Account Management**: View connected exchanges, wallets, and trading permissions
 - **Market Data**: Access trading pairs, exchange rates, limits, and supported markets  
-- **DCA Bot Information**: Get detailed bot configuration, status, and performance data
 - **System Health**: Test API connectivity and authentication
 
-**Coming in Phase 2+**: Full bot management (create, update, enable/disable), grid bots, advanced analytics, and strategy configuration.
+**Phase 2 DCA Bot Management (Complete)** - Comprehensive DCA bot read-only operations:
+- **DCA Bot Information**: Get detailed bot configuration, status, and performance data
+- **Strategy Management**: Access available trading strategies and configurations
+- **Trading Restrictions**: View blacklisted pairs and trading limitations
+- **Performance Analytics**: Daily profit data and bot performance metrics
+
+**Coming in Phase 3+**: Account analytics, trading history, SmartTrade operations, advanced analytics, and full bot management (create, update, enable/disable).
 
 ---
 
@@ -82,6 +86,7 @@ Add to `claude_desktop_config.json`:
 - `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
 - `get_available_strategy_list()` - Available DCA bot trading strategies with configuration options
 - `get_dca_bot_profit_data()` - Daily profit analytics with BTC/USD amounts and timestamps
+- `get_blacklist_of_pairs()` - Get blacklisted trading pairs with restrictions and configurations
 
 ### System
 - `health_check()` - Test API connectivity and authentication
@@ -107,6 +112,8 @@ All tools include `response_filter` parameter (`"display"` for essential data, `
 "Check if my bot is active and show safety order configuration"
 "Show me available DCA bot strategies"
 "Get profit data for my bot over the last 30 days"
+"What trading pairs are blacklisted for DCA bots?"
+"Show me the trading restrictions and blacklist configuration"
 ```
 
 **System Health:**

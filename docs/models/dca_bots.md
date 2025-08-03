@@ -110,6 +110,27 @@ request = GetAvailableStrategyListRequest()
 
 The simplest request model with no parameters, demonstrating the minimal APIRequest inheritance pattern.
 
+### GetBlacklistOfPairsRequest
+
+**Purpose:** Request model for retrieving blacklisted trading pairs for DCA bots.
+
+**Used by:** [get_blacklist_of_pairs](../tools/dca_bots.md#get-blacklist-of-pairs)
+
+**Fields:** No additional fields beyond the base `response_filter` from `APIRequest`.
+
+**API Mapping:** No query parameters beyond response filtering.
+
+**Validation Rules:** Uses default APIRequest validation (response_filter only).
+
+**Safety:** Simple read-only operation for trading restriction data with no trading risks.
+
+**Example:**
+```python
+request = GetBlacklistOfPairsRequest()
+```
+
+Follows the same minimal pattern as GetAvailableStrategyListRequest for read-only data access.
+
 ### GetDCABotProfitDataRequest
 
 **Purpose:** Validates parameters for retrieving DCA bot profit analytics over specified time periods.

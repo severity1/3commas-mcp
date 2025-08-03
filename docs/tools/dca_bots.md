@@ -116,6 +116,29 @@ DCA (Dollar Cost Averaging) bot tools provide functionality for managing and mon
 
 **Examples:** [DCA Bot Management Conversation](../conversations/dca-bot-management-conversation.md#analyzing-bot-performance)
 
+### get_blacklist_of_pairs
+
+**Function:** `get_blacklist_of_pairs(response_filter: str = "display") -> APIResponse`
+
+**Description:** Retrieves the list of trading pairs that are blacklisted for DCA bot creation. These pairs are restricted from being used in new DCA bots for risk management purposes.
+
+**API Endpoint:** `GET /ver1/bots/pairs_black_list`  
+**Security:** SIGNED (requires API key + HMAC signature)  
+**Permission:** BOTS_READ
+
+**Parameters:**
+- `response_filter` (str, optional): Filter type for response ("full" or "display", default: "display")
+
+**Returns:** Blacklisted trading pairs including:
+- List of restricted trading pairs
+- Pair symbols and base/quote currencies
+- Trading restriction configurations
+- Blacklist management data
+
+**Safety:** Read-only operation with no trading risks
+
+**Examples:** [DCA Bot Management Conversation](../conversations/dca-bot-management-conversation.md#managing-trading-restrictions)
+
 ## Usage Patterns
 
 ### Basic Bot Information Retrieval
@@ -169,6 +192,15 @@ quarterly_profit = await get_dca_bot_profit_data("12345678", days=90)
 detailed_profit = await get_dca_bot_profit_data("12345678", days=30, response_filter="full")
 ```
 
+### Trading Pair Management
+```python
+# Get blacklisted trading pairs
+blacklisted_pairs = await get_blacklist_of_pairs()
+
+# Get detailed blacklist information
+detailed_blacklist = await get_blacklist_of_pairs(response_filter="full")
+```
+
 ### Bot Status Monitoring
 The functions are commonly used for:
 - Checking bot configuration before making changes
@@ -203,6 +235,7 @@ The functions are commonly used for:
 - `get_dca_bot_details()` - Get detailed information for specific bot ✅
 - `get_available_strategy_list()` - Get available DCA bot trading strategies ✅
 - `get_dca_bot_profit_data()` - Get daily profit analytics for specific bot ✅
+- `get_blacklist_of_pairs()` - Get blacklisted trading pairs for restrictions ✅
 - Future: `update_dca_bot()` - Modify bot configuration
 - Future: `get_dca_bot_stats()` - Detailed performance statistics
 

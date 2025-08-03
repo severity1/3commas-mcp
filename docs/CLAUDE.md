@@ -8,7 +8,7 @@
 1. **Function Reference** - Create `docs/tools/{domain}.md`
 2. **Model Documentation** - Create `docs/models/{domain}.md`  
 3. **Conversation Examples** - Create `docs/conversations/{domain}-conversation.md`
-4. **README Updates** - Add function to appropriate category
+4. **Root README Updates** - Update tool listings, phase status, and usage examples in main README.md
 5. **Tracking Updates** - Update API_REFERENCES.md, TASKS.md, MVP_GET_APIS.md
 
 ## Documentation Structure Templates
@@ -71,6 +71,13 @@ request = ModelNameRequest(
 - Show function calls with realistic dummy data
 - Demonstrate error handling and troubleshooting
 ```
+
+## Root README.md Update Checklist
+- [ ] Update phase completion badge if applicable (e.g., phase_1 → phase_2)
+- [ ] Add new tool to appropriate category section (Account, DCA Bot, Market Data, System)
+- [ ] Update "What's Available Now" section for new capabilities
+- [ ] Add usage examples for new functionality
+- [ ] Update phase descriptions when phases complete
 
 ## Critical Requirements
 - **Privacy**: Use dummy/example data only (bot ID 12345678, $245.67 profit)
