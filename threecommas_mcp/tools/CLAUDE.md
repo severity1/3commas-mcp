@@ -1,29 +1,39 @@
-# CLAUDE.md for tools/
+# MCP Tool Implementation Patterns
 
-## Context Activation
-**Triggers**: Implementing MCP functions for 3Commas API trading operations
-**Usage**: Referenced during root CLAUDE.md steps 3-4 (tool implementation)
+**Context**: MCP function implementation for 3Commas API trading operations  
+**When to Use**: After completing Root CLAUDE.md Phase 1 (validation) and Phase 2 decision tree
 
-## Required Implementation Structure
-1. **Function Signature**
+## Specific Implementation Pattern
+1. **Function Signature** (use exact parameter names from script output):
    ```python
    @handle_api_errors
    async def function_name(
-       request_param: RequestModel,
+       required_param: str,  # From script output, not docs
+       optional_param: bool = False,
        response_filter: str = "display"
-   ) -> Dict[str, Any]:
+   ) -> APIResponse:
    ```
 
-2. **Standard Implementation Pattern**
+2. **Implementation Steps**:
    ```python
-   # Validate request using Pydantic model
-   request = RequestModel(**locals())
+   # Step 1: Validate using Pydantic model (based on script findings)
+   request = RequestModel(
+       required_param=required_param,
+       optional_param=optional_param,
+       response_filter=ResponseFilter(response_filter)
+   )
    
-   # Make authenticated API call
-   response = await api_request("endpoint", request.dict())
+   # Step 2: Build endpoint from script testing
+   endpoint = f"ver1/endpoint/{request.required_param}"  # Exact format from scripts
    
-   # Filter and return response
-   return filter_response(response, response_filter)
+   # Step 3: Make authenticated API call
+   response = await api_request(endpoint, params=request.to_query_params(), method="GET")
+   
+   # Step 4: Apply response filtering
+   if isinstance(response, dict) and "error" not in response:
+       response = filter_response(response, request.response_filter)
+   
+   return response
    ```
 
 3. **Required Imports**
@@ -39,5 +49,6 @@
 - **Complete implementation**: dca_bots.py:20 (get_dca_bot_details)
 - **Concise docstring style**: market_data.py:52 (get_currency_rates_and_limits)
 
-## Documentation Requirements
-After implementation, follow root CLAUDE.md step 6 for documentation workflow.
+## Integration Notes
+- Always use script-validated parameter names from Root CLAUDE.md Phase 1
+- Return to Root CLAUDE.md for Phase 3 (documentation) after implementation

@@ -1,8 +1,7 @@
-# CLAUDE.md for utils/
+# Utility Usage Patterns
 
-## Context Activation
-**Triggers**: Implementing authentication, error handling, and validation utilities
-**Usage**: Referenced as needed throughout development workflow
+**Context**: Authentication, error handling, and validation utilities  
+**When to Use**: Throughout Root CLAUDE.md Phase 2 implementation as needed
 
 ## Required Usage Patterns
 1. **Error Handling Decorator**
@@ -42,5 +41,7 @@
 - **Complete decorator usage**: decorators.py:11 (handle_api_errors)
 - **Response filtering**: response_filter.py:13 (filter_response)
 
-## Documentation Requirements
-After implementation, follow root CLAUDE.md step 6 for documentation workflow.
+## Integration Notes
+- All tools must use @handle_api_errors decorator
+- Always apply filter_response() before returning data
+- Authentication handled automatically via api_request()
