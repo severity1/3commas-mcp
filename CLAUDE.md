@@ -20,9 +20,10 @@ This root memory defines the complete development workflow. Component memories p
 - **Component-based architecture** - Each subtree has focused responsibilities
 
 ## Development Workflow
+**MANDATORY Phases**
 
 ### Phase 1: Validation & Discovery
-**MANDATORY FIRST STEPS:**
+
 1. **Script Discovery**: `ls scripts/` (confirm testing scripts exist)
 2. **API Testing**: `python scripts/test_api.py <endpoint>`
 3. **Response Analysis**: Document structure, parameter names, token count
@@ -34,12 +35,12 @@ This root memory defines the complete development workflow. Component memories p
 1. **Pydantic Model** (`models/{domain}.py`) - Script-validated parameters
 2. **Tool Function** (`tools/{domain}.py`) - MCP function with error handling
 3. **Tool Registration** (`server.py`) - `mcp.tool()(domain.function_name)`
-4. **Quality Assurance** - `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
+4. **Quality Assurance** - `uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
 
 ### Phase 3: Documentation
 - Update TASKS.md, docs/API_REFERENCES.md, and docs/MV_GET_APIS.md (⏸️ → ✅)
 - Create/Update Tool/model documentation (docs/tools/, docs/models/)
-- Create/Update Conversation examples (docs/conversations)
+- Create/Update Conversation examples (docs/conversations/)
 - Update Pattern documentation (docs/PATTERNS.md)
 - Update README.md
 

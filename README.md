@@ -4,26 +4,32 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Python](https://img.shields.io/badge/python-3.12+-green)
-![Implementation](https://img.shields.io/badge/phase_2-complete-success)
+![Implementation](https://img.shields.io/badge/phase_3-in_progress-yellow)
 ![Type Checking](https://img.shields.io/badge/type_checking-mypy-brightgreen)
 ![Code Quality](https://img.shields.io/badge/code_quality-100%25-success)
 
 ---
 
-## What's Available Now
+## Available Tools
 
-**Phase 1 Foundation (Complete)** - Essential account and market data operations:
-- **Account Management**: View connected exchanges, wallets, and trading permissions
-- **Market Data**: Access trading pairs, exchange rates, limits, and supported markets  
-- **System Health**: Test API connectivity and authentication
+### Account & Market Data
+- `get_connected_exchanges_and_wallets()` - View all connected exchanges with permissions and status
+- `get_account_info()` - Get detailed account information with balance, profit metrics, and settings
+- `get_supported_markets()` - List supported trading markets and exchanges
+- `get_all_market_pairs()` - Get available trading pairs for any exchange
+- `get_currency_rates_and_limits()` - Current rates, limits, and precision for currency pairs
 
-**Phase 2 DCA Bot Management (Complete)** - Comprehensive DCA bot read-only operations:
-- **DCA Bot Information**: Get detailed bot configuration, status, and performance data
-- **Strategy Management**: Access available trading strategies and configurations
-- **Trading Restrictions**: View blacklisted pairs and trading limitations
-- **Performance Analytics**: Daily profit data and bot performance metrics
+### DCA Bot Information  
+- `get_dca_bot_list()` - Get all DCA bots with status, configuration, and performance overview
+- `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
+- `get_available_strategy_list()` - Available DCA bot trading strategies with configuration options
+- `get_dca_bot_profit_data()` - Daily profit analytics with BTC/USD amounts and timestamps
+- `get_blacklist_of_pairs()` - Get blacklisted trading pairs with restrictions and configurations
 
-**Coming in Phase 3+**: Account analytics, trading history, SmartTrade operations, advanced analytics, and full bot management (create, update, enable/disable).
+### System
+- `health_check()` - Test API connectivity and authentication
+
+All tools include `response_filter` parameter (`"display"` for essential data, `"full"` for complete response).
 
 ---
 
@@ -73,33 +79,13 @@ Add to `claude_desktop_config.json`:
 
 ---
 
-## Available Tools
-
-### Account & Market Data
-- `get_connected_exchanges_and_wallets()` - View all connected exchanges with permissions and status
-- `get_supported_markets()` - List supported trading markets and exchanges
-- `get_all_market_pairs()` - Get available trading pairs for any exchange
-- `get_currency_rates_and_limits()` - Current rates, limits, and precision for currency pairs
-
-### DCA Bot Information  
-- `get_dca_bot_list()` - Get all DCA bots with status, configuration, and performance overview
-- `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
-- `get_available_strategy_list()` - Available DCA bot trading strategies with configuration options
-- `get_dca_bot_profit_data()` - Daily profit analytics with BTC/USD amounts and timestamps
-- `get_blacklist_of_pairs()` - Get blacklisted trading pairs with restrictions and configurations
-
-### System
-- `health_check()` - Test API connectivity and authentication
-
-All tools include `response_filter` parameter (`"display"` for essential data, `"full"` for complete response).
-
----
-
 ## Usage Examples
 
 **Account & Market Analysis:**
 ```
 "Show me all my connected exchanges and their status"
+"Get my account summary with balance and profit information"
+"Show me my account performance for Binance"
 "What trading pairs are available on Binance?"
 "Get current BTC/USDT rates and limits on OKX"
 ```
@@ -135,6 +121,7 @@ All tools include `response_filter` parameter (`"display"` for essential data, `
 ### Safety Features
 - **Read-Only Operations** - Current implementation has zero trading risk
 - **Environment Variable Security** - Credentials never stored in code
+- **Response Security Filtering** - Sensitive API credentials automatically removed from responses
 - **Destructive Operation Controls** - High-risk operations disabled by default
 - **Comprehensive Error Handling** with trading context
 

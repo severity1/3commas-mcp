@@ -4,11 +4,12 @@ This module implements account-related endpoints of the 3Commas API.
 Reference: https://developers.3commas.io/account
 """
 
+from typing import Union
 from ..api.client import api_request
 from ..utils.decorators import handle_api_errors
 from ..utils.response_filter import filter_response
 from ..models.base import APIResponse, ResponseFilter
-from ..models.account import GetConnectedExchangesRequest
+from ..models.account import GetConnectedExchangesRequest, GetAccountInfoRequest
 
 
 @handle_api_errors
@@ -30,6 +31,38 @@ async def get_connected_exchanges_and_wallets(
 
     # Make API request using existing authentication infrastructure
     response = await api_request("ver1/accounts", method="GET")
+
+    # Apply response filtering for token efficiency
+    if isinstance(response, dict) and "error" not in response:
+        response = filter_response(response, request.response_filter)
+
+    return response
+
+
+@handle_api_errors
+async def get_account_info(
+    account_id: Union[str, int] = "summary",
+    response_filter: str = "display",
+) -> APIResponse:
+    """Get account information for a specific account or aggregated summary.
+
+    Args:
+        account_id: Account ID (integer) or 'summary' for aggregated data
+        response_filter: Response detail level ("full" or "display")
+
+    Returns:
+        Account information including settings, balance, profit metrics, and trading permissions.
+    """
+    # Validate inputs using Pydantic model
+    request = GetAccountInfoRequest(
+        account_id=account_id, response_filter=ResponseFilter(response_filter)
+    )
+
+    # Build endpoint with account ID
+    endpoint = f"ver1/accounts/{request.account_id}"
+
+    # Make API request using existing authentication infrastructure
+    response = await api_request(endpoint, method="GET")
 
     # Apply response filtering for token efficiency
     if isinstance(response, dict) and "error" not in response:

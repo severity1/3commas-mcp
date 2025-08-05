@@ -68,8 +68,8 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 - ✅ **Priority 2.4**: `GET` Get DCA Bot Profit Data - DCA bot analytics **[IMPLEMENTED]**  
 - ✅ **Priority 2.5**: `GET` Get Blacklist of Pairs - Trading restrictions
 
-### Phase 3: Account & Trading Data APIs (12 APIs) ⏸️
-- ⏸️ **Priority 3.1**: `GET` Get Account Info - User account details
+### Phase 3: Account & Trading Data APIs (12 APIs) 🚧 **IN PROGRESS**
+- ✅ **Priority 3.1**: `GET` Get Account Info - User account details **[IMPLEMENTED]**
 - ⏸️ **Priority 3.2**: `GET` Balance History Data - Account balance trends
 - ⏸️ **Priority 3.3-3.5**: `GET` Trading Volume APIs (Daily/Monthly/All-Time) - Volume statistics
 - ⏸️ **Priority 3.6**: `GET` Get Trade - Individual trade details
@@ -133,21 +133,21 @@ This document tracks the implementation progress of the 3Commas MCP server proje
 ## MVP GET APIs Progress Tracking
 
 ### Implementation Progress (29 Total GET APIs)
-- ✅ **Completed**: 8/29 APIs (27.6%)
+- ✅ **Completed**: 9/29 APIs (31.0%)
 - 🚧 **In Progress**: 0/29 APIs (0%)
-- ⏸️ **Pending**: 21/29 APIs (72.4%)
+- ⏸️ **Pending**: 20/29 APIs (69.0%)
 
 ### Phase Progress
 | Phase | APIs | Completed | In Progress | Pending | Status |
 |-------|------|-----------|-------------|---------|--------|
 | Phase 1: Foundation | 4 | 4 | 0 | 0 | ✅ Completed |
 | Phase 2: DCA Bot Management | 5 | 5 | 0 | 0 | ✅ Completed |
-| Phase 3: Account & Trading | 12 | 0 | 0 | 12 | ⏸️ Awaiting Phase 2 |
+| Phase 3: Account & Trading | 12 | 1 | 0 | 11 | 🚧 In Progress |
 | Phase 4: Advanced Analytics | 8 | 0 | 0 | 8 | ⏸️ Awaiting Phase 3 |
 
 ### Next Priority APIs for Implementation (Phase 3: Account & Trading Data)
-1. **Priority 3.1**: `GET` Get Account Info - User account details ⏸️
-2. **Priority 3.2**: `GET` Balance History Data - Account balance trends ⏸️
+1. **Priority 3.2**: `GET` Balance History Data - Account balance trends ⏸️
+2. **Priority 3.3**: `GET` Get Daily Trading Volume - Daily volume statistics ⏸️
 
 ### Quality Gates Status
 - ✅ **Implementation Pattern**: Established with get_dca_bot_details

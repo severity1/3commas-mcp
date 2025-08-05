@@ -35,7 +35,7 @@ For each implemented API, documentation is available in multiple layers:
 - [Account Entity](https://developers.3commas.io/account/account-entity) - Account data structure and field definitions
 - [⏸️] `GET` [Available Market Subtypes](https://developers.3commas.io/account/available-market-subtypes) - Get supported market types for exchanges
 - [⏸️] `POST` [Add Exchange Account](https://developers.3commas.io/account/add-exchange-account) - Connect new exchange account
-- [⏸️] `GET` [Get Account Info](https://developers.3commas.io/account/get-account-info) - Retrieve current account information
+- [✅] `GET` [Get Account Info](https://developers.3commas.io/account/get-account-info) - Retrieve current account information
 - [⏸️] `POST` [Edit Exchange Account](https://developers.3commas.io/account/edit-exchange-account) - Modify exchange account settings
 - [✅] `GET` [List Connected Exchanges and Wallets](https://developers.3commas.io/account/list-of-connected-exchanges-and-wallets) - Get all connected exchange accounts
 - [⏸️] `GET` [Get List of Active Entities](https://developers.3commas.io/account/get-the-list-of-active-entities) - Retrieve active trading entities

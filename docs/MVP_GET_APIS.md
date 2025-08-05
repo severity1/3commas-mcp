@@ -34,7 +34,7 @@ This document outlines the MVP implementation strategy focusing on GET method AP
 
 | Priority | API | Endpoint | Description |
 |----------|-----|----------|-------------|
-| 3.1 | `GET` Get Account Info | `/account/get-account-info` | User account details |
+| 3.1 | `GET` Get Account Info | `/account/get-account-info` | User account details ✅ **Implemented** |
 | 3.2 | `GET` Balance History Data | `/account/balance-history-data` | Account balance trends |
 | 3.3 | `GET` Get Daily Trading Volume | `/account/get-volume-daily` | Daily volume statistics |
 | 3.4 | `GET` Get Monthly Trading Volume | `/account/get-volume-monthly` | Monthly volume statistics |

@@ -34,6 +34,7 @@ mcp.tool()(dca_bots.get_blacklist_of_pairs)
 
 # Register account management tools
 mcp.tool()(account.get_connected_exchanges_and_wallets)
+mcp.tool()(account.get_account_info)
 
 # Register market data tools
 mcp.tool()(market_data.get_all_market_pairs)

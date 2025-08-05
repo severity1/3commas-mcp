@@ -4,7 +4,7 @@ This module provides filtering functions to reduce API response size
 while maintaining necessary context for different use cases.
 """
 
-from typing import Dict, Any, Union
+from typing import Any, Dict, Union
 import logging
 
 logger = logging.getLogger(__name__)
@@ -42,18 +42,25 @@ def filter_response(data: Dict[str, Any], filter_type: str) -> Dict[str, Any]:
 
 
 def _apply_security_filter(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Remove security-sensitive fields from response.
+    """Remove security-sensitive fields from response recursively.
 
     This filter is always applied regardless of filter type.
     """
-    security_fields = ["url_secret"]
+    security_fields = {"url_secret", "api_key_invalid", "api_keys_state", "customer_id"}
 
-    for field in security_fields:
-        if field in data:
-            del data[field]
-            logger.debug(f"Removed security field: {field}")
+    def clean_recursive(obj: Any) -> Any:
+        if isinstance(obj, dict):
+            return {
+                k: clean_recursive(v)
+                for k, v in obj.items()
+                if k not in security_fields
+            }
+        elif isinstance(obj, list):
+            return [clean_recursive(item) for item in obj]
+        return obj
 
-    return data
+    result = clean_recursive(data)
+    return result if isinstance(result, dict) else data
 
 
 def _apply_display_filter(data: Dict[str, Any]) -> Dict[str, Any]:
