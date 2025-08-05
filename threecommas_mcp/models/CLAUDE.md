@@ -1,32 +1,38 @@
-# CLAUDE.md for models/
+# Pydantic Model Creation Patterns
 
-## Context Activation
-**Triggers**: Creating Pydantic validation models for 3Commas API structures
-**Usage**: Referenced during root CLAUDE.md step 2 (model creation)
+**Context**: Pydantic validation models for 3Commas API structures  
+**When to Use**: During Root CLAUDE.md Phase 2 implementation, after script validation
 
-## Required Model Structure
-1. **Class Definition**
+## Model Creation Based on Script Output
+1. **Class Definition** (using exact API mapping from scripts):
    ```python
    class ModelNameRequest(APIRequest):
-       """Brief description of API endpoint and purpose.
+       """Brief description based on script testing results.
+       
+       Script Validation:
+           Tested: python scripts/test_api.py ver1/endpoint/<param>
+           Response: <key_fields_from_script_output>
+           Tokens: <count_from_script> (must be <25,000)
        
        API Mapping:
-           Endpoint: /api/ver1/endpoint_name
-           Method: GET/POST
-           Authentication: Required
+           Endpoint: /ver1/endpoint/<param>  # Exact format from scripts
+           Method: GET
+           Authentication: SIGNED
        """
    ```
 
-2. **Field Validation Pattern**
+2. **Field Definition** (using parameter names from script testing):
    ```python
-   field_name: str = Field(
-       description="Clear description of field purpose and constraints",
-       example="example_value"
+   # Use EXACT parameter names from script output, not documentation
+   account_id: str = Field(
+       description="Account ID confirmed working in script test",
+       example="31337503"  # Real working value from testing
    )
    
-   optional_field: Optional[int] = Field(
+   # Only include optional fields that script testing confirmed work
+   optional_param: Optional[bool] = Field(
        default=None,
-       description="Optional field description"
+       description="Optional parameter validated in script testing"
    )
    ```
 
@@ -46,5 +52,7 @@
 ## Reference Examples
 - **Complete model**: dca_bots.py:13 (GetDCABotDetailsRequest)
 
-## Documentation Requirements
-After implementation, follow root CLAUDE.md step 6 for documentation workflow.
+## Integration Notes
+- Use exact parameter names from Root CLAUDE.md Phase 1 script testing
+- All models inherit from APIRequest base class
+- Return to Root CLAUDE.md for Phase 3 (documentation) after implementation

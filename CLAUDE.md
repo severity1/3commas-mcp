@@ -1,22 +1,17 @@
 # 3Commas MCP Development
 
-## Memory Management
+## Memory Architecture
 **Reference**: https://docs.anthropic.com/en/docs/claude-code/memory for official memory guidelines
 
-This root memory defines the master development workflow. Component-specific memories are automatically discovered in subdirectories when working in those areas.
-
-**Component memories available:**
-- `threecommas_mcp/tools/CLAUDE.md` - MCP function implementation patterns
-- `threecommas_mcp/models/CLAUDE.md` - Pydantic validation patterns  
-- `threecommas_mcp/utils/CLAUDE.md` - Authentication and error handling utilities
-- `threecommas_mcp/api/CLAUDE.md` - HTTP client implementation
-- `docs/CLAUDE.md` - Comprehensive documentation requirements
+This root memory defines the complete development workflow. Component memories provide implementation-specific patterns without duplication.
 
 ## Essential Commands
 - **Environment**: `source .venv/bin/activate`
 - **Dependencies**: `uv sync`
 - **Install**: `uv pip install -e .`
-- **Quality**: `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
+- **Script Discovery**: `ls scripts/` (always check before API work)
+- **API Testing**: `python scripts/test_api.py <endpoint>`
+- **Quality Checks**: `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
 
 ## Core Implementation Patterns
 - **Trading safety first** - Always validate bot/deal operations before execution
@@ -25,26 +20,37 @@ This root memory defines the master development workflow. Component-specific mem
 - **Component-based architecture** - Each subtree has focused responsibilities
 
 ## Development Workflow
-### Implementing New MCP Tools
-1. **API Validation First** - Thoroughly test API endpoint parameters and response structure before implementation:
-   ```bash
-   python scripts/test_api.py <endpoint> [key=value ...]
-   python scripts/validate_endpoint.py <endpoint_name>  # For common endpoints
-   ```
-   - Test with different parameter combinations to verify actual API behavior
-   - Validate response structure matches documentation expectations
-   - Confirm parameter names and types before creating Pydantic models
-2. Create Pydantic request model in `models/{domain}.py` (inherit from APIRequest)
-3. Implement tool function in `tools/{domain}.py`:
-   - Use `@handle_api_errors` decorator
-   - Include `response_filter: str = "display"` parameter
-   - Call `api_request()` from api/client.py
-   - Apply `filter_response()` before returning
-4. Register tool in server.py with `mcp.tool()(function_name)`
-5. **Run quality tests**: `uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
-6. **Documentation System** - Follow requirements in `docs/CLAUDE.md`
-7. **Update Root README.md** - Update tool listings, phase completion, and usage examples
-8. **Memory Maintenance** - Update CLAUDE.md files when patterns change
+**MANDATORY Phases**
+
+### Phase 1: Validation & Discovery
+
+1. **Script Discovery**: `ls scripts/` (confirm testing scripts exist)
+2. **API Testing**: `python scripts/test_api.py <endpoint>`
+3. **Response Analysis**: Document structure, parameter names, token count
+4. **Validation**: Confirm token count < 25,000 for MCP efficiency
+5. **Parameter Verification**: Use exact API response names (not documentation)
+
+### Phase 2: Implementation
+**Core Implementation Steps:**
+1. **Pydantic Model** (`models/{domain}.py`) - Script-validated parameters
+2. **Tool Function** (`tools/{domain}.py`) - MCP function with error handling
+3. **Tool Registration** (`server.py`) - `mcp.tool()(domain.function_name)`
+4. **Quality Assurance** - `uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
+
+### Phase 3: Documentation
+- Update TASKS.md, docs/API_REFERENCES.md, and docs/MV_GET_APIS.md (⏸️ → ✅)
+- Create/Update Tool/model documentation (docs/tools/, docs/models/)
+- Create/Update Conversation examples (docs/conversations/)
+- Update Pattern documentation (docs/PATTERNS.md)
+- Update README.md
+
+## Pattern Violation Recovery
+If you find yourself implementing without running scripts:
+1. **STOP** current work immediately
+2. **Run required scripts**: `python scripts/test_api.py <endpoint>`
+3. **Compare** script output to your current assumptions
+4. **Adjust** implementation based on actual API behavior
+5. **Continue** with corrected understanding
 
 ## Privacy & Security Requirements
 
@@ -56,14 +62,12 @@ This root memory defines the master development workflow. Component-specific mem
 
 ## Component Integration
 
-**Memory Hierarchy**: Root memory (this file) defines workflow; component memories provide implementation details:
-- **tools/** - MCP function patterns for step 3-4  
-- **models/** - Pydantic validation patterns for step 2
-- **utils/** - Error handling and authentication utilities
-- **api/** - HTTP client implementation  
-- **docs/** - Documentation requirements for steps 6-7
-
-**Usage**: Consult component memories when implementing specific parts of the workflow.
+**Component Focus Areas:**
+- **tools/**: MCP function signatures, decorators, response handling
+- **models/**: Pydantic class structure, field validation, inheritance
+- **utils/**: Decorator usage, response filtering, authentication integration
+- **api/**: Endpoint formatting, HTTP client usage, error handling
+- **docs/**: Documentation templates, structure requirements, tracking updates
 
 ## Ongoing Maintenance
 - **Update relevant documentation** - When code changes affect documented workflows or APIs

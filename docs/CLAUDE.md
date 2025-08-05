@@ -1,8 +1,7 @@
-# CLAUDE.md for docs/
+# Documentation Creation Patterns
 
-## Context Activation
-**Triggers**: Creating documentation for 3Commas trading contexts
-**Usage**: Referenced during root CLAUDE.md step 6 (documentation system)
+**Context**: Documentation for 3Commas trading operations  
+**When to Use**: Root CLAUDE.md Phase 3 (documentation) after implementation complete
 
 ## Required Documentation Workflow
 1. **Function Reference** - Create `docs/tools/{domain}.md`

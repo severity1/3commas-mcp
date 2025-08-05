@@ -25,21 +25,54 @@ Our patterns prioritize **scalability**, **maintainability**, and **trading safe
 
 ### 2. Tool Function Pattern
 
-**Reference Implementation**: `threecommas_mcp/tools/dca_bots.py:69-161`  
+**Reference Implementation**: `threecommas_mcp/tools/dca_bots.py:69-110`  
 **Example**: `get_dca_bot_list()` function
 
 **Key Pattern Elements:**
 - ✅ **`@handle_api_errors` decorator** - Always first decorator for consistent error handling
 - ✅ **Type hints** - Modern Python union types (str | None, int with defaults)
 - ✅ **`response_filter: str = "display"`** - Always include with default value
-- ✅ **Comprehensive docstring** - Include API endpoint, security, parameters, returns, errors
+- ✅ **Concise docstring** - Brief description + Args + Returns (see docstring pattern below)
 - ✅ **Pydantic validation** - Use request model for input validation with proper enum types
 - ✅ **Automatic parameter building** - Use `request.to_query_params()` for automatic conversion
 - ✅ **API request** - Call `api_request()` with endpoint and params
 - ✅ **Response filtering** - Always apply `filter_response()` before return
+- ✅ **Security filtering** - Automatic removal of sensitive fields (`api_key_invalid`, `api_keys_state`, `customer_id`)
 - ✅ **Error context** - Include trading context in error descriptions
 
-### 3. File Structure Pattern
+### 3. Docstring Pattern
+
+**Reference Implementation**: `threecommas_mcp/models/dca_bots.py:13-15` and `threecommas_mcp/tools/dca_bots.py:24-33`
+
+**Model Class Docstring Pattern:**
+```python
+class GetModelNameRequest(APIRequest):
+    """Request parameters for [domain] [action] [with optional filtering]."""
+```
+
+**Tool Function Docstring Pattern:**
+```python
+async def get_domain_action(...) -> APIResponse:
+    """Brief description of what the function does.
+
+    Args:
+        param_name: Parameter description
+        optional_param: Optional parameter description (default: value)
+        response_filter: Response detail level ("full" or "display")
+
+    Returns:
+        Brief description of return data structure and key fields.
+    """
+```
+
+**Key Docstring Elements:**
+- ✅ **Concise format** - No API endpoint details, permissions, or implementation notes
+- ✅ **Standard Args section** - One line per parameter with type and description
+- ✅ **Standard Returns section** - Brief description of return data structure
+- ✅ **No verbose sections** - Avoid Raises, See, API Mapping, Script Validation sections
+- ✅ **Consistent terminology** - Use established domain language (bots, pairs, accounts)
+
+### 4. File Structure Pattern
 
 **Model File**: `threecommas_mcp/models/dca_bots.py:1-11` (header pattern)  
 **Tool File**: `threecommas_mcp/tools/dca_bots.py:1-11` (imports pattern)
@@ -56,8 +89,8 @@ Our patterns prioritize **scalability**, **maintainability**, and **trading safe
 
 **For new API implementation, copy patterns from:**
 
-1. **Model**: Copy `threecommas_mcp/models/dca_bots.py:42-116` (GetDCABotListRequest) and modify for your parameters
-2. **Tool Function**: Copy `threecommas_mcp/tools/dca_bots.py:69-161` (get_dca_bot_list) and modify endpoint/parameters  
+1. **Model**: Copy `threecommas_mcp/models/dca_bots.py:42-116` (GetDCABotListRequest) or `threecommas_mcp/models/account.py:20-38` (GetAccountInfoRequest) and modify for your parameters
+2. **Tool Function**: Copy `threecommas_mcp/tools/dca_bots.py:69-161` (get_dca_bot_list) or `threecommas_mcp/tools/account.py:42-91` (get_account_info) and modify endpoint/parameters  
 3. **File Structure**: Follow `threecommas_mcp/models/dca_bots.py:1-11` for file headers
 4. **Imports**: Follow `threecommas_mcp/tools/dca_bots.py:7-11` for import patterns
 5. **Server Registration**: Follow `threecommas_mcp/server.py:29-30` for MCP tool registration
@@ -80,7 +113,7 @@ When implementing a new API, verify:
 
 ### Model Compliance
 - [ ] Model inherits from `APIRequest`
-- [ ] Comprehensive docstring with API mapping and endpoint reference
+- [ ] Concise docstring following pattern: `"""Request parameters for [domain] [action]."""`
 - [ ] Field validation using `Field()` with appropriate constraints
 - [ ] Use enums for type safety (StrategyType, etc.)
 - [ ] Range validation for numeric parameters (ge, le)
@@ -97,7 +130,7 @@ When implementing a new API, verify:
 - [ ] Uses `request.to_query_params()` for automatic parameter building
 - [ ] Calls `api_request()` with correct endpoint and params
 - [ ] Calls `filter_response(response, request.response_filter)` before return
-- [ ] Comprehensive docstring with API endpoint, security, parameters, returns, errors
+- [ ] Concise docstring with brief description + Args + Returns sections only
 
 ### Documentation Compliance
 - [ ] API status updated in `docs/API_REFERENCES.md` (⏸️ → ✅)
@@ -153,7 +186,7 @@ When implementing a new API, verify:
 
 ## Pattern Evolution
 
-This pattern has evolved through the implementation of 6 APIs (Phase 1 + 2 APIs). Key improvements include:
+This pattern has evolved through multiple API implementations. Key improvements include:
 
 - **Enhanced type safety**: Full union types and enum integration
 - **Comprehensive validation**: Range, pattern, and enum constraints
@@ -163,6 +196,6 @@ This pattern has evolved through the implementation of 6 APIs (Phase 1 + 2 APIs)
 
 ## Next Steps
 
-With the pattern now fully established, the remaining **29 APIs** can be implemented rapidly using this exact template, ensuring consistent quality and maintainability across the entire codebase.
+With the pattern now fully established, additional APIs can be implemented rapidly using this exact template, ensuring consistent quality and maintainability across the entire codebase.
 
-This pattern reference ensures consistent, maintainable, and scalable implementation across all 35 planned GET APIs and future API additions.
+This pattern reference ensures consistent, maintainable, and scalable implementation across all planned GET APIs and future API additions.

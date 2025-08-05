@@ -1,8 +1,7 @@
-# CLAUDE.md for api/
+# HTTP Client Integration Patterns
 
-## Context Activation
-**Triggers**: Implementing HTTP client for 3Commas API integration
-**Usage**: Referenced as needed for api_request() implementation
+**Context**: HTTP client for 3Commas API integration  
+**When to Use**: During Root CLAUDE.md Phase 2 implementation for API calls
 
 ## Required Usage Pattern
 1. **Standard API Call**
@@ -44,5 +43,7 @@
 ## Reference Examples
 - **Complete implementation**: client.py:48 (api_request function)
 
-## Documentation Requirements
-After implementation, follow root CLAUDE.md step 6 for documentation workflow.
+## Integration Notes
+- Always use api_request() - never implement direct HTTP calls
+- Endpoint format excludes base URL (use "ver1/bots" not full path)
+- Authentication and rate limiting handled automatically

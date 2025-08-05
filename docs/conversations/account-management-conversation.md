@@ -119,6 +119,115 @@ Account management conversations demonstrate how to use account-related tools to
 
 **Risk Level:** Low - Diagnostic information only
 
+### get-account-info
+
+**Tools used:** [get_account_info](../tools/account.md#get-account-info)
+
+**Models:** [GetAccountInfoRequest](../models/account.md#getaccountinforequest)
+
+**Description:** Detailed account information retrieval including balance, profit metrics, and trading settings.
+
+**User:** "Show me my account summary with balance and profit information"
+
+**Assistant:** "I'll retrieve your account summary with detailed balance and profit metrics."
+
+*Uses get_account_info()*
+
+**Expected Response:**
+```json
+{
+  "id": 12345,
+  "auto_balance_period": 12,
+  "autobalance_enabled": false,
+  "is_locked": false,
+  "primary_display_currency_amount": {
+    "currency": "USD", 
+    "amount": "15137.05"
+  },
+  "primary_display_currency_profit": {
+    "currency": "USD",
+    "amount": "2834.09"
+  },
+  "primary_display_currency_profit_percentage": {
+    "currency": "USD",
+    "amount": "23.04"
+  },
+  "day_profit_primary_display_currency": {
+    "currency": "USD",
+    "amount": "43.82"
+  },
+  "day_profit_primary_display_currency_percentage": {
+    "currency": "USD",
+    "amount": "0.29"
+  },
+  "btc_amount": "0.132201",
+  "usd_amount": "15137.05",
+  "btc_profit": "0.013688",
+  "usd_profit": "2834.09",
+  "usd_profit_percentage": "23.04",
+  "btc_profit_percentage": "11.55"
+}
+```
+
+**Safety:** Read-only operation providing comprehensive account metrics for analysis.
+
+**Risk Level:** Low - Information retrieval with profit/loss analysis
+
+### Specific Account Analysis
+
+**Tools used:** [get_account_info](../tools/account.md#get-account-info)
+
+**Description:** Getting detailed information for a specific exchange account.
+
+**User:** "Tell me about my Binance account performance and settings"
+
+**Assistant:** "I'll get the detailed information for your Binance account including performance metrics."
+
+*Uses get_account_info(account_id=31337503)*
+
+**Assistant Analysis:**
+- "Account Balance: $15,137.05 USD (0.132 BTC)"
+- "Total Profit: $2,834.09 (23.04% gain)"
+- "Today's Performance: +$43.82 (+0.29%)"
+- "Auto-balance: Disabled (12-hour period)"
+- "Account Status: Active and unlocked"
+- "Trading Features: All enabled (bots, smart trading, etc.)"
+
+**Safety Considerations:**
+- Provides historical performance without executing trades
+- Shows current settings that affect trading behavior
+- Identifies any account restrictions or issues
+
+**Risk Level:** Low - Historical data and configuration review
+
+### Portfolio Performance Review
+
+**Tools used:** [get_account_info](../tools/account.md#get-account-info)
+
+**Description:** Comprehensive portfolio analysis using account summary data.
+
+**User:** "How is my overall portfolio performing across all exchanges?"
+
+**Assistant:** "I'll get your portfolio summary showing performance across all connected exchanges."
+
+*Uses get_account_info(account_id="summary")*
+
+**Assistant Analysis:**
+- "Total Portfolio Value: $52,347.50"
+- "Overall Profit: $37,370.75 (24.12% gain)"
+- "Best Performing Account: Binance (+23.04%)"
+- "Today's Change: -$51.53 (-0.10%)"
+- "Active Exchanges: 2 accounts"
+- "Auto-balance Status: Mixed settings"
+
+**Usage Context:**
+- Portfolio performance monitoring
+- Investment allocation review  
+- Account comparison and optimization
+- Risk assessment across exchanges
+
+**Risk Level:** Low - Portfolio analysis and reporting
+
 ## Usage Patterns
 
 ### Pre-Bot Configuration Workflow
@@ -146,6 +255,24 @@ Account management conversations demonstrate how to use account-related tools to
 3. Assistant: Analyze balances and supported features
 4. Assistant: Recommend optimal exchange for strategy
 5. Assistant: Explain reasoning and next steps
+```
+
+### Portfolio Performance Analysis
+```
+1. User: "How is my trading performing?"
+2. Assistant: Get account summary with get_account_info()
+3. Assistant: Analyze profit metrics and performance trends
+4. Assistant: Compare current vs historical performance
+5. Assistant: Provide insights and recommendations
+```
+
+### Account-Specific Investigation
+```
+1. User: "Check my Binance account details"
+2. Assistant: Get specific account info with account ID
+3. Assistant: Analyze balance, profit, and settings
+4. Assistant: Identify any issues or opportunities
+5. Assistant: Suggest optimizations or next steps
 ```
 
 ## Trading Safety Scenarios
