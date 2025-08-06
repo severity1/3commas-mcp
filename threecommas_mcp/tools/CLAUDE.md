@@ -1,54 +1,27 @@
-# MCP Tool Implementation Patterns
+# Tool Patterns
 
-**Context**: MCP function implementation for 3Commas API trading operations  
-**When to Use**: After completing Root CLAUDE.md Phase 1 (validation) and Phase 2 decision tree
+**Context**: MCP function implementation for 3Commas API operations
 
-## Specific Implementation Pattern
-1. **Function Signature** (use exact parameter names from script output):
-   ```python
-   @handle_api_errors
-   async def function_name(
-       required_param: str,  # From script output, not docs
-       optional_param: bool = False,
-       response_filter: str = "display"
-   ) -> APIResponse:
-   ```
+## Component Focus
+- **MCP function signatures** - Standard async function patterns
+- **Decorators** - @handle_api_errors for consistent error handling
+- **Response handling** - filter_response() application before return
 
-2. **Implementation Steps**:
-   ```python
-   # Step 1: Validate using Pydantic model (based on script findings)
-   request = RequestModel(
-       required_param=required_param,
-       optional_param=optional_param,
-       response_filter=ResponseFilter(response_filter)
-   )
-   
-   # Step 2: Build endpoint from script testing
-   endpoint = f"ver1/endpoint/{request.required_param}"  # Exact format from scripts
-   
-   # Step 3: Make authenticated API call
-   response = await api_request(endpoint, params=request.to_query_params(), method="GET")
-   
-   # Step 4: Apply response filtering
-   if isinstance(response, dict) and "error" not in response:
-       response = filter_response(response, request.response_filter)
-   
-   return response
-   ```
+## Required Patterns
+1. **Use @handle_api_errors decorator** - Consistent error handling
+2. **Include response_filter parameter** - Token optimization
+3. **Pydantic validation** - Use request models for input validation
+4. **Apply filter_response()** - Before returning data
 
-3. **Required Imports**
-   ```python
-   from typing import Dict, Any
-   from ..models.{domain} import RequestModel
-   from ..api.client import api_request
-   from ..utils.decorators import handle_api_errors
-   from ..utils.response_filter import filter_response
-   ```
+## Pattern Example
+```python
+from ..utils.decorators import handle_api_errors
+from ..utils.response_filter import filter_response
+from ..api.client import api_request
 
-## Reference Examples
-- **Complete implementation**: dca_bots.py:20 (get_dca_bot_details)
-- **Concise docstring style**: market_data.py:52 (get_currency_rates_and_limits)
-
-## Integration Notes
-- Always use script-validated parameter names from Root CLAUDE.md Phase 1
-- Return to Root CLAUDE.md for Phase 3 (documentation) after implementation
+@handle_api_errors
+async def get_data(param: str, response_filter: str = "display"):
+    request = RequestModel(param=param, response_filter=response_filter)
+    response = await api_request("ver1/endpoint", params=request.to_query_params())
+    return filter_response(response, request.response_filter)
+```

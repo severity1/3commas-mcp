@@ -1,7 +1,11 @@
 # HTTP Client Integration Patterns
 
-**Context**: HTTP client for 3Commas API integration  
-**When to Use**: During Root CLAUDE.md Phase 2 implementation for API calls
+**Context**: HTTP client for 3Commas API integration
+
+## Component Focus
+- **Endpoint formatting** - Correct API endpoint structure and paths
+- **HTTP client usage** - api_request() function implementation
+- **Error handling** - Automatic authentication and rate limiting
 
 ## Required Usage Pattern
 1. **Standard API Call**
@@ -41,7 +45,7 @@
 - **Security**: Credential protection and safe logging
 
 ## Reference Examples
-- **Complete implementation**: client.py:48 (api_request function)
+- **Complete implementation**: client.py (api_request function)
 
 ## Integration Notes
 - Always use api_request() - never implement direct HTTP calls

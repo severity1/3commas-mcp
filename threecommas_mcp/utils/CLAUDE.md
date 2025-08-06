@@ -1,7 +1,11 @@
 # Utility Usage Patterns
 
-**Context**: Authentication, error handling, and validation utilities  
-**When to Use**: Throughout Root CLAUDE.md Phase 2 implementation as needed
+**Context**: Authentication, error handling, and validation utilities
+
+## Component Focus
+- **Decorator usage** - @handle_api_errors implementation patterns
+- **Response filtering** - filter_response() for security and token optimization
+- **Authentication integration** - HMAC-SHA256 via api_request()
 
 ## Required Usage Patterns
 1. **Error Handling Decorator**
@@ -38,8 +42,8 @@
 - **Authentication**: HMAC-SHA256 via api_request() integration
 
 ## Reference Examples
-- **Complete decorator usage**: decorators.py:11 (handle_api_errors)
-- **Response filtering**: response_filter.py:13 (filter_response)
+- **Complete decorator usage**: decorators.py (handle_api_errors)
+- **Response filtering**: response_filter.py (filter_response)
 
 ## Integration Notes
 - All tools must use @handle_api_errors decorator
