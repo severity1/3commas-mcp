@@ -1,158 +1,68 @@
 ---
 allowed-tools: TodoWrite, Read, Grep, LS, Bash
-description: Generate comprehensive implementation plan for 3Commas MCP APIs with dynamic analysis
+argument-hint: "[api-name, identifier, or task]"
+description: Generate implementation plan for 3Commas MCP APIs with validation
 ---
 
-# 3Commas MCP Implementation Plan Generator
+# API Implementation Plan: $ARGUMENTS
 
-**API Target**: `$ARGUMENTS`
+## Phase 1: Analysis & Validation
 
-I'll analyze your API request and generate a complete implementation plan. Let me start by examining the project context and identifying the specific API.
+### API Discovery
+Examine project context and identify API details:
+- Check `docs/MVP_GET_APIS.md` for priority, phase, and endpoint details
+- Review `docs/API_REFERENCES.md` for current implementation status
+- Analyze `TASKS.md` for progress context and next logical steps
+- Identify best reference implementation to copy patterns from
 
-## 🔍 Comprehensive Analysis & Validation
+### Parameter Validation
+Validate API using testing scripts:
+- Test endpoint: `python scripts/test_api.py <endpoint>` with realistic parameters
+- **Parameter Testing**: Identify required vs optional parameters, valid parameter names, correct value formats and types, parameter constraints
+- **Request/Response Validation**: Confirm request method and parameter location, test parameter variations, verify actual vs documented response structure
+- **Error Testing**: Test invalid parameters to understand error responses
+- Document actual response structure and exact parameter names
+- Verify token count < 25,000 for MCP efficiency
 
-I'll perform complete project analysis including API validation to generate a solid, ready-to-execute plan.
+## Phase 2: Implementation
 
-### Step 1: API Identification & Mapping
-**Analyzing**: `$ARGUMENTS`
+### Setup & Model Creation
+1. **TodoWrite**: Create todos for implementation and documentation phases
+2. **Pydantic Model** (`models/{domain}.py`):
+   - Use ONLY script-validated parameter names, types, and constraints
+   - Follow @docs/PATTERNS.md model patterns exactly
+   - Inherit from APIRequest with proper field validation
 
-I'll examine:
-- MVP_GET_APIS.md for API priority, phase, and endpoint details
-- API_REFERENCES.md for current implementation status and official API documentation
-- TASKS.md for overall progress context and next logical steps
+### Tool Function & Registration  
+3. **Tool Function** (`tools/{domain}.py`):
+   - Follow @docs/PATTERNS.md tool patterns exactly
+   - Use @handle_api_errors decorator
+   - Include response_filter parameter with "display" default
+   - Use validated endpoint path and parameters from testing
+4. **Registration**: Add `mcp.tool()(domain.function_name)` to `server.py`
 
-### Step 2: Script Validation & Parameter Discovery
-I'll validate the API by:
-- Checking available testing scripts (`ls scripts/`)
-- Testing API endpoint: `python scripts/test_api.py <endpoint>` with realistic parameters
-- **Parameter Validation**: Testing different parameter combinations to identify:
-  - Required vs optional parameters
-  - Valid parameter names (API may differ from documentation)
-  - Correct parameter value formats and types
-  - Parameter constraints (ranges, enums, patterns)
-- **Request/Response Validation**: 
-  - Confirming request method (GET/POST) and parameter location (query/body)
-  - Testing parameter variations to catch documentation errors
-  - Verifying actual response structure vs documented structure
-- Documenting actual response structure and field names
-- Extracting exact parameter names from API response (not documentation)
-- Verifying token count < 25,000 for MCP efficiency
-- **Error Testing**: Testing invalid parameters to understand error responses
+### Quality Assurance
+5. **Validation**: Run all quality checks: `uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
+6. **Final Test**: Verify implemented function matches script validation results
 
-### Step 3: Implementation Pattern Analysis
-I'll identify:
-- Best reference implementation to copy patterns from (with line numbers)
-- Required model and tool file locations
-- Server registration requirements
-- Documentation update paths and cross-references
+## Phase 3: Documentation
 
-### Step 4: Progress Impact Assessment
-I'll calculate:
-- Current phase progress and completion percentages
-- Impact of this implementation on overall MVP progress
-- Next recommended APIs after completion
-- Dependencies and prerequisites
+### Status & Documentation Updates
+1. **Progress Tracking**: Update TASKS.md counters, change docs/API_REFERENCES.md status (⏸️ → ✅)
+2. **Tool Documentation**: Create/update `docs/tools/{domain}.md`
+3. **Model Documentation**: Create/update `docs/models/{domain}.md`  
+4. **Conversation Examples**: Create/update `docs/conversations/{domain}-conversation.md`
+5. **Project Updates**: Update `README.md` and `docs/PATTERNS.md` if needed
+6. **Cross-References**: Verify all documentation layers reference each other
 
----
-
-## 📋 2-Phase Implementation Plan
-
-Based on validated analysis, memory system principles from CLAUDE.md, and patterns from @docs/PATTERNS.md:
-
-### ⚙️ Phase 1: Implementation
-**🎯 GOAL**: Implement API using script-validated parameters and established patterns
-
-**Required Steps (Reference @docs/PATTERNS.md for HOW):**
-1. **📋 TodoWrite Setup**: Create todos for both implementation phases
-2. **🏗️ Pydantic Model** (`models/{domain}.py`) - Use ONLY script-validated parameters with:
-   - Exact parameter names from testing (not documentation)
-   - Correct parameter types and constraints from validation
-   - Proper field validation (ranges, patterns, enums) from testing
-3. **🔧 Tool Function** (`tools/{domain}.py`) - Follow @docs/PATTERNS.md exactly with:
-   - Validated parameter types and defaults from testing
-   - Correct endpoint path from script validation
-   - Proper error handling for tested edge cases
-4. **📋 Tool Registration** (`server.py`) - Add `mcp.tool()(domain.function_name)`
-5. **✅ Quality Assurance** - All checks: `uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
-
-**✅ Phase 1 Completion Checklist:**
-- [ ] TodoWrite tool used to create phase tracking todos
-- [ ] Pydantic model created using ONLY script-validated parameter names, types, and constraints
-- [ ] Tool function implemented following @docs/PATTERNS.md exactly with validated endpoint
-- [ ] Function registered in server.py
-- [ ] All quality checks pass (black, ruff format, ruff check, mypy)
-- [ ] MCP server loads without errors (test with import)
-- [ ] **Final Validation**: Test implemented function matches script validation results
-- [ ] Mark Phase 1 todo as completed in TodoWrite
-
-**🛑 CHECKPOINT**: Complete ALL Phase 1 before Phase 2
-
-### 📚 Phase 2: Documentation
-**🎯 GOAL**: Complete all documentations
-
-**Required Steps (ALL documentation layers mandatory):**
-1. **📝 Mark Phase 2 in progress** in TodoWrite
-2. **📊 Status Updates**: TASKS.md, docs/API_REFERENCES.md (⏸️ → ✅)
-3. **📖 Tool Documentation**: `docs/tools/{domain}.md`
-4. **🏗️ Model Documentation**: `docs/models/{domain}.md`
-5. **💬 Conversation Examples**: `docs/conversations/{domain}-conversation.md`
-6. **📄 Project Documentation**: `README.md`
-7. **📐 Patterns**: Update `docs/PATTERNS.md` if new pattern is identified.
-8. **🔄 Cross-References**: Ensure all documentation layers reference each other
-
-**✅ Phase 2 Completion Checklist:**
-- [ ] Phase 2 marked as in_progress in TodoWrite
-- [ ] TASKS.md progress updated (increment counters, mark ✅)
-- [ ] docs/API_REFERENCES.md status changed (⏸️ → ✅)
-- [ ] Tool documentation created/updated in docs/tools/{domain}.md
-- [ ] Model documentation created/updated in docs/models/{domain}.md
-- [ ] Conversation examples created/updated in docs/conversations/{domain}-conversation.md
-- [ ] Project documentation updated in README.md
-- [ ] Patterns updated in docs/PATTERNS.md
-- [ ] Cross-references verified between all documentation layers
-- [ ] Mark Phase 2 todo as completed in TodoWrite
-
-**✅ FINAL CHECKPOINT**: API implementation complete when ALL boxes checked
-
-## Success Criteria
-
-### Requirements (Non-Negotiable)
+### Requirements
 - **Trading Safety**: Validate operations before execution
-- **Parameter Validation**: Use ONLY script-tested parameters, types, and constraints
-- **Pattern Compliance**: Follow @docs/PATTERNS.md exactly for implementation details
+- **Parameter Validation**: Use ONLY script-tested parameters, types, and constraints  
+- **Pattern Compliance**: Follow @docs/PATTERNS.md exactly
 - **Privacy**: Use dummy data only (bot ID 12345678, $245.67 profit)
-- **Analysis Validation**: APIs validated during analysis phase before plan generation
-
-### Common Violations to Avoid
-- Using documentation parameters instead of script-validated ones
-- Implementing before thorough parameter validation testing
-- Using incorrect parameter types, names, or constraints
-- Missing TodoWrite phase tracking
-- Implementing without following @docs/PATTERNS.md
-- Incomplete documentation (missing any of the 4 layers)
-- Skipping error testing and edge case validation
 
 ---
 
-## Implementation Execution
+## Execution
 
-Now I'll perform the dynamic analysis and generate your specific implementation plan:
-
-### 🔍 Analysis Results
-*I'll examine the project files and provide:*
-- **API Mapping**: Exact priority, phase, and endpoint details
-- **Current Status**: Implementation progress and next logical steps  
-- **Pattern Reference**: Best existing implementation to copy from
-- **File Locations**: Specific paths for models, tools, and documentation
-- **Test Commands**: Exact scripts and parameters for validation
-- **Progress Impact**: How this implementation affects overall project progress
-
-### 📋 Your Specific Implementation Plan
-*Generated after analysis with:*
-- **Realistic Test Commands**: Using actual project scripts and valid parameters
-- **Specific File Paths**: Exact locations for all required changes
-- **Pattern References**: Copy-paste-modify approach with line number references
-- **Progress Tracking**: Updated counters and completion percentages
-- **Next Steps**: Recommended follow-up APIs after completion
-
-Let me begin the analysis...
+Starting analysis for: `$ARGUMENTS`
