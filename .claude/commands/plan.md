@@ -25,9 +25,19 @@ I'll examine:
 I'll validate the API by:
 - Checking available testing scripts (`ls scripts/`)
 - Testing API endpoint: `python scripts/test_api.py <endpoint>` with realistic parameters
+- **Parameter Validation**: Testing different parameter combinations to identify:
+  - Required vs optional parameters
+  - Valid parameter names (API may differ from documentation)
+  - Correct parameter value formats and types
+  - Parameter constraints (ranges, enums, patterns)
+- **Request/Response Validation**: 
+  - Confirming request method (GET/POST) and parameter location (query/body)
+  - Testing parameter variations to catch documentation errors
+  - Verifying actual response structure vs documented structure
 - Documenting actual response structure and field names
 - Extracting exact parameter names from API response (not documentation)
 - Verifying token count < 25,000 for MCP efficiency
+- **Error Testing**: Testing invalid parameters to understand error responses
 
 ### Step 3: Implementation Pattern Analysis
 I'll identify:
@@ -54,18 +64,25 @@ Based on validated analysis, memory system principles from CLAUDE.md, and patter
 
 **Required Steps (Reference @docs/PATTERNS.md for HOW):**
 1. **📋 TodoWrite Setup**: Create todos for both implementation phases
-2. **🏗️ Pydantic Model** (`models/{domain}.py`) - Use ONLY analysis-validated parameters
-3. **🔧 Tool Function** (`tools/{domain}.py`) - Follow @docs/PATTERNS.md exactly
+2. **🏗️ Pydantic Model** (`models/{domain}.py`) - Use ONLY script-validated parameters with:
+   - Exact parameter names from testing (not documentation)
+   - Correct parameter types and constraints from validation
+   - Proper field validation (ranges, patterns, enums) from testing
+3. **🔧 Tool Function** (`tools/{domain}.py`) - Follow @docs/PATTERNS.md exactly with:
+   - Validated parameter types and defaults from testing
+   - Correct endpoint path from script validation
+   - Proper error handling for tested edge cases
 4. **📋 Tool Registration** (`server.py`) - Add `mcp.tool()(domain.function_name)`
 5. **✅ Quality Assurance** - All checks: `uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .`
 
 **✅ Phase 1 Completion Checklist:**
 - [ ] TodoWrite tool used to create phase tracking todos
-- [ ] Pydantic model created using ONLY analysis-validated parameter names
-- [ ] Tool function implemented following @docs/PATTERNS.md exactly
+- [ ] Pydantic model created using ONLY script-validated parameter names, types, and constraints
+- [ ] Tool function implemented following @docs/PATTERNS.md exactly with validated endpoint
 - [ ] Function registered in server.py
 - [ ] All quality checks pass (black, ruff format, ruff check, mypy)
 - [ ] MCP server loads without errors (test with import)
+- [ ] **Final Validation**: Test implemented function matches script validation results
 - [ ] Mark Phase 1 todo as completed in TodoWrite
 
 **🛑 CHECKPOINT**: Complete ALL Phase 1 before Phase 2
@@ -101,16 +118,19 @@ Based on validated analysis, memory system principles from CLAUDE.md, and patter
 
 ### Requirements (Non-Negotiable)
 - **Trading Safety**: Validate operations before execution
+- **Parameter Validation**: Use ONLY script-tested parameters, types, and constraints
 - **Pattern Compliance**: Follow @docs/PATTERNS.md exactly for implementation details
 - **Privacy**: Use dummy data only (bot ID 12345678, $245.67 profit)
 - **Analysis Validation**: APIs validated during analysis phase before plan generation
 
 ### Common Violations to Avoid
-- Using documentation parameters instead of analysis-validated ones
-- Implementing before thorough analysis validation
+- Using documentation parameters instead of script-validated ones
+- Implementing before thorough parameter validation testing
+- Using incorrect parameter types, names, or constraints
 - Missing TodoWrite phase tracking
 - Implementing without following @docs/PATTERNS.md
 - Incomplete documentation (missing any of the 4 layers)
+- Skipping error testing and edge case validation
 
 ---
 
