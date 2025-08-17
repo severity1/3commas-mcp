@@ -13,6 +13,7 @@
 - **Script validation mandatory** - Always test APIs before implementation  
 - **Pattern compliance** - Follow @docs/PATTERNS.md exactly
 - **Privacy protection** - Use dummy data ONLY when documenting (bot ID 12345678, $245.67 profit)
+- **KISS & DRY** - Keep implementations simple and avoid code duplication
 
 ## Component Focus
 - **API layer** - HMAC-SHA256 auth, rate limiting (100/min global, 120/min deals, 40/10s smart_trades)
