@@ -40,7 +40,7 @@ For each implemented API, documentation is available in multiple layers:
 - [✅] `GET` [List Connected Exchanges and Wallets](https://developers.3commas.io/account/list-of-connected-exchanges-and-wallets) - Get all connected exchange accounts
 - [⏸️] `GET` [Get List of Active Entities](https://developers.3commas.io/account/get-the-list-of-active-entities) - Retrieve active trading entities
 - [⏸️] `POST` [Rename Exchange Account](https://developers.3commas.io/account/rename-exchange-account) - Update exchange account name
-- [⏸️] `GET` [Balance History Data](https://developers.3commas.io/account/balance-history-data) - Historical balance changes over time
+- [✅] `GET` [Balance History Data](https://developers.3commas.io/account/balance-history-data) - Historical balance changes over time
 - [⏸️] `POST` [Load Balances for Specified Exchange](https://developers.3commas.io/account/load-balances-for-specified-exchange) - Refresh balance data from exchange
 - [⏸️⚠️] `POST` [Sell All to BTC](https://developers.3commas.io/account/sell-all-to-btc) - Convert all holdings to BTC **[High Risk]**
 - [⏸️⚠️] `POST` [Sell All to USD](https://developers.3commas.io/account/sell-all-to-usd) - Convert all holdings to USD **[High Risk]**

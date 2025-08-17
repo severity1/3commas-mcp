@@ -44,12 +44,12 @@ All contributions must meet these quality standards:
 - **Documentation**: All public APIs must be documented
 
 ### Trading Safety Standards
-Given the nature of cryptocurrency trading, all contributions must prioritize safety:
-- **Parameter Validation**: All trading parameters must be validated thoroughly
-- **Account Safety**: Verify account permissions and trading capabilities
-- **Destructive Operations**: Require explicit confirmation for risky operations
-- **Error Handling**: Provide clear, actionable error messages with trading context
-- **Security**: Never log or expose API credentials or sensitive trading data
+All contributions must prioritize trading safety:
+- Validate all trading parameters thoroughly
+- Verify account permissions and capabilities  
+- Require explicit confirmation for destructive operations
+- Provide clear error messages with trading context
+- Never log or expose API credentials
 
 ## Contribution Process
 
@@ -84,28 +84,10 @@ Before starting work on a significant feature:
    - Include code docstrings with trading context
 
 ### 3. Testing Requirements
-All contributions must include comprehensive testing:
-
-#### Required Test Coverage
-- **Authentication Tests**: Test HMAC-SHA256 signature generation and validation
-- **API Tests**: Test API connectivity and request/response handling
-- **Trading Safety Tests**: Test validation logic for trading parameters
-- **Error Handling Tests**: Test error scenarios and edge cases
-
-#### Test Structure
-```python
-def test_create_dca_bot_success():
-    """Test successful DCA bot creation with valid parameters."""
-    # Arrange: Set up valid bot configuration
-    # Act: Create bot using the tool
-    # Assert: Verify bot created with correct parameters
-
-def test_create_dca_bot_invalid_params():
-    """Test DCA bot creation with invalid parameters."""
-    # Arrange: Set up invalid bot configuration
-    # Act: Attempt to create bot
-    # Assert: Verify appropriate error handling
-```
+All contributions must include testing:
+- Authentication, API connectivity, and error handling tests
+- Trading safety and parameter validation tests
+- Follow Arrange-Act-Assert pattern with descriptive test names
 
 ### 4. Pull Request Process
 1. **Pre-submission checklist**
@@ -157,82 +139,19 @@ def test_create_dca_bot_invalid_params():
 
 ## Documentation Standards
 
-### Code Documentation
-- **Docstrings**: Include comprehensive docstrings with trading context
-- **Type Hints**: Use complete type hints for all parameters and returns
-- **Examples**: Include usage examples where appropriate
-- **Safety Warnings**: Include trading safety warnings where applicable
-
-### Project Documentation
-When adding new features, update relevant documentation:
-- **TASKS.md**: Mark features as completed
-- **docs/API_REFERENCES.md**: Update implementation status
-- **docs/models/**: Add model documentation following templates
-- **docs/tools/**: Add tool documentation with trading examples
-- **docs/conversations/**: Add usage examples with trading scenarios
+### Required Documentation
+- Include docstrings with trading context and type hints
+- Update TASKS.md and docs/API_REFERENCES.md for new features
+- Follow templates in docs/models/, docs/tools/, docs/conversations/
+- Include trading safety warnings where applicable
 
 ## Trading Safety Guidelines
 
-### Critical Safety Considerations
-- **Bot Operations**: Always validate bot configuration and account permissions
-- **Deal Management**: Include safety checks for deal cancellation and modifications
-- **Strategy Configuration**: Validate strategy parameters against 3Commas requirements
-- **Account Validation**: Verify exchange account capabilities before operations
+### Trading Safety Requirements
+- Validate bot configuration and account permissions
+- Include safety checks for trading operations
+- Assess risk levels: Low (read-only), Medium (bot config), High (deletion/cancellation)  
+- Provide clear error messages with trading context
+- Never log API credentials or sensitive trading data
 
-### Risk Assessment
-All contributions involving trading operations must include risk assessment:
-- **Low Risk**: Read-only operations (get bot details, list accounts)
-- **Medium Risk**: Bot creation and configuration changes
-- **High Risk**: Bot deletion, deal cancellation, panic sell operations
-
-### Error Handling for Trading
-- **Clear Messages**: Provide actionable error messages with trading context
-- **Safety Context**: Include information about potential trading impact
-- **Recovery Options**: Suggest recovery steps for common error scenarios
-- **Logging**: Log errors safely without exposing sensitive trading data
-
-## Communication
-
-### Getting Help
-- **GitHub Issues**: For bug reports and feature requests
-- **Discussions**: For questions and general discussion
-- **Documentation**: Check CLAUDE.md files for component-specific guidance
-
-### Reporting Issues
-When reporting issues:
-1. **Use issue templates** if available
-2. **Include trading context** for trading-related issues
-3. **Provide reproduction steps** with sample parameters (anonymized)
-4. **Include environment information** (Python version, OS, etc.)
-5. **Never include** API credentials or sensitive trading data
-
-## Code of Conduct
-
-### Our Standards
-- **Professional Communication**: Maintain respectful and constructive communication
-- **Trading Safety Focus**: Prioritize user safety and responsible trading practices
-- **Collaborative Spirit**: Help others learn and contribute effectively
-- **Security Awareness**: Be mindful of security implications in all contributions
-
-### Enforcement
-- Issues will be addressed by project maintainers
-- Serious violations may result in contribution restrictions
-- Focus remains on building a safe and reliable trading tool
-
-## Release Process
-
-### Version Management
-- **Semantic Versioning**: Follow semver for version numbering
-- **Change Documentation**: Update CHANGELOG.md for all releases
-- **Breaking Changes**: Clearly document any breaking changes
-- **Migration Guides**: Provide migration instructions for major version changes
-
-### Quality Gates
-All releases must pass:
-- [ ] All automated tests
-- [ ] Manual testing with live 3Commas API (testnet)
-- [ ] Documentation review and updates
-- [ ] Security review for credential handling
-- [ ] Trading safety validation
-
-Thank you for contributing to the 3Commas MCP server project! Your contributions help make cryptocurrency trading more accessible and safer for everyone.
+Thank you for contributing to the 3Commas MCP server project!
