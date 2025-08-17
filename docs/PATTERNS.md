@@ -62,6 +62,7 @@ Implementation patterns for 3Commas MCP server APIs.
 - [ ] API status updated
 - [ ] 4-layer docs complete
 - [ ] Cross-references maintained
+- [ ] **Use dummy data ONLY when documenting** (bot ID 12345678, $245.67 profit)
 
 ## Cross-References
 

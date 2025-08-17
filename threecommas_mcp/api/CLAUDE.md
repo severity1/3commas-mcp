@@ -1,53 +1,40 @@
-# HTTP Client Integration Patterns
+# API Client Patterns
 
-**Context**: HTTP client for 3Commas API integration
+**Context**: 3Commas API client with HMAC-SHA256 authentication and rate limiting
 
 ## Component Focus
-- **Endpoint formatting** - Correct API endpoint structure and paths
-- **HTTP client usage** - api_request() function implementation
-- **Error handling** - Automatic authentication and rate limiting
+- **API request function** - Single api_request() interface for all endpoints
+- **Rate limiting** - Automatic endpoint detection and limit application
+- **Authentication** - HMAC-SHA256 signing with credential protection
 
-## Required Usage Pattern
-1. **Standard API Call**
-   ```python
-   from ..api.client import api_request
-   
-   # Always use api_request() - never implement direct HTTP calls
-   response = await api_request(
-       endpoint="ver1/bots",
-       params={"account_id": 123, "strategy": "long"}
-   )
-   # Returns: Dict[str, Any] with JSON response
-   ```
+## Required Patterns
+1. **Use api_request() exclusively** - Never implement direct HTTP calls
+2. **Endpoint format** - Use "ver1/bots" format (exclude base URL)
+3. **Rate limit compliance** - Automatic detection based on endpoint patterns
 
-2. **Endpoint Format**
-   ```python
-   # Correct endpoint formats:
-   endpoint = "ver1/bots"           # Global endpoints
-   endpoint = "ver1/deals/123"      # Deal-specific  
-   endpoint = "ver1/smart_trades"   # SmartTrade endpoints
-   
-   # Do NOT include base URL or full path
-   ```
+## Rate Limiting Specifics
+- **Global endpoints**: 100 requests/minute (default)
+- **Deals endpoints** (/ver1/deals): 120 requests/minute  
+- **SmartTrades endpoints** (/ver1/smart_trades): 40 requests/10 seconds
+- **Deal details** (/ver1/deals/:id/show): 120 requests/minute
 
-3. **Authentication & Security**
-   ```python
-   # Authentication handled automatically via HMAC-SHA256
-   # Rate limiting applied automatically based on endpoint type
-   # Credentials never logged or exposed
-   ```
+## Code Examples
+```python
+from ..api.client import api_request
 
-## Available Features
-- **Authentication**: Automatic HMAC-SHA256 signing
-- **Rate Limiting**: Global (100/min), Deals (120/min), SmartTrades (40/10s)  
-- **Endpoint Detection**: Automatic classification and rate limit application
-- **Response Handling**: JSON/text parsing with error handling
-- **Security**: Credential protection and safe logging
+# Standard API call
+response = await api_request(
+    "ver1/bots",
+    params={"account_id": 123, "strategy": "long"}
+)
 
-## Reference Examples
-- **Complete implementation**: client.py (api_request function)
+# Endpoint detection automatically applies rate limits
+response = await api_request("ver1/deals/123/show")  # 120/min limit
+response = await api_request("ver1/smart_trades")    # 40/10s limit
+```
 
-## Integration Notes
-- Always use api_request() - never implement direct HTTP calls
-- Endpoint format excludes base URL (use "ver1/bots" not full path)
-- Authentication and rate limiting handled automatically
+## Integration Requirements
+- Always use api_request() function from api.client
+- Authentication handled automatically via HMAC-SHA256
+- Rate limiting applied automatically via detect_endpoint_type()
+- Credentials never logged or exposed in responses

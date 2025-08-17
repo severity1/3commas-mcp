@@ -37,7 +37,7 @@ Thank you for your interest in contributing to the 3Commas MCP server project! T
 
 ### Code Quality Requirements
 All contributions must meet these quality standards:
-- **Formatting**: Code must be formatted with `ruff format .`
+- **Formatting**: Code must be formatted with `black .` and `ruff format .`
 - **Linting**: Code must pass `ruff check .` without errors
 - **Type Checking**: Code must pass `mypy .` without errors
 - **Testing**: All new code must include comprehensive tests
@@ -50,6 +50,7 @@ All contributions must prioritize trading safety:
 - Require explicit confirmation for destructive operations
 - Provide clear error messages with trading context
 - Never log or expose API credentials
+- **Use dummy data ONLY when documenting** (bot ID 12345678, $245.67 profit)
 
 ## Contribution Process
 
@@ -91,7 +92,7 @@ All contributions must include testing:
 
 ### 4. Pull Request Process
 1. **Pre-submission checklist**
-   - [ ] Code formatted with `ruff format .`
+   - [ ] Code formatted with `black .` and `ruff format .`
    - [ ] Linting passed with `ruff check .`
    - [ ] Type checking passed with `mypy .`
    - [ ] All tests pass with `pytest`
@@ -153,5 +154,6 @@ All contributions must include testing:
 - Assess risk levels: Low (read-only), Medium (bot config), High (deletion/cancellation)  
 - Provide clear error messages with trading context
 - Never log API credentials or sensitive trading data
+- **Use dummy data ONLY when documenting** (bot ID 12345678, $245.67 profit)
 
 Thank you for contributing to the 3Commas MCP server project!

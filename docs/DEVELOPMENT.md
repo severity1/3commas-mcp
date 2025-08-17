@@ -29,7 +29,7 @@ uv run -m ruff check .
 uv run -m mypy .
 
 # Run all quality checks
-uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
+uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
 ```
 
 ## Project Structure
@@ -153,11 +153,13 @@ LOG_LEVEL=INFO
 - Follow 4-layer pattern: conversations/, models/, tools/, code docstrings
 - Maintain cross-references between documentation layers
 - Include trading safety warnings where applicable
+- **Use dummy data ONLY when documenting** (bot ID 12345678, $245.67 profit)
 
 ## Quality Assurance
 
 ### Required Checks
-- [ ] `ruff format .` - code formatting
+- [ ] `black .` - code formatting
+- [ ] `ruff format .` - additional formatting
 - [ ] `ruff check .` - linting
 - [ ] `mypy .` - type checking  
 - [ ] `pytest` - tests

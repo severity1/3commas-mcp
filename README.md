@@ -108,7 +108,7 @@ See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for technical architecture and se
 
 ```bash
 # Run quality checks
-uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
+uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
 ```
 
 See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for contribution guidelines and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup details.
