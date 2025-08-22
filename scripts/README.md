@@ -10,7 +10,7 @@ Simple, streamlined scripts for testing 3Commas API endpoints before MCP impleme
 python scripts/test_api.py ver1/bots/strategy_list
 
 # With parameters  
-python scripts/test_api.py ver1/bots account_id=31337503 limit=5
+python scripts/test_api.py ver1/bots account_id=12345678 limit=5
 
 # Specific bot
 python scripts/test_api.py ver1/bots/123456/show include_events=true
