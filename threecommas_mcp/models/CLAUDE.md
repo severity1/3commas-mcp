@@ -1,58 +1,39 @@
-# Pydantic Model Creation Patterns
+# Model Patterns
 
-**Context**: Pydantic validation models for 3Commas API structures  
-**When to Use**: During Root CLAUDE.md Phase 2 implementation, after script validation
+**Context**: Pydantic models for 3Commas API request validation with trading safety
 
-## Model Creation Based on Script Output
-1. **Class Definition** (using exact API mapping from scripts):
-   ```python
-   class ModelNameRequest(APIRequest):
-       """Brief description based on script testing results.
-       
-       Script Validation:
-           Tested: python scripts/test_api.py ver1/endpoint/<param>
-           Response: <key_fields_from_script_output>
-           Tokens: <count_from_script> (must be <25,000)
-       
-       API Mapping:
-           Endpoint: /ver1/endpoint/<param>  # Exact format from scripts
-           Method: GET
-           Authentication: SIGNED
-       """
-   ```
+## Component Focus
+- **APIRequest inheritance** - Automatic response_filter field from base.py
+- **Field validation** - Comprehensive constraints with Field() descriptors  
+- **Enum integration** - StrategyType, ResponseFilter, LimitType from base.py
 
-2. **Field Definition** (using parameter names from script testing):
-   ```python
-   # Use EXACT parameter names from script output, not documentation
-   account_id: str = Field(
-       description="Account ID confirmed working in script test",
-       example="31337503"  # Real working value from testing
-   )
-   
-   # Only include optional fields that script testing confirmed work
-   optional_param: Optional[bool] = Field(
-       default=None,
-       description="Optional parameter validated in script testing"
-   )
-   ```
+## Required Patterns
+1. **Inherit from APIRequest** - Gets response_filter field automatically
+2. **Use Field() with constraints** - Include ge, le, regex for validation
+3. **Import enums from base** - Use StrategyType, ResponseFilter consistently
+4. **Script-validated parameters** - Use exact names from test_api.py results
 
-3. **Required Inheritance**
-   ```python
-   from .base import APIRequest
-   
-   class YourModel(APIRequest):
-       # APIRequest provides response_filter automatically
-   ```
+## Available Components
+- **APIRequest**: Base with response_filter and to_query_params()
+- **ResponseFilter**: DISPLAY/FULL enum for token optimization
+- **StrategyType**: long/short enum for trading strategies
+- **BaseModelConfig**: Standard Pydantic configuration
 
-## Available Base Components
-- **APIRequest**: Base class with response_filter support
-- **ResponseFilter**: DISPLAY/FULL enum for token optimization  
-- **Common Enums**: BotType, DealStatus, StrategyType, LimitType, MarketCode
+## Code Examples
+```python
+from .base import APIRequest, StrategyType, ResponseFilter
+from pydantic import Field
 
-## Reference Examples
-- **Complete model**: dca_bots.py:13 (GetDCABotDetailsRequest)
+class GetDCABotListRequest(APIRequest):
+    """Request parameters for DCA bot list retrieval."""
+    
+    account_id: int = Field(default=0, ge=0, description="Account ID")
+    strategy: StrategyType | None = Field(default=None, description="Trading strategy")
+    limit: int = Field(default=50, ge=1, le=1000, description="Results limit")
+```
 
-## Integration Notes
-- Use exact parameter names from Root CLAUDE.md Phase 1 script testing
-- All models inherit from APIRequest base class
-- Return to Root CLAUDE.md for Phase 3 (documentation) after implementation
+## Integration Requirements
+- All request models inherit from APIRequest
+- Use Field() validation for all parameters with appropriate constraints
+- Import and use enums from base.py for type safety
+- Docstring format: "Request parameters for [domain] [action]"

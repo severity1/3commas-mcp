@@ -4,7 +4,7 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Python](https://img.shields.io/badge/python-3.12+-green)
-![Implementation](https://img.shields.io/badge/phase_3-in_progress-yellow)
+![Implementation](https://img.shields.io/badge/10_of_29_apis-completed-success)
 ![Type Checking](https://img.shields.io/badge/type_checking-mypy-brightgreen)
 ![Code Quality](https://img.shields.io/badge/code_quality-100%25-success)
 
@@ -12,24 +12,29 @@ A Model Context Protocol (MCP) server that integrates AI assistants with the 3Co
 
 ## Available Tools
 
-### Account & Market Data
+### Account Management ✅
+- `health_check()` - Test API connectivity and authentication status
+- `get_account_info(account_id)` - Get account details, balance, profit metrics (summary or specific account)
 - `get_connected_exchanges_and_wallets()` - View all connected exchanges with permissions and status
-- `get_account_info()` - Get detailed account information with balance, profit metrics, and settings
-- `get_supported_markets()` - List supported trading markets and exchanges
-- `get_all_market_pairs()` - Get available trading pairs for any exchange
-- `get_currency_rates_and_limits()` - Current rates, limits, and precision for currency pairs
+- `get_balance_history_data(date_from, account_id)` - Historical balance changes with profit tracking
 
-### DCA Bot Information  
+### Market Data ✅  
+- `get_supported_markets()` - List supported trading markets and exchanges
+- `get_all_market_pairs(market_code)` - Get available trading pairs for any exchange
+- `get_currency_rates_and_limits(market_code, pair)` - Current rates, limits, and precision for currency pairs
+
+### DCA Bot Management ✅
 - `get_dca_bot_list()` - Get all DCA bots with status, configuration, and performance overview
-- `get_dca_bot_details()` - Comprehensive bot configuration, deals, and performance data
+- `get_dca_bot_details(bot_id)` - Comprehensive bot configuration, deals, and performance data
 - `get_available_strategy_list()` - Available DCA bot trading strategies with configuration options
-- `get_dca_bot_profit_data()` - Daily profit analytics with BTC/USD amounts and timestamps
+- `get_dca_bot_profit_data(bot_id)` - Daily profit analytics with BTC/USD amounts and timestamps
 - `get_blacklist_of_pairs()` - Get blacklisted trading pairs with restrictions and configurations
 
-### System
-- `health_check()` - Test API connectivity and authentication
+**Implementation Status**: 10 of 29 planned GET APIs completed (34.5%) - **Read-only operations only for trading safety**
 
 All tools include `response_filter` parameter (`"display"` for essential data, `"full"` for complete response).
+
+See [docs/tools/](docs/tools/) for detailed function documentation and [docs/API_REFERENCES.md](docs/API_REFERENCES.md) for complete API status.
 
 ---
 
@@ -81,87 +86,43 @@ Add to `claude_desktop_config.json`:
 
 ## Usage Examples
 
-**Account & Market Analysis:**
 ```
 "Show me all my connected exchanges and their status"
-"Get my account summary with balance and profit information"
-"Show me my account performance for Binance"
+"List all my DCA bots and their current status"
 "What trading pairs are available on Binance?"
-"Get current BTC/USDT rates and limits on OKX"
 ```
 
-**DCA Bot Analysis:**
-```
-"List all my DCA bots and their status"
-"Show details for my DCA bot ID 12345678"
-"What's the current performance of my Bitcoin bot?"
-"Check if my bot is active and show safety order configuration"
-"Show me available DCA bot strategies"
-"Get profit data for my bot over the last 30 days"
-"What trading pairs are blacklisted for DCA bots?"
-"Show me the trading restrictions and blacklist configuration"
-```
-
-**System Health:**
-```
-"Test my 3Commas API connection"
-"Verify my API credentials are working"
-```
+See [docs/conversations/](docs/conversations/) for comprehensive usage examples and scenarios.
 
 ---
 
 ## Architecture & Security
 
-### Technical Design
-- **HMAC-SHA256 Authentication** with secure credential handling
-- **Rate Limiting Compliance** respecting 3Commas API limits (300/60/120 req/min)
-- **Pydantic Models** for comprehensive data validation
-- **Component-based Architecture** with domain-specific modules
+**Read-only operations only** - Current implementation has zero trading risk with secure HMAC-SHA256 authentication and comprehensive error handling.
 
-### Safety Features
-- **Read-Only Operations** - Current implementation has zero trading risk
-- **Environment Variable Security** - Credentials never stored in code
-- **Response Security Filtering** - Sensitive API credentials automatically removed from responses
-- **Destructive Operation Controls** - High-risk operations disabled by default
-- **Comprehensive Error Handling** with trading context
-
-### Component Architecture
-- **API Layer**: HMAC-SHA256 authenticated 3Commas client with rate limiting
-- **Model Layer**: Pydantic validation for all trading parameters
-- **Tool Layer**: MCP-compatible functions with comprehensive error handling
-- **Utils Layer**: Authentication, environment, and safety decorators
-
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed project structure.
+See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for technical architecture and security details.
 
 ---
 
 ## Development
 
-### Quality Checks
 ```bash
-# Run all checks
-uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
-
-# Test server
-uv run threecommas-mcp
+# Run quality checks
+uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
 ```
 
-### Contributing
-1. Fork repository and create feature branch
-2. Follow established patterns in existing code
-3. Run quality checks before submitting
-4. Update documentation for any new features
-
-See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for contribution guidelines and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for setup details.
 
 ---
 
 ## Documentation
 
 - **[API References](docs/API_REFERENCES.md)** - Complete 3Commas API mapping with implementation status
-- **[Development Guide](docs/DEVELOPMENT.md)** - Contributing and development instructions  
-- **[Tool Documentation](docs/tools/)** - Detailed function references
-- **[Conversation Examples](docs/conversations/)** - Real-world usage scenarios
+- **[Tool Documentation](docs/tools/)** - Detailed function references and parameters
+- **[Conversation Examples](docs/conversations/)** - Real-world usage scenarios  
+- **[Development Guide](docs/DEVELOPMENT.md)** - Technical architecture and setup
+- **[Contributing](docs/CONTRIBUTING.md)** - Contribution guidelines and standards
+- **[Patterns](docs/PATTERNS.md)** - Implementation patterns and compliance
 
 ---
 

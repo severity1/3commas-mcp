@@ -24,3 +24,21 @@ class GetAccountInfoRequest(APIRequest):
         default="summary",
         description="Account ID or 'summary' for aggregated data from all accounts",
     )
+
+
+class GetBalanceHistoryRequest(APIRequest):
+    """Request parameters for balance history data retrieval."""
+
+    account_id: Union[str, int] = Field(
+        default="summary",
+        description="Account ID or 'summary' for aggregated data from all accounts",
+    )
+    date_from: str = Field(
+        description="Start date in ISO 8601 format (YYYY-MM-DDTHH:MM:SS.sssZ)",
+        pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$",
+    )
+    date_to: Optional[str] = Field(
+        default=None,
+        description="End date in ISO 8601 format (YYYY-MM-DDTHH:MM:SS.sssZ)",
+        pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$",
+    )

@@ -1,54 +1,48 @@
-# MCP Tool Implementation Patterns
+# Tool Patterns
 
-**Context**: MCP function implementation for 3Commas API trading operations  
-**When to Use**: After completing Root CLAUDE.md Phase 1 (validation) and Phase 2 decision tree
+**Context**: MCP tool functions for 3Commas API with consistent error handling and filtering
 
-## Specific Implementation Pattern
-1. **Function Signature** (use exact parameter names from script output):
-   ```python
-   @handle_api_errors
-   async def function_name(
-       required_param: str,  # From script output, not docs
-       optional_param: bool = False,
-       response_filter: str = "display"
-   ) -> APIResponse:
-   ```
+## Component Focus
+- **Function signatures** - Standard async functions with response_filter parameter
+- **Error handling** - @handle_api_errors decorator from utils.decorators  
+- **Request validation** - Pydantic models with to_query_params() method
 
-2. **Implementation Steps**:
-   ```python
-   # Step 1: Validate using Pydantic model (based on script findings)
-   request = RequestModel(
-       required_param=required_param,
-       optional_param=optional_param,
-       response_filter=ResponseFilter(response_filter)
-   )
-   
-   # Step 2: Build endpoint from script testing
-   endpoint = f"ver1/endpoint/{request.required_param}"  # Exact format from scripts
-   
-   # Step 3: Make authenticated API call
-   response = await api_request(endpoint, params=request.to_query_params(), method="GET")
-   
-   # Step 4: Apply response filtering
-   if isinstance(response, dict) and "error" not in response:
-       response = filter_response(response, request.response_filter)
-   
-   return response
-   ```
+## Required Patterns
+1. **Use @handle_api_errors decorator** - First decorator for consistent error handling
+2. **Include response_filter parameter** - Default "display" for token optimization
+3. **Pydantic request models** - Instantiate with function parameters
+4. **Apply filter_response()** - Before returning API response
 
-3. **Required Imports**
-   ```python
-   from typing import Dict, Any
-   from ..models.{domain} import RequestModel
-   from ..api.client import api_request
-   from ..utils.decorators import handle_api_errors
-   from ..utils.response_filter import filter_response
-   ```
+## Import Pattern
+```python
+from ..api.client import api_request
+from ..utils.decorators import handle_api_errors
+from ..utils.response_filter import filter_response
+from ..models.base import APIResponse
+from ..models.dca_bots import GetDCABotListRequest
+```
 
-## Reference Examples
-- **Complete implementation**: dca_bots.py:20 (get_dca_bot_details)
-- **Concise docstring style**: market_data.py:52 (get_currency_rates_and_limits)
+## Code Examples
+```python
+@handle_api_errors
+async def get_dca_bot_list(
+    account_id: int = 0, 
+    strategy: str | None = None,
+    response_filter: str = "display"
+) -> APIResponse:
+    """Get all DCA bots with status and configuration."""
+    
+    request = GetDCABotListRequest(
+        account_id=account_id,
+        strategy=strategy, 
+        response_filter=response_filter
+    )
+    response = await api_request("ver1/bots", params=request.to_query_params())
+    return filter_response(response, request.response_filter)
+```
 
-## Integration Notes
-- Always use script-validated parameter names from Root CLAUDE.md Phase 1
-- Return to Root CLAUDE.md for Phase 3 (documentation) after implementation
+## Integration Requirements
+- All tool functions use @handle_api_errors as first decorator
+- All functions include response_filter: str = "display" parameter
+- Use request model to_query_params() for API parameter building
+- Apply filter_response() before returning data to optimize tokens

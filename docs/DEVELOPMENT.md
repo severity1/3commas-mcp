@@ -29,45 +29,12 @@ uv run -m ruff check .
 uv run -m mypy .
 
 # Run all quality checks
-uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
+uv run -m black . && uv run -m ruff format . && uv run -m ruff check . && uv run -m mypy .
 ```
 
 ## Project Structure
 
-### Core Architecture
-```
-3commas_mcp/
-├── __init__.py
-├── server.py                 # Main MCP server entry point
-├── api/
-│   ├── __init__.py
-│   ├── CLAUDE.md            # API client guidance
-│   └── client.py            # 3Commas API client with HMAC-SHA256 auth
-├── models/
-│   ├── __init__.py
-│   ├── CLAUDE.md            # Model validation guidance
-│   ├── base.py              # Base models and config
-│   ├── bots.py              # DCA/Grid bot models
-│   ├── strategies.py        # Trading strategy models
-│   ├── deals.py             # Deal and safety order models
-│   ├── accounts.py          # Account and exchange models
-│   └── pairs.py             # Market pairs and blacklist models
-├── tools/
-│   ├── __init__.py
-│   ├── CLAUDE.md            # Tool implementation guidance
-│   ├── bots.py              # Bot creation/management tools
-│   ├── strategies.py        # Strategy configuration tools
-│   ├── deals.py             # Deal analysis and safety orders
-│   ├── accounts.py          # Account and exchange tools
-│   └── pairs.py             # Market data and pair management tools
-└── utils/
-    ├── __init__.py
-    ├── CLAUDE.md            # Utility function guidance
-    ├── auth.py              # 3Commas HMAC-SHA256 authentication
-    ├── decorators.py        # Error handling decorators
-    ├── env.py               # Environment configuration
-    └── validation.py        # Trading parameter validation
-```
+Core architecture: `3commas_mcp/` with `api/`, `models/`, `tools/`, `utils/` components.
 
 ## Development Standards
 
@@ -179,57 +146,22 @@ DEBUG=false
 LOG_LEVEL=INFO
 ```
 
-### Security Considerations
-- **Credential Storage**: Store credentials in environment variables only
-- **Feature Flags**: Use feature flags to control destructive operations
-- **Logging**: Configure safe logging that excludes sensitive data
-- **Validation**: Validate all environment variables on startup
-
 ## Documentation Standards
 
-### Code Documentation
-- **Docstrings**: Include comprehensive docstrings with trading context
-- **Type Hints**: Use complete type hints for all parameters and returns
-- **Examples**: Include usage examples in docstrings where appropriate
-- **Safety Warnings**: Include trading safety warnings where applicable
-
-### Documentation Structure
-- **4-Layer Pattern**: conversations/, models/, tools/, code docstrings
-- **Cross-References**: Maintain bidirectional links between all layers
-- **Trading Context**: Include trading scenarios and safety considerations
-- **API References**: Link to 3Commas API documentation
-
-## Troubleshooting
-
-### Common Issues
-- **Authentication Failures**: Verify API key and secret configuration
-- **Rate Limiting**: Check rate limit compliance and backoff implementation
-- **Bot Creation Errors**: Validate trading parameters and account permissions
-- **Deal Management Issues**: Verify deal state and safety order configuration
-
-### Debugging Tools
-- **Logging**: Use structured logging with trading context
-- **Error Messages**: Include detailed error information with trading context
-- **Validation**: Use comprehensive validation with clear error messages
-- **Testing**: Use comprehensive test coverage for debugging support
+### Required Documentation
+- Include docstrings with trading context and complete type hints
+- Follow 4-layer pattern: conversations/, models/, tools/, code docstrings
+- Maintain cross-references between documentation layers
+- Include trading safety warnings where applicable
+- **Use dummy data ONLY when documenting** (bot ID 12345678, $245.67 profit)
 
 ## Quality Assurance
 
-### Pre-commit Checklist
-- [ ] Code formatted with `ruff format .`
-- [ ] Linting passed with `ruff check .`
-- [ ] Type checking passed with `mypy .`
-- [ ] Tests passed with `pytest`
-- [ ] Trading safety validation included
-- [ ] Documentation updated for new features
-- [ ] Environment variables configured correctly
-- [ ] **Pattern compliance verified** (see `docs/PATTERNS.md` checklist)
-
-### Pattern Compliance Checklist
-For new API implementations, verify all items in the **complete checklist** documented in `docs/PATTERNS.md`
-
-### Continuous Integration
-- **Automated Testing**: All tests must pass in CI/CD pipeline
-- **Quality Checks**: All quality checks must pass before merge
-- **Security Scanning**: Scan for security vulnerabilities and credential exposure
-- **Documentation**: Ensure documentation is updated with code changes
+### Required Checks
+- [ ] `black .` - code formatting
+- [ ] `ruff format .` - additional formatting
+- [ ] `ruff check .` - linting
+- [ ] `mypy .` - type checking  
+- [ ] `pytest` - tests
+- [ ] Documentation updated
+- [ ] Pattern compliance verified (see `docs/PATTERNS.md`)
