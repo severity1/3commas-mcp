@@ -82,8 +82,8 @@ async def build_test_cases() -> dict[str, list[tuple[str, dict[str, str] | None]
             ("ver1/accounts", None),
         ],
         "market_pairs": [
-            ("ver1/market_pairs", None),
-            ("ver1/market_pairs", {"market_code": "binance"}),
+            ("ver1/accounts/market_pairs", None),
+            ("ver1/accounts/market_pairs", {"market_code": "binance"}),
         ],
     }
     
